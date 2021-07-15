@@ -1,0 +1,8 @@
+{
+  "language": "العربية",
+      "@language":{
+    "description": "The current Language"
+},
+  "helloWorld": "!مرحبا بالعالم",
+  "hello": "{username} مرحبا"
+}

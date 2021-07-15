@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:laundro/screens/user/account.dart';
 import 'package:laundro/screens/user/category.dart';
+import 'package:laundro/screens/user/search.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/user/category_screen.dart';
 import 'screens/user/launch_screen.dart';
+import 'screens/user/order_history.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,13 +16,25 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: const LaunchScreen());
+            type: PageTransitionType.topToBottom, child: const LaunchScreen());
       case '/categories':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: CategoryList());
+            type: PageTransitionType.bottomToTop, child: const CategoryList());
       case '/category_details':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: CategoryScreen());
+            type: PageTransitionType.bottomToTop,
+            child: const CategoryScreen());
+      case '/order_history':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop, child: const OrderHistory());
+      case '/account':
+        return PageTransition(
+            type: PageTransitionType.topToBottom, child: const Account());
+      case '/search':
+        return PageTransition(
+            // ignore: lines_longer_than_80_chars
+            type: PageTransitionType.bottomToTop,
+            child: const GridSearchScreen());
       // case '/category_detail':
       //   return PageTransition(
       //       type: PageTransitionType.bottomToTop, child: ArticleDetail());

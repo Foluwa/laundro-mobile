@@ -15,20 +15,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
-        // Add the app bar to the CustomScrollView.
         SliverAppBar(
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.cancel)),
-          // Provide a standard title.
           title: Text(title),
           pinned: true,
-          // Allows the user to reveal the app bar if they begin scrolling
-          // back up the list of items.
           floating: true,
-          // Display a placeholder widget to visualize the shrinking size.
           flexibleSpace: const Placeholder(),
           // Make the initial height of the SliverAppBar larger than normal.
           expandedHeight: 200,

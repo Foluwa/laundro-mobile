@@ -1,83 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:laundro/routes.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:laundro/providers/locale_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+import 'l10n/l10n.dart';
+import 'routes.dart';
+
+// void main() => runApp(MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'laundro',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // home: MyHomePage(title: 'Tabs Demo'),
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 6,
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-            bottom: const TabBar(
-              isScrollable: true,
-              indicatorWeight: 10.0,
-              indicatorColor: Colors.black,
-              tabs: <Widget>[
-                Tab(
-                  text: 'Incoming Call',
-                ),
-                Tab(
-                  text: 'Outgoing Call',
-                ),
-                Tab(
-                  text: 'Missed Call',
-                ),
-                Tab(
-                  text: 'Missed Call1',
-                ),
-                Tab(
-                  text: 'Missed Call',
-                ),
-                Tab(
-                  text: 'Missed Call3',
-                ),
-              ],
-            ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LocaleProvider(),
+        ),
+      ],
+      child: Consumer<LocaleProvider>(builder: (_, locale, child) {
+        return MaterialApp(
+          title: 'laundro',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
           ),
-          body: TabBarView(
-            children: <Widget>[
-              _buildListViewWithName('Incoming Call'),
-              _buildListViewWithName('Outgoing Call'),
-              _buildListViewWithName('Missed Call'),
-              _buildListViewWithName('Missed Call1'),
-              _buildListViewWithName('Missed Call2'),
-              _buildListViewWithName('Missed Call3'),
-            ],
-          )),
+          locale: locale.locale,
+          supportedLocales: L10n.all,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          initialRoute: '/',
+          onGenerateRoute: RouteGenerator.generateRoute,
+        );
+      }),
     );
-  }
-
-  ListView _buildListViewWithName(String s) {
-    return ListView.builder(
-        itemBuilder: (context, index) => ListTile(
-              title: Text(s + ' $index'),
-            ));
   }
 }

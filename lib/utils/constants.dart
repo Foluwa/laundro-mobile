@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-// Colors
-const primaryColor = Color(0xFF2697FF);
-const secondaryColor = Color(0xFF2A2D3E);
-const bgColor = Color(0xFF212332);
+class Constants {
+  // Colors
+  static Color primaryColor = const Color(0xFF607D8B);
+  static Color secondaryColor = const Color(0xFF2A2D3E);
+  static Color bgColor = const Color(0xFF212332);
 
 // Spacing
-const defaultPadding = 16.0;
+  var defaultPadding = 16.0;
+}

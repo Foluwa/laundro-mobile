@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/utils/constants.dart';
 
 class CategoryList extends StatefulWidget {
-  const CategoryList({Key key, this.title}) : super(key: key);
-
-  final String title;
+  const CategoryList({Key key}) : super(key: key);
 
   @override
   _CategoryListState createState() => _CategoryListState();
@@ -17,21 +16,25 @@ class _CategoryListState extends State<CategoryList> {
       length: 6,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Constants.primaryColor,
           title: const Text('Laundro'),
           actions: [
             IconButton(
                 onPressed: () {
                   // Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/search');
                 },
                 icon: const Icon(Icons.search)),
             IconButton(
                 onPressed: () {
                   // Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/order_history');
                 },
-                icon: const Icon(Icons.shopping_cart)),
+                icon: const Icon(Icons.history)),
             IconButton(
                 onPressed: () {
-                  // Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/account');
                 },
                 icon: const Icon(Icons.person)),
           ],
@@ -71,7 +74,7 @@ class _CategoryListState extends State<CategoryList> {
           children: <Widget>[
             _buildListViewWithName('Incoming Call'),
             _buildListViewWithName('Outgoing Call'),
-            _buildListViewWithName('Missed Call'),
+            _buildListViewWithName('Missed Call0'),
             _buildListViewWithName('Missed Call1'),
             _buildListViewWithName('Missed Call2'),
             _buildListViewWithName('Missed Call3'),
