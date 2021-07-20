@@ -18,7 +18,6 @@ analyzer:
 
     #This is added as an error to make viewing code on the web easier
     #lines_longer_than_80_chars: error
-    lines_longer_than_100_chars: error
     prefer_single_quotes: error
 
 linter:
@@ -27,7 +26,7 @@ linter:
     - always_require_non_null_named_parameters
     - annotate_overrides
     - avoid_annotating_with_dynamic
-    - avoid_bool_literals_in_conditional_expressions
+#    - avoid_bool_literals_in_conditional_expressions
     - avoid_empty_else
     - avoid_unnecessary_containers
     - avoid_web_libraries_in_flutter

@@ -1,5 +1,6 @@
 {
   "language": "मानक हिन्दी",
   "helloWorld": "नमस्ते दुनिया!",
-  "hello": "नमस्ते {username}"
+  "hello": "नमस्ते {username}",
+   "accounts":"हिसाब किताब"
 }

@@ -4,5 +4,6 @@
     "description": "The current Language"
 },
   "helloWorld": "!مرحبا بالعالم",
-  "hello": "{username} مرحبا"
+  "hello": "{username} مرحبا",
+   "accounts":"حسابات"
 }

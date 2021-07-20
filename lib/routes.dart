@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:laundro/screens/user/account.dart';
-import 'package:laundro/screens/user/category.dart';
-import 'package:laundro/screens/user/search.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'screens/user/account.dart';
+import 'screens/user/category.dart';
 import 'screens/user/category_screen.dart';
 import 'screens/user/launch_screen.dart';
 import 'screens/user/order_history.dart';
+import 'screens/user/search.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,7 +19,9 @@ class RouteGenerator {
             type: PageTransitionType.topToBottom, child: const LaunchScreen());
       case '/categories':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: const CategoryList());
+            // ignore: lines_longer_than_80_chars
+            type: PageTransitionType.bottomToTop,
+            child: const CategoryWidgetList());
       case '/category_details':
         return PageTransition(
             type: PageTransitionType.bottomToTop,

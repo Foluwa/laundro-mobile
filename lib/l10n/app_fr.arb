@@ -1,5 +1,6 @@
 {
 "language": "French",
 "helloWorld": "bonjour mot",
-"hello": "Bonjour {username}"
+"hello": "Bonjour {username}",
+"accounts":"Comptes"
 }

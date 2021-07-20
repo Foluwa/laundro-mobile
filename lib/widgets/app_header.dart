@@ -31,6 +31,7 @@ class AppHeader extends StatelessWidget {
         onPressed: () =>
             onCloseClicked != null ? onCloseClicked() : Navigator.pop(context),
       ),
+      actions: [],
     );
   }
 }

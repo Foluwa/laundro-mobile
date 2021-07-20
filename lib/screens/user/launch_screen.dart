@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 
-import '../onboarding.dart';
+import 'category.dart';
 
 class LaunchScreen extends StatefulWidget {
   const LaunchScreen({Key key}) : super(key: key);
@@ -16,7 +16,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
   Widget build(BuildContext context) {
     return SplashScreen(
         seconds: 4,
-        navigateAfterSeconds: OnBoardingPage(),
+        navigateAfterSeconds: CategoryWidgetList(), //OnBoardingPage(),
         title: const Text(
           'Laundro',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
