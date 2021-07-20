@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:laundro/l10n/l10n.dart';
-import 'package:laundro/providers/locale_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../l10n/l10n.dart';
+import '../providers/locale_provider.dart';
 
 // ignore: use_key_in_widget_constructors
 class LanguageWidget extends StatelessWidget {
@@ -24,10 +25,11 @@ class LanguageWidget extends StatelessWidget {
 }
 
 class LanguagePickerWidget extends StatelessWidget {
+  const LanguagePickerWidget({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context);
-    final locale = provider.locale ?? Locale('en');
+    final locale = provider.locale ?? const Locale('en');
 
     return DropdownButtonHideUnderline(
       child: DropdownButton(
@@ -41,7 +43,7 @@ class LanguagePickerWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   flag,
-                  style: TextStyle(fontSize: 32),
+                  style: const TextStyle(fontSize: 32),
                 ),
               ),
               value: locale,

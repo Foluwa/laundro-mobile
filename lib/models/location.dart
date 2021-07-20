@@ -16,6 +16,6 @@ class Location {
 
   @override
   String toString() {
-    return 'id: ${id}, UserId: ${location}';
+    return 'id: ${id}, location: ${location}';
   }
 }

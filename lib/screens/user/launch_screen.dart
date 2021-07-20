@@ -16,7 +16,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
   Widget build(BuildContext context) {
     return SplashScreen(
         seconds: 4,
-        navigateAfterSeconds: CategoryWidgetList(), //OnBoardingPage(),
+        navigateAfterSeconds: const CategoryWidgetList(), //OnBoardingPage(),
         title: const Text(
           'Laundro',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),

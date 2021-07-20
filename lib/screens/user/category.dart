@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -8,6 +7,8 @@ import '../../models/categories.dart';
 import '../../models/currency.dart';
 import '../../providers/laundry_provider.dart';
 import '../../utils/constants.dart';
+import '../../utils/size_config.dart';
+import '../../widgets/common.dart';
 
 class CategoryWidgetList extends StatefulWidget {
   const CategoryWidgetList({Key key}) : super(key: key);
@@ -19,6 +20,7 @@ class CategoryWidgetList extends StatefulWidget {
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
   LaundryApi api = LaundryApi(addAccessToken: false);
   LaundryProvider _laundryProvider = LaundryProvider();
+
   bool screenLoading = true;
 
   @override
@@ -33,25 +35,13 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
 
-    print(SizeConfig.safeBlockHorizontal * 2.55);
+    // print(SizeConfig.safeBlockHorizontal * 30);
 
     // print(
     //     'CURRENT CURRENCY ${_laundryProvider.getCurrency.currency}');
 
-    // if (_laundryProvider.getCategories != null) {
-    //   for (var e in _laundryProvider.getCategories) {
-    //     print('Sub ${e.subCategory.name}');
-    //   }
-    // }
-
     if (_laundryProvider.getCategories == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-    return DefaultTabController(
-      length: _laundryProvider.getCategories.length,
-      child: Scaffold(
+      return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Constants.primaryColor,
@@ -68,52 +58,59 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                 onPressed: () => Navigator.of(context).pushNamed('/account'),
                 icon: const Icon(Icons.person)),
           ],
-          bottom: TabBar(
-            isScrollable: true,
-            indicatorWeight: SizeConfig.safeBlockHorizontal * 2.55, //10.0,
-            indicatorColor: Colors.black,
-            tabs: _laundryProvider.getCategories.map((title) {
-              return Tab(
-                icon: const Icon(Icons.local_laundry_service_outlined),
-                text: title.Name,
-              );
-            }).toList(),
+        ),
+        body: Center(
+          child: Common.Loader(
+              height: SizeConfig.safeBlockHorizontal * 8.5,
+              width: SizeConfig.safeBlockHorizontal * 8.5),
+        ),
+      );
+    }
+    return DefaultTabController(
+      length: _laundryProvider.getCategories.length,
+      child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Constants.primaryColor,
+            title: Text(Constants.appName),
+            actions: [
+              IconButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/search'),
+                  icon: const Icon(Icons.search)),
+              IconButton(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/order_history'),
+                  icon: const Icon(Icons.history)),
+              IconButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/account'),
+                  icon: const Icon(Icons.person)),
+            ],
+            bottom: TabBar(
+              isScrollable: true,
+              indicatorWeight: SizeConfig.safeBlockHorizontal * 2.55, //10.0,
+              indicatorColor: Colors.black,
+              tabs: _laundryProvider.getCategories.map((title) {
+                return Tab(
+                  icon: const Icon(Icons.local_laundry_service_outlined),
+                  text: title.Name,
+                );
+              }).toList(),
+            ),
           ),
-        ),
-        body: TabBarView(
-          // children: _laundryProvider.getCategories.map((title) {
-          //   return ListView.builder(
-          //       itemBuilder: (context, index) => ListTile(
-          //             title: GestureDetector(
-          //                 onTap: () {
-          //                   Navigator.of(context)
-          //                       .pushNamed('/category_details');
-          //                 },
-          //                 // ignore: lines_longer_than_80_chars
-          //                 child: Text(_laundryProvider
-          //                     .getCategories[index].)),
-          //           ));
-          // }).toList(),
-
-          children: <Widget>[
-            _buildListViewWithName('Incoming Call'),
-            _buildListViewWithName('Outgoing Call'),
-            _buildListViewWithName('Missed Call0'),
-          ],
-        ),
-      ),
+          body: TabBarView(
+            children: _laundryProvider.getCategories.map((item) {
+              return ListView.builder(
+                  itemCount: item.subCategory.subcategory.length,
+                  itemBuilder: (context, index) => ListTile(
+                      title: GestureDetector(
+                          onTap: () => Navigator.of(context).pushNamed(
+                              '/category_details',
+                              arguments: item.subCategory.subcategory[index]),
+                          child:
+                              Text(item.subCategory.subcategory[index].name))));
+            }).toList(),
+          )),
     );
-  }
-
-  ListView _buildListViewWithName(String s) {
-    return ListView.builder(
-        itemBuilder: (context, index) => ListTile(
-              title: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/category_details');
-                  },
-                  child: Card(child: Text(s + ' $index'))),
-            ));
   }
 
   /// Fetch Current Currency
@@ -139,10 +136,8 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       screenLoading = true;
     });
 
-    print('FETCHING categories');
     await api.fetchCategories().then((categories) {
       if (categories != null) {
-        print('categories $categories');
         final cc = categories;
         _laundryProvider.setCategories(cc.category);
         setState(() {
@@ -150,6 +145,24 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
         });
         return categories;
       }
+    }).catchError((error) {
+      print('ERROR CAUGHT $error');
+      // setState(() {
+      //   loading = false;
+      // });
+      // globalKey.currentState.showSnackBar(Loaders.maidokiSnackbar(
+      //   fontSize: 15.0,
+      //   title: error.toString(),
+      //   onClick: SnackBarAction(
+      //     label: 'Dismiss',
+      //     textColor: Colors.white,
+      //     onPressed: () => {
+      //       setState(() {
+      //         loading = false;
+      //       })
+      //     },
+      //   ),
+      // ));
     });
     return null;
   }

@@ -1,12 +1,14 @@
+import 'sub_categories.dart';
+
 class CategoryList {
   List<Category> category;
   CategoryList({this.category});
   factory CategoryList.fromJson(category) {
-    print('CategoryList category $category');
+    // print('CategoryList category $category');
     final operations = category as List;
-    print('CategoryList operations $operations');
+    // print('CategoryList operations $operations');
     final data = operations.map((f) => Category.fromJson(f)).toList();
-    print('CategoryList data $data');
+    // print('CategoryList data $data');
     return CategoryList(category: data);
   }
 }
@@ -15,32 +17,34 @@ class Category {
   int id;
   String Name;
   String Description;
-  // SubCategory subCategory;
+  SubCategoryList subCategory;
 
   Category({
     this.id,
     this.Name,
     this.Description,
-    // this.subCategory,
+    this.subCategory,
   });
 
-  factory Category.fromJson(Map<String, dynamic> category) {
-    // var _subcategory;
-    // if (category != null && category['sub_categories'] != null) {
-    //   // print('Operations: ${booking['Operation']}');
-    //   var dd = category['sub_categories'] as List;
-    //   _subcategory = SubCategory.fromJson(dd);
-    // }
+  factory Category.fromJson(category) {
+    // Map<String, dynamic> category
+    // print('category $category');
+    var _subcategory;
+    if (category != null && category['sub_categories'] != null) {
+      // print('Operations: ${booking['Operation']}');
+      final dd = category['sub_categories']; //as List;
+      _subcategory = SubCategoryList.fromJson(dd);
+    }
     return Category(
       id: category['id'],
       Name: category['Name'],
       Description: category['Description'],
-      // subCategory: _subcategory,
+      subCategory: _subcategory,
     );
   }
 
   @override
   String toString() {
-    return 'id: ${id}, UserId: ${Name}';
+    return 'id: ${id}, name: ${Name}';
   }
 }

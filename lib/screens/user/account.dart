@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/locale_provider.dart';
+import '../../utils/size_config.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/language_picker_widget.dart';
 
@@ -16,8 +16,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  // Constants cc = Constants();
-  static const iconSize = 0;
   @override
   void initState() {
     super.initState();
@@ -32,7 +30,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    SizeConfig.safeBlockHorizontal * 7.65;
+    // SizeConfig.safeBlockHorizontal * 7.65;
 
     print('ACCOUNT ${SizeConfig.safeBlockHorizontal * 6.45}');
     return Scaffold(
@@ -120,7 +118,7 @@ class _AccountState extends State<Account> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              LanguagePickerWidget(),
+              const LanguagePickerWidget(),
               Text(
                 AppLocalizations.of(context).language,
                 style:

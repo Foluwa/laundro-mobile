@@ -5,7 +5,7 @@ class FormValidate {
       return 'Enter email address';
     }
     // This is just a regular expression for email addresses
-    var p = '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}' +
+    const p = '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}' +
         '\\@' +
         '[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}' +
         '(' +

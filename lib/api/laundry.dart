@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:laundro/models/products.dart';
 
 import '../models/categories.dart';
 import '../models/currency.dart';
@@ -21,17 +22,36 @@ class LaundryApi {
     // }
   }
 
-  /// Fetch Categories, Sub-Categories and Products
-
+  /// Fetch Categories and Sub-Categories
   Future<CategoryList> fetchCategories() async {
-    print('I WAS CALLED');
+    print('FetchCategories WAS CALLED');
     try {
       // var response = await _dio.get(ApiRoutes.categories);
       final response = await Dio().get(ApiRoutes.categories);
+      // print('RESPONSE $response');
       // print('Called Categories  ${response.data}');
       return CategoryList.fromJson(response.data);
     } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();
+      print('FOLUWA  $errorMessage');
+      throw Exception('$errorMessage');
+    }
+  }
+
+  /// Fetch Products in a subcategory
+  Future<ProductList> fetchProducts(var id) async {
+    try {
+      print('FetchProducts WAS CALLED');
+      //var url = ApiRoutes.sub_categories + id;
+      var url2 = 'https://laundro-staging-api.herokuapp.com/sub-categories/2';
+      // print('URL is $url');
+      final response =
+          await Dio().get(url2); // '${ApiRoutes.sub_categories}/${id}'
+      print('RESPONSE ${response.data['products']}');
+      return ProductList.fromJson(response.data['products']);
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      print('FOLUWA  $errorMessage');
       throw Exception('$errorMessage');
     }
   }

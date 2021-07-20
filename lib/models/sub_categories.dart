@@ -3,11 +3,8 @@ class SubCategoryList {
   SubCategoryList({this.subcategory});
 
   factory SubCategoryList.fromJson(subcategory) {
-    print('CategoryList category $subcategory');
-    var operations = subcategory as List;
-    print('CategoryList operations $operations');
-    var data = operations.map((f) => SubCategory.fromJson(f)).toList();
-    print('CategoryList data $data');
+    final operations = subcategory as List;
+    final data = operations.map((f) => SubCategory.fromJson(f)).toList();
     return SubCategoryList(subcategory: data);
   }
 }
@@ -36,6 +33,6 @@ class SubCategory {
 
   @override
   String toString() {
-    return 'id: ${id}, UserId: ${name}';
+    return 'id: ${id}, product_name: ${name}';
   }
 }

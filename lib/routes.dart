@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -19,13 +20,12 @@ class RouteGenerator {
             type: PageTransitionType.topToBottom, child: const LaunchScreen());
       case '/categories':
         return PageTransition(
-            // ignore: lines_longer_than_80_chars
             type: PageTransitionType.bottomToTop,
             child: const CategoryWidgetList());
       case '/category_details':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const CategoryScreen());
+            child: CategoryScreen(subCat: args));
       case '/order_history':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const OrderHistory());
@@ -34,7 +34,6 @@ class RouteGenerator {
             type: PageTransitionType.topToBottom, child: const Account());
       case '/search':
         return PageTransition(
-            // ignore: lines_longer_than_80_chars
             type: PageTransitionType.bottomToTop,
             child: const GridSearchScreen());
       // case '/category_detail':
