@@ -6,7 +6,6 @@ import 'package:laundro/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
-import '../../models/products.dart';
 
 // ignore: must_be_immutable
 class CategoryScreen extends StatefulWidget {
@@ -22,10 +21,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   LaundryApi api = LaundryApi(addAccessToken: false);
   LaundryProvider _laundryProvider = LaundryProvider();
   bool screenLoading = true;
-  List _products = null;
+  List _products;
   @override
   void initState() {
-    getProducts().then((_) => print('fetch currency'));
+    // getProducts().then((_) => print('fetch currency'));
     super.initState();
   }
 
@@ -33,9 +32,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
+    // _laundryProvider
+    print('LENGTH ${_laundryProvider.getProducts.length}');
     print('subCat ${widget.subCat.id}');
-    print('_products $_products');
 
+    // ignore: lines_longer_than_80_chars
+    _products = _laundryProvider.getProducts
+        .where((e) => e.sub_category_id == widget.subCat.id)
+        .toList();
+    print('_products $_products');
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -53,36 +58,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
           delegate: SliverChildBuilderDelegate(
             (context, index) =>
                 ListTile(title: Text('${_products[index].name}')),
-            childCount: _products.length,
+            childCount:
+                _products.length, // _laundryProvider.getProducts.length, /
           ),
         ),
       ],
     ));
-  }
-
-  // fetchProducts
-  /// Fetch Categories
-  Future<ProductList> getProducts() async {
-    setState(() {
-      screenLoading = true;
-    });
-
-    print('FETCHING PRODUCTS');
-    await api.fetchProducts(widget.subCat.id).then((products) {
-      if (products != null) {
-        print('products first ${products.product.first}');
-        print('products second ${products.product.last}');
-        //_laundryProvider.setCategories(cc.category);
-
-        setState(() {
-          _products = products.product;
-          screenLoading = false;
-        });
-        return products;
-      }
-    }).catchError((error) {
-      print('ERROR CAUGHT $error');
-    });
-    return null;
   }
 }

@@ -28,8 +28,6 @@ class LaundryApi {
     try {
       // var response = await _dio.get(ApiRoutes.categories);
       final response = await Dio().get(ApiRoutes.categories);
-      // print('RESPONSE $response');
-      // print('Called Categories  ${response.data}');
       return CategoryList.fromJson(response.data);
     } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();
@@ -38,17 +36,13 @@ class LaundryApi {
     }
   }
 
-  /// Fetch Products in a subcategory
-  Future<ProductList> fetchProducts(var id) async {
+  /// Fetch All Products in a subcategory
+  Future<ProductList> fetchAllProducts() async {
     try {
-      print('FetchProducts WAS CALLED');
-      //var url = ApiRoutes.sub_categories + id;
-      var url2 = 'https://laundro-staging-api.herokuapp.com/sub-categories/2';
-      // print('URL is $url');
-      final response =
-          await Dio().get(url2); // '${ApiRoutes.sub_categories}/${id}'
-      print('RESPONSE ${response.data['products']}');
-      return ProductList.fromJson(response.data['products']);
+      print('FetchAllProducts WAS CALLED');
+      final response = await Dio().get(ApiRoutes.products);
+      print('RESPONSE ${response.data}');
+      return ProductList.fromJson(response.data);
     } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();
       print('FOLUWA  $errorMessage');
@@ -56,7 +50,7 @@ class LaundryApi {
     }
   }
 
-  /// Fetch Location
+  /// Fetch Locations
   /// Fetch currency
   Future<Currency> fetchCurrency() async {
     try {

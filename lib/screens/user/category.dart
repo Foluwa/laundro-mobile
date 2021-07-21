@@ -27,6 +27,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   void initState() {
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
+    getAllProducts().then((_) => print('fetch products'));
     super.initState();
   }
 
@@ -34,8 +35,6 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
-
-    // print(SizeConfig.safeBlockHorizontal * 30);
 
     // print(
     //     'CURRENT CURRENCY ${_laundryProvider.getCurrency.currency}');
@@ -100,14 +99,25 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           body: TabBarView(
             children: _laundryProvider.getCategories.map((item) {
               return ListView.builder(
-                  itemCount: item.subCategory.subcategory.length,
-                  itemBuilder: (context, index) => ListTile(
-                      title: GestureDetector(
+                itemCount: item.subCategory.subcategory.length,
+                itemBuilder: (context, index) => ListTile(
+                  title: item.subCategory.subcategory.isEmpty
+
+                      //TODO: Check if empty and display no product
+                      ? GestureDetector(
+                          onTap: () => null,
+                          // ignore: lines_longer_than_80_chars
+                          child: const Center(child: Text('Empty')))
+                      : GestureDetector(
                           onTap: () => Navigator.of(context).pushNamed(
                               '/category_details',
                               arguments: item.subCategory.subcategory[index]),
-                          child:
-                              Text(item.subCategory.subcategory[index].name))));
+                          // ignore: lines_longer_than_80_chars
+                          child: Text(
+                              '${item.subCategory.subcategory[index].name}'),
+                        ),
+                ),
+              );
             }).toList(),
           )),
     );
@@ -139,6 +149,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     await api.fetchCategories().then((categories) {
       if (categories != null) {
         final cc = categories;
+        print('LENGTH OF CAT ${categories.category.length}');
         _laundryProvider.setCategories(cc.category);
         setState(() {
           screenLoading = false;
@@ -163,6 +174,27 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       //     },
       //   ),
       // ));
+    });
+    return null;
+  }
+
+  Future<CategoryList> getAllProducts() async {
+    setState(() {
+      screenLoading = true;
+    });
+
+    await api.fetchAllProducts().then((products) {
+      if (products != null) {
+        final all_products = products;
+        // print('ALL PRODUCTS ARE ${all_products.product}');
+        _laundryProvider.setProducts(all_products.product);
+        setState(() {
+          screenLoading = false;
+        });
+        return products;
+      }
+    }).catchError((error) {
+      print('ERROR CAUGHT $error');
     });
     return null;
   }
