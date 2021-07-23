@@ -8,7 +8,9 @@ import '../../models/currency.dart';
 import '../../providers/laundry_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
+import '../../widgets/bottom_cart.dart';
 import '../../widgets/common.dart';
+import '../../widgets/refresh_widget.dart';
 
 class CategoryWidgetList extends StatefulWidget {
   const CategoryWidgetList({Key key}) : super(key: key);
@@ -20,6 +22,7 @@ class CategoryWidgetList extends StatefulWidget {
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
   LaundryApi api = LaundryApi(addAccessToken: false);
   LaundryProvider _laundryProvider = LaundryProvider();
+  final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
   bool screenLoading = true;
 
@@ -68,58 +71,77 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     return DefaultTabController(
       length: _laundryProvider.getCategories.length,
       child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Constants.primaryColor,
-            title: Text(Constants.appName),
-            actions: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/search'),
-                  icon: const Icon(Icons.search)),
-              IconButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/order_history'),
-                  icon: const Icon(Icons.history)),
-              IconButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/account'),
-                  icon: const Icon(Icons.person)),
-            ],
-            bottom: TabBar(
-              isScrollable: true,
-              indicatorWeight: SizeConfig.safeBlockHorizontal * 2.55, //10.0,
-              indicatorColor: Colors.black,
-              tabs: _laundryProvider.getCategories.map((title) {
-                return Tab(
-                  icon: const Icon(Icons.local_laundry_service_outlined),
-                  text: title.Name,
-                );
-              }).toList(),
-            ),
-          ),
-          body: TabBarView(
-            children: _laundryProvider.getCategories.map((item) {
-              return ListView.builder(
-                itemCount: item.subCategory.subcategory.length,
-                itemBuilder: (context, index) => ListTile(
-                  title: item.subCategory.subcategory.isEmpty
-
-                      //TODO: Check if empty and display no product
-                      ? GestureDetector(
-                          onTap: () => null,
-                          // ignore: lines_longer_than_80_chars
-                          child: const Center(child: Text('Empty')))
-                      : GestureDetector(
-                          onTap: () => Navigator.of(context).pushNamed(
-                              '/category_details',
-                              arguments: item.subCategory.subcategory[index]),
-                          // ignore: lines_longer_than_80_chars
-                          child: Text(
-                              '${item.subCategory.subcategory[index].name}'),
-                        ),
-                ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Constants.primaryColor,
+          title: Text(Constants.appName),
+          actions: [
+            IconButton(
+                onPressed: () => Navigator.of(context).pushNamed('/search'),
+                icon: const Icon(Icons.search)),
+            IconButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/order_history'),
+                icon: const Icon(Icons.history)),
+            IconButton(
+                onPressed: () => Navigator.of(context).pushNamed('/account'),
+                icon: const Icon(Icons.person)),
+          ],
+          bottom: TabBar(
+            isScrollable: true,
+            indicatorWeight: SizeConfig.safeBlockHorizontal * 2.55, //10.0,
+            indicatorColor: Colors.black,
+            tabs: _laundryProvider.getCategories.map((title) {
+              return Tab(
+                icon: const Icon(Icons.local_laundry_service_outlined),
+                text: title.Name,
               );
             }).toList(),
-          )),
+          ),
+        ),
+        body: TabBarView(
+          children: _laundryProvider.getCategories.map((item) {
+            return RefreshWidget(
+              // keyRefresh: keyRefresh,
+              onRefresh: getCategories,
+              child: ListView.builder(
+                itemCount: item.subCategory.subcategory.length,
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    ListTile(
+                      title: item.subCategory.subcategory.isEmpty
+                          //TODO: Check if empty and display no product
+                          ? GestureDetector(
+                              onTap: () => null,
+                              child: const Center(child: Text('Empty')))
+                          : GestureDetector(
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  '/category_details',
+                                  arguments:
+                                      item.subCategory.subcategory[index]),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fitWidth,
+                                    image: NetworkImage(item.subCategory
+                                        .subcategory[index].img_url),
+                                  ),
+                                ),
+                                child: Text(
+                                    item.subCategory.subcategory[index].name),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+        bottomNavigationBar: const BottomCart(),
+      ),
     );
   }
 
@@ -142,6 +164,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
 
   /// Fetch Categories
   Future<CategoryList> getCategories() async {
+    print('CALLING getCategories');
     setState(() {
       screenLoading = true;
     });

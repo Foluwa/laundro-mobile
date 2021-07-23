@@ -14,20 +14,24 @@ class SubCategory {
   String name;
   String description;
   int category_id;
+  String img_url;
 
   SubCategory({
     this.id,
     this.name,
     this.description,
     this.category_id,
+    this.img_url,
   });
 
   factory SubCategory.fromJson(subCategory) {
+    print('${subCategory['id']} is ${subCategory['Image'][0]['url']}');
     return SubCategory(
-      id: subCategory['id'],
-      name: subCategory['Name'],
-      description: subCategory['Description'],
-      category_id: subCategory['category'],
+      id: subCategory['id'] ?? '',
+      name: subCategory['Name'] ?? '',
+      description: subCategory['Description'] ?? '',
+      category_id: subCategory['category'] ?? '',
+      img_url: subCategory['Image'][0]['url'] ?? '',
     );
   }
 

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:laundro/models/products.dart';
 
 import '../models/categories.dart';
 import '../models/currency.dart';
+import '../models/products.dart';
 import '../utils/api_routes.dart';
 import 'Exceptions/dio_exception.dart';
 

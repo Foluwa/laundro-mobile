@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/models/sub_categories.dart';
-import 'package:laundro/providers/laundry_provider.dart';
-import 'package:laundro/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
+import '../../models/sub_categories.dart';
+import '../../providers/laundry_provider.dart';
+import '../../utils/size_config.dart';
+import '../../widgets/bottom_cart.dart';
 
-// ignore: must_be_immutable
 class CategoryScreen extends StatefulWidget {
   SubCategory subCat;
   CategoryScreen({Key key, this.subCat}) : super(key: key);
@@ -42,27 +42,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
         .toList();
     print('_products $_products');
     return Scaffold(
-        body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.cancel)),
-          title: Text(widget.subCat.name),
-          pinned: true,
-          floating: true,
-          flexibleSpace: const Placeholder(),
-          expandedHeight: SizeConfig.safeBlockHorizontal * 55.60, //200,
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) =>
-                ListTile(title: Text('${_products[index].name}')),
-            childCount:
-                _products.length, // _laundryProvider.getProducts.length, /
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.cancel)),
+            title: Text(widget.subCat.name),
+            flexibleSpace: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                    child: Image.network(
+                  widget.subCat.img_url,
+                  fit: BoxFit.cover,
+                ))
+              ],
+            ),
+            pinned: true,
+            floating: true,
+            expandedHeight: SizeConfig.safeBlockHorizontal * 55.60,
           ),
-        ),
-      ],
-    ));
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) =>
+                  ListTile(title: Text('${_products[index].name}')),
+              childCount:
+                  _products.length, // _laundryProvider.getProducts.length, /
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const BottomCart(),
+    );
   }
 }
