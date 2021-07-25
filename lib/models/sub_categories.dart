@@ -1,6 +1,6 @@
 class SubCategoryList {
   List<SubCategory> subcategory;
-  SubCategoryList({this.subcategory});
+  SubCategoryList({required this.subcategory});
 
   factory SubCategoryList.fromJson(subcategory) {
     final operations = subcategory as List;
@@ -17,15 +17,15 @@ class SubCategory {
   String img_url;
 
   SubCategory({
-    this.id,
-    this.name,
-    this.description,
-    this.category_id,
-    this.img_url,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.category_id,
+    required this.img_url,
   });
 
   factory SubCategory.fromJson(subCategory) {
-    print('${subCategory['id']} is ${subCategory['Image'][0]['url']}');
+    // print('${subCategory['id']} is ${subCategory['Image'][0]['url']}');
     return SubCategory(
       id: subCategory['id'] ?? '',
       name: subCategory['Name'] ?? '',

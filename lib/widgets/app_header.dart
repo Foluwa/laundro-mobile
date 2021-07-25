@@ -2,34 +2,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppHeader extends StatelessWidget {
-  final String title;
-  final Color bg;
-  final Color textColor;
-  final double elevation;
-  final Widget bottom;
-  final double fontSize;
-  final Function onCloseClicked;
-  const AppHeader(
-      {Key key,
-      this.title,
-      this.bg,
-      this.textColor,
-      this.elevation,
-      this.bottom,
-      this.fontSize,
-      this.onCloseClicked,
-      Color backgroundColor,
-      IconButton leading})
+  String title = 'Header';
+  Color bg = Colors.white;
+  Color textColor = Colors.black;
+  double elevation = 0.0;
+  double fontSize = 30.0;
+  Function onCloseClicked;
+  AppHeader(
+      {Key? key,
+      required this.title,
+      required this.bg,
+      required this.textColor,
+      required this.elevation,
+      required this.fontSize,
+      required this.onCloseClicked,
+      required Color backgroundColor,
+      IconButton? leading})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: bg ?? Colors.white,
-      elevation: elevation ?? 0,
-      title: Text(title ?? 'Header'),
+      backgroundColor: bg, //?? Colors.white,
+      elevation: elevation, // ?? 0,
+      title: Text(
+        title,
+        style: TextStyle(color: textColor, fontSize: fontSize),
+      ), //?? //'Header'),
       leading: IconButton(
         icon: const Icon(Icons.cancel),
         onPressed: () =>
+            // ignore: unnecessary_null_comparison
             onCloseClicked != null ? onCloseClicked() : Navigator.pop(context),
       ),
       actions: [],

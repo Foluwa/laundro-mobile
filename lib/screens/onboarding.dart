@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class OnBoardingPage extends StatefulWidget {
-  const OnBoardingPage({Key key}) : super(key: key);
+  const OnBoardingPage({Key? key}) : super(key: key);
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }

@@ -2,7 +2,7 @@ import 'sub_categories.dart';
 
 class CategoryList {
   List<Category> category;
-  CategoryList({this.category});
+  CategoryList({required this.category});
   factory CategoryList.fromJson(category) {
     // print('CategoryList category $category');
     final operations = category as List;
@@ -20,10 +20,10 @@ class Category {
   SubCategoryList subCategory;
 
   Category({
-    this.id,
-    this.Name,
-    this.Description,
-    this.subCategory,
+    required this.id,
+    required this.Name,
+    required this.Description,
+    required this.subCategory,
   });
 
   factory Category.fromJson(category) {
@@ -36,10 +36,10 @@ class Category {
       _subcategory = SubCategoryList.fromJson(dd);
     }
     return Category(
-      id: category['id'],
-      Name: category['Name'],
-      Description: category['Description'],
-      subCategory: _subcategory,
+      id: category['id'] ?? '',
+      Name: category['Name'] ?? '',
+      Description: category['Description'] ?? '',
+      subCategory: _subcategory ?? '',
     );
   }
 

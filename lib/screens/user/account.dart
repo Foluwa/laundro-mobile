@@ -9,7 +9,7 @@ import '../../widgets/app_header.dart';
 import '../../widgets/language_picker_widget.dart';
 
 class Account extends StatefulWidget {
-  const Account({Key key}) : super(key: key);
+  const Account({Key? key}) : super(key: key);
 
   @override
   _AccountState createState() => _AccountState();
@@ -20,7 +20,7 @@ class _AccountState extends State<Account> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       final provider = Provider.of<LocaleProvider>(context, listen: false);
 
       provider.clearLocale();
@@ -32,15 +32,19 @@ class _AccountState extends State<Account> {
     SizeConfig().init(context);
     // SizeConfig.safeBlockHorizontal * 7.65;
 
-    print('ACCOUNT ${SizeConfig.safeBlockHorizontal * 6.45}');
+    // print('ACCOUNT ${SizeConfig.safeBlockHorizontal * 6.45}');
     return Scaffold(
-      appBar: const PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppHeader(
           elevation: 0,
           fontSize: 25.0,
           title: 'Accounts',
           bg: Color(0xFF607D8B),
+          textColor: Colors.black,
+          onCloseClicked: () => Navigator.pop(context),
+          backgroundColor: Color(0xFF607D8B),
+          //backgroundColor: null,
         ),
       ),
       body: Column(
@@ -120,16 +124,16 @@ class _AccountState extends State<Account> {
             children: [
               const LanguagePickerWidget(),
               Text(
-                AppLocalizations.of(context).language,
+                AppLocalizations.of(context)!.language,
                 style:
                     const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
               ),
               Text(
-                AppLocalizations.of(context).helloWorld,
+                AppLocalizations.of(context)!.helloWorld,
                 style: const TextStyle(fontSize: 16),
               ),
               Text(
-                AppLocalizations.of(context).accounts,
+                AppLocalizations.of(context)!.accounts,
                 style: const TextStyle(fontSize: 16),
               ),
             ],

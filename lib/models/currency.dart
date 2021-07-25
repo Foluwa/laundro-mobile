@@ -3,8 +3,8 @@ class Currency {
   String currency;
 
   Currency({
-    this.id,
-    this.currency,
+    required this.id,
+    required this.currency,
   });
 
   factory Currency.fromJson(Map<String, dynamic> currency) {

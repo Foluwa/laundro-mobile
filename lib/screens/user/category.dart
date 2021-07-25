@@ -9,18 +9,23 @@ import '../../providers/laundry_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/bottom_cart.dart';
-import '../../widgets/common.dart';
 import '../../widgets/refresh_widget.dart';
 
+class RIKeys {
+  static const riKey1 = Key('__RIKEY1__');
+  static const riKey2 = Key('__RIKEY2__');
+  static const riKey3 = Key('__RIKEY3__');
+}
+
 class CategoryWidgetList extends StatefulWidget {
-  const CategoryWidgetList({Key key}) : super(key: key);
+  const CategoryWidgetList({Key? key}) : super(key: key);
 
   @override
   _CategoryWidgetListState createState() => _CategoryWidgetListState();
 }
 
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
-  LaundryApi api = LaundryApi(addAccessToken: false);
+  LaundryApi api = LaundryApi();
   LaundryProvider _laundryProvider = LaundryProvider();
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
@@ -28,10 +33,15 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
 
   @override
   void initState() {
+    super.initState();
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     getAllProducts().then((_) => print('fetch products'));
-    super.initState();
+
+    ///
+    // getCurrencies(); // .then((_) => print('fetch currency'));
+    // getCategories(); //.then((_) => print('fetch categories'));
+    // getAllProducts(); //.then((_) => print('fetch products'));
   }
 
   @override
@@ -39,37 +49,9 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
 
-    // print(
-    //     'CURRENT CURRENCY ${_laundryProvider.getCurrency.currency}');
-
-    if (_laundryProvider.getCategories == null) {
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Constants.primaryColor,
-          title: Text(Constants.appName),
-          actions: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pushNamed('/search'),
-                icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/order_history'),
-                icon: const Icon(Icons.history)),
-            IconButton(
-                onPressed: () => Navigator.of(context).pushNamed('/account'),
-                icon: const Icon(Icons.person)),
-          ],
-        ),
-        body: Center(
-          child: Common.Loader(
-              height: SizeConfig.safeBlockHorizontal * 8.5,
-              width: SizeConfig.safeBlockHorizontal * 8.5),
-        ),
-      );
-    }
+    // print('CURRENT CURRENCY ${_laundryProvider!.getCurrency!.currency}');
     return DefaultTabController(
-      length: _laundryProvider.getCategories.length,
+      length: _laundryProvider.getCategories?.length ?? 0,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -89,9 +71,9 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           ],
           bottom: TabBar(
             isScrollable: true,
-            indicatorWeight: SizeConfig.safeBlockHorizontal * 2.55, //10.0,
+            indicatorWeight: 10.0, //SizeConfig.safeBlockHorizontal * 2.55, //
             indicatorColor: Colors.black,
-            tabs: _laundryProvider.getCategories.map((title) {
+            tabs: _laundryProvider.getCategories!.map((title) {
               return Tab(
                 icon: const Icon(Icons.local_laundry_service_outlined),
                 text: title.Name,
@@ -100,41 +82,42 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           ),
         ),
         body: TabBarView(
-          children: _laundryProvider.getCategories.map((item) {
+          children: _laundryProvider.getCategories!.map((item) {
             return RefreshWidget(
-              // keyRefresh: keyRefresh,
+              keyRefresh: RIKeys.riKey1, // keyRefresh,
               onRefresh: getCategories,
               child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: item.subCategory.subcategory.length,
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    ListTile(
-                      title: item.subCategory.subcategory.isEmpty
-                          //TODO: Check if empty and display no product
-                          ? GestureDetector(
-                              onTap: () => null,
-                              child: const Center(child: Text('Empty')))
-                          : GestureDetector(
-                              onTap: () => Navigator.of(context).pushNamed(
-                                  '/category_details',
-                                  arguments:
-                                      item.subCategory.subcategory[index]),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fitWidth,
-                                    image: NetworkImage(item.subCategory
-                                        .subcategory[index].img_url),
-                                  ),
+                itemBuilder: (context, index) => MediaQuery(
+                  data: const MediaQueryData(padding: EdgeInsets.zero),
+                  child: ListTile(
+                    contentPadding:
+                        const EdgeInsets.only(left: 0.0, right: 0.0),
+                    title: item.subCategory.subcategory.isEmpty
+                        //TODO: Check if empty and display no product
+                        ? InkWell(
+                            onTap: () => null,
+                            child: const Center(child: Text('Empty')))
+                        : InkWell(
+                            onTap: () => Navigator.of(context).pushNamed(
+                                '/category_details',
+                                arguments: item.subCategory.subcategory[index]),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 170,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.fitWidth,
+                                  image: NetworkImage(item
+                                      .subCategory.subcategory[index].img_url),
                                 ),
-                                child: Text(
-                                    item.subCategory.subcategory[index].name),
                               ),
+                              child: Text(
+                                  item.subCategory.subcategory[index].name),
                             ),
-                    ),
-                  ],
+                          ),
+                  ),
                 ),
               ),
             );
@@ -150,16 +133,16 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     setState(() {
       screenLoading = true;
     });
+    var data;
     await api.fetchCurrency().then((currencies) {
-      if (currencies != null) {
-        _laundryProvider.setCurrency(currencies);
-        setState(() {
-          screenLoading = false;
-        });
-        return currencies;
-      }
+      _laundryProvider.setCurrency(currencies);
+      setState(() {
+        screenLoading = false;
+      });
+      data = currencies;
+      //return currencies;
     });
-    return null;
+    return data;
   }
 
   /// Fetch Categories
@@ -169,36 +152,18 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       screenLoading = true;
     });
 
+    var data;
     await api.fetchCategories().then((categories) {
-      if (categories != null) {
-        final cc = categories;
-        print('LENGTH OF CAT ${categories.category.length}');
-        _laundryProvider.setCategories(cc.category);
-        setState(() {
-          screenLoading = false;
-        });
-        return categories;
-      }
-    }).catchError((error) {
-      print('ERROR CAUGHT $error');
-      // setState(() {
-      //   loading = false;
-      // });
-      // globalKey.currentState.showSnackBar(Loaders.maidokiSnackbar(
-      //   fontSize: 15.0,
-      //   title: error.toString(),
-      //   onClick: SnackBarAction(
-      //     label: 'Dismiss',
-      //     textColor: Colors.white,
-      //     onPressed: () => {
-      //       setState(() {
-      //         loading = false;
-      //       })
-      //     },
-      //   ),
-      // ));
+      final cc = categories;
+      print('LENGTH OF CAT ${categories.category.length}');
+      _laundryProvider.setCategories(cc.category);
+      setState(() {
+        screenLoading = false;
+      });
+      //return categories;
+      data = categories;
     });
-    return null;
+    return data;
   }
 
   Future<CategoryList> getAllProducts() async {
@@ -206,19 +171,20 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       screenLoading = true;
     });
 
+    var data;
     await api.fetchAllProducts().then((products) {
-      if (products != null) {
-        final all_products = products;
-        // print('ALL PRODUCTS ARE ${all_products.product}');
-        _laundryProvider.setProducts(all_products.product);
-        setState(() {
-          screenLoading = false;
-        });
-        return products;
-      }
+      final all_products = products;
+      // print('ALL PRODUCTS ARE ${all_products.product}');
+      _laundryProvider.setProducts(all_products.product);
+      setState(() {
+        screenLoading = false;
+      });
+      data = products;
+      //return products;
     }).catchError((error) {
       print('ERROR CAUGHT $error');
+      // return error;
     });
-    return null;
+    return data;
   }
 }

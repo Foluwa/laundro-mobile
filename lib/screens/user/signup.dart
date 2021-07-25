@@ -4,7 +4,7 @@ import '../../utils/constants.dart';
 import '../../utils/form_validator.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -32,9 +32,9 @@ class _SignUpState extends State<SignUp> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         TextFormField(
-          validator: (label == 'Email Address')
-              ? FormValidate.validateEmail
-              : FormValidate.validatePassword,
+          // validator: label == 'Email Address'
+          //     ? FormValidate.validateEmail
+          //     : FormValidate.validatePassword,
           obscureText: obscureText
               ? (obscureText ? _passwordVisible : !_passwordVisible)
               : false,

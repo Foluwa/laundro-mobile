@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
 
 class LocaleProvider extends ChangeNotifier {
-  Locale _locale;
+  late Locale _locale;
 
   Locale get locale => _locale;
 
@@ -15,7 +15,7 @@ class LocaleProvider extends ChangeNotifier {
   }
 
   void clearLocale() {
-    _locale = null;
+    // _locale = null;
     notifyListeners();
   }
 }

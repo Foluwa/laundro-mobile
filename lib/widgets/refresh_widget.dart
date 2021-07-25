@@ -4,15 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RefreshWidget extends StatefulWidget {
-  final GlobalKey<RefreshIndicatorState> keyRefresh;
+  // final GlobalKey<RefreshIndicatorState> keyRefresh;
+  final Key keyRefresh;
   final Widget child;
   final Future Function() onRefresh;
 
   const RefreshWidget({
-    Key key,
-    this.keyRefresh,
-    @required this.onRefresh,
-    @required this.child,
+    Key? key,
+    required this.keyRefresh,
+    required this.onRefresh,
+    required this.child,
   }) : super(key: key);
 
   @override

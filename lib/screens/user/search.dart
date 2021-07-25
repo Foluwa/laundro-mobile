@@ -1,50 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/laundry_provider.dart';
+
+// https://www.youtube.com/watch?v=oFZIwBudIj0
+// https://www.youtube.com/watch?v=oFZIwBudIj0
+// https://www.youtube.com/watch?v=oFZIwBudIj0
+// https://www.youtube.com/watch?v=oFZIwBudIj0
+// https://www.youtube.com/watch?v=oFZIwBudIj0
+// https://www.youtube.com/watch?v=oFZIwBudIj0
 class GridSearchScreen extends StatefulWidget {
-  const GridSearchScreen({Key key}) : super(key: key);
+  const GridSearchScreen({Key? key}) : super(key: key);
   @override
   _GridSearchScreenState createState() => _GridSearchScreenState();
 }
 
 class _GridSearchScreenState extends State<GridSearchScreen> {
-  List<String> foodList = [
-    'Orange',
-    'Berries',
-    'Lemons',
-    'Apples',
-    'Mangoes',
-    'Dates',
-    'Avocados',
-    'Black Beans',
-    'Chickpeas',
-    'Pinto beans',
-    'White Beans',
-    'Green lentils',
-    'Split Peas',
-    'Rice',
-    'Oats',
-    'Quinoa',
-    'Pasta',
-    'Sparkling water',
-    'Coconut water',
-    'Herbal tea',
-    'Kombucha',
-    'Almonds',
-    'Peannuts',
-    'Chia seeds',
-    'Flax seeds',
-    'Canned tomatoes',
-    'Olive oil',
-    'Broccoli',
-    'Onions',
-    'Garlic',
-    'Carots',
-    'Leafy greens',
-    'Meat',
-  ];
-  List<String> foodListSearch;
+  List<String> productListSearch = [];
   final FocusNode _textFocusNode = FocusNode();
   final TextEditingController _textEditingController = TextEditingController();
+  LaundryProvider _laundryProvider = LaundryProvider();
+
   @override
   void dispose() {
     _textFocusNode.dispose();
@@ -54,6 +30,8 @@ class _GridSearchScreenState extends State<GridSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _laundryProvider = Provider.of<LaundryProvider>(context);
+
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -81,20 +59,22 @@ class _GridSearchScreenState extends State<GridSearchScreen> {
                     contentPadding: EdgeInsets.all(8)),
                 onChanged: (value) {
                   setState(() {
-                    foodListSearch = foodList
-                        .where(
-                            (element) => element.contains(value.toLowerCase()))
+                    productListSearch = _laundryProvider.getProducts!
+                        .where((element) =>
+                            element.name.contains(value.toLowerCase()))
+                        .cast<String>()
                         .toList();
                     if (_textEditingController.text.isNotEmpty &&
-                        foodListSearch.length == 0) {
-                      print('foodListSearch length ${foodListSearch.length}');
+                        productListSearch.length == 0) {
+                      print(
+                          'productListSearch length ${productListSearch.length}');
                     }
                   });
                 },
               ),
             )),
         body: _textEditingController.text.isNotEmpty &&
-                foodListSearch.length == 0
+                productListSearch.length == 0
             ? Center(
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
@@ -126,8 +106,8 @@ class _GridSearchScreenState extends State<GridSearchScreen> {
                   crossAxisSpacing: 12,
                 ),
                 itemCount: _textEditingController.text.isNotEmpty
-                    ? foodListSearch.length
-                    : foodList.length,
+                    ? productListSearch.length
+                    : _laundryProvider.getProducts!.length,
                 itemBuilder: (ctx, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -140,8 +120,8 @@ class _GridSearchScreenState extends State<GridSearchScreen> {
                           width: 10,
                         ),
                         Text(_textEditingController.text.isNotEmpty
-                            ? foodListSearch[index]
-                            : foodList[index]),
+                            ? productListSearch[index]
+                            : _laundryProvider.getProducts![index].name),
                       ],
                     ),
                   );
