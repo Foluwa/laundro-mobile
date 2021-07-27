@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/laundry_provider.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         title: Constants.appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         debugShowCheckedModeBanner: Constants.showDebugBanner,
         // locale: locale.locale,

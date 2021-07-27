@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/widgets/dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
@@ -118,8 +119,6 @@ class _AccountState extends State<Account> {
             ),
           ),
 
-          ///
-
           Container(
             margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
             color: Colors.grey,
@@ -134,25 +133,7 @@ class _AccountState extends State<Account> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.directions_transit,
-                          color: Colors.pink,
-                          size: 30,
-                          semanticLabel: 'accessibility modes',
-                        ),
-                        const Text(
-                          'Help',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                DialogBox(),
                 GestureDetector(
                   // onTap: () => Navigator.of(context).pushNamed('/signup'),
                   child: Padding(

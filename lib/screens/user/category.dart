@@ -86,7 +86,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           children: _laundryProvider.getCategories!.map((item) {
             return RefreshWidget(
               keyRefresh: RIKeys.riKey1, // keyRefresh,
-              onRefresh: getCategories,
+              onRefresh: callAllApis, //getCategories,
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: item.subCategory.subcategory.length,
@@ -127,6 +127,13 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
         bottomNavigationBar: const BottomCart(),
       ),
     );
+  }
+
+  Future callAllApis() {
+    //getCategories();
+    getCurrencies().then((_) => print('fetch currency'));
+    getCategories().then((_) => print('fetch categories'));
+    return getAllProducts().then((_) => print('fetch products'));
   }
 
   /// Fetch Current Currency

@@ -10,16 +10,6 @@ class SizeConfig {
   static double _safeAreaVertical = 0.0;
   static double safeBlockHorizontal = 0.0;
   static double safeBlockVertical = 0.0;
-  //
-
-  // late double screenWidth;
-  // late double screenHeight;
-  // late double blockSizeHorizontal;
-  // late double blockSizeVertical;
-  // late double _safeAreaHorizontal;
-  // late double _safeAreaVertical;
-  // late double safeBlockHorizontal;
-  // late double safeBlockVertical;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
