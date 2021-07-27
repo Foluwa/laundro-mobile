@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/models/products.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -166,7 +167,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     return data;
   }
 
-  Future<CategoryList> getAllProducts() async {
+  Future<ProductList> getAllProducts() async {
     setState(() {
       screenLoading = true;
     });

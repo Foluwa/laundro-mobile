@@ -51,7 +51,7 @@ class LaundryProvider extends ChangeNotifier {
     print('Product_ID ${p.id}');
     // Product found =
     //     _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
-    var found = _baskets.firstWhereOrNull((a) => a.id == p.id);
+    final found = _baskets.firstWhereOrNull((a) => a.id == p.id);
     print('FOUND IS $found');
     if (found != null) {
       found.qty += 1;

@@ -1,130 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/products.dart';
 import '../../providers/laundry_provider.dart';
+import '../../widgets/search_widget.dart';
 
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-// https://www.youtube.com/watch?v=oFZIwBudIj0
-class GridSearchScreen extends StatefulWidget {
-  const GridSearchScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({Key? key}) : super(key: key);
+
   @override
-  _GridSearchScreenState createState() => _GridSearchScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _GridSearchScreenState extends State<GridSearchScreen> {
-  List<String> productListSearch = [];
-  final FocusNode _textFocusNode = FocusNode();
-  final TextEditingController _textEditingController = TextEditingController();
+class _SearchScreenState extends State<SearchScreen> {
+  late List<Product> products;
+  String query = '';
   LaundryProvider _laundryProvider = LaundryProvider();
 
   @override
-  void dispose() {
-    _textFocusNode.dispose();
-    _textEditingController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    products = _laundryProvider.getProducts!;
   }
 
   @override
   Widget build(BuildContext context) {
     _laundryProvider = Provider.of<LaundryProvider>(context);
-
+    print('QUERY $query');
     return Scaffold(
-        appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.cancel),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            backgroundColor: Colors.blue.shade300,
-            title: Container(
-              decoration: BoxDecoration(
-                  color: Colors.blue.shade200,
-                  borderRadius: BorderRadius.circular(20)),
-              child: TextField(
-                controller: _textEditingController,
-                focusNode: _textFocusNode,
-                cursorColor: Colors.black,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    hintText: 'Search here',
-                    contentPadding: EdgeInsets.all(8)),
-                onChanged: (value) {
-                  setState(() {
-                    productListSearch = _laundryProvider.getProducts!
-                        .where((element) =>
-                            element.name.contains(value.toLowerCase()))
-                        .cast<String>()
-                        .toList();
-                    if (_textEditingController.text.isNotEmpty &&
-                        productListSearch.length == 0) {
-                      print(
-                          'productListSearch length ${productListSearch.length}');
-                    }
-                  });
-                },
-              ),
-            )),
-        body: _textEditingController.text.isNotEmpty &&
-                productListSearch.length == 0
-            ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.search_off,
-                          size: 160,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'No results found,\nPlease try different keyword',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
+      appBar: AppBar(
+        title: buildSearch(),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+              child: products.isEmpty
+                  ? const Center(child: Text('no product found'))
+                  : ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+                        return buildproduct(product);
+                      },
+                    )),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Product name or description',
+        onChanged: searchProduct,
+      );
+
+  Widget buildproduct(Product product) => ListTile(
+        // leading: Image.network(
+        //   book.urlImage,
+        //   fit: BoxFit.cover,
+        //   width: 50,
+        //   height: 50,
+        // ),
+        title: Text(product.name),
+        // subtitle: Text(product.name),
+        subtitle: _laundryProvider.inCart(product.id)
+            ? Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // add item into basket
+                      print('add item into basket');
+                      Product dd = product;
+                      _laundryProvider.addOneItemToCart(dd);
+                    },
+                    icon: const Icon(Icons.add),
+                    iconSize: 20,
                   ),
-                ),
+                  Text(
+                      // ignore: lines_longer_than_80_chars
+                      '${_laundryProvider.inCartQty(product.id)}'),
+                  IconButton(
+                    onPressed: () {
+                      // remove item from basket
+                      _laundryProvider.removeOneItemToCart(product);
+                    },
+                    icon: const Icon(Icons.remove),
+                    iconSize: 20,
+                  )
+                ],
               )
-            : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3,
-                  crossAxisSpacing: 12,
-                ),
-                itemCount: _textEditingController.text.isNotEmpty
-                    ? productListSearch.length
-                    : _laundryProvider.getProducts!.length,
-                itemBuilder: (ctx, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          child: Icon(Icons.food_bank),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(_textEditingController.text.isNotEmpty
-                            ? productListSearch[index]
-                            : _laundryProvider.getProducts![index].name),
-                      ],
-                    ),
-                  );
-                }));
+            : IconButton(
+                onPressed: () {
+                  // add item into basket
+                  print('add item into cart basket');
+                  _laundryProvider.addOneItemToCart(product);
+                  _laundryProvider.getBasketQty();
+                  _laundryProvider.getTotalPrice();
+                },
+                icon: const Icon(Icons.ac_unit_outlined),
+                iconSize: 20,
+              ),
+      );
+
+  void searchProduct(String query) {
+    final displayProducts = _laundryProvider.getProducts!.where((book) {
+      final nameLower = book.name.toLowerCase();
+      final descriptionLower = book.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return nameLower.contains(searchLower) ||
+          descriptionLower.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      products = displayProducts;
+    });
   }
 }

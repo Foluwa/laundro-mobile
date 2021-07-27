@@ -67,6 +67,7 @@ class _CartState extends State<Cart> {
                           Text(_laundryProvider.getCart![index].name),
                           // ignore: lines_longer_than_80_chars
                           Text(
+                              // ignore: lines_longer_than_80_chars
                               '  QTY: ${_laundryProvider.getCart![index].qty.toString()}'),
                         ],
                       ),

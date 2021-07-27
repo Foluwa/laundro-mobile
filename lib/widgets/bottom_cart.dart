@@ -28,11 +28,13 @@ class _BottomCartState extends State<BottomCart> {
     // 'Items(${_laundryProvider.getBasketQty() ?? 0}) Total: \$${_laundryProvider.getTotalPrice()}'),
     // print('PRICE ${_laundryProvider.getBasketQty()}');
     // print('TOTAL ${_laundryProvider.getTotalPrice()}');
-
+    // SizeConfig().init(context);
+    // SizeConfig.safeBlockHorizontal * 7.65;
+    print(SizeConfig.safeBlockHorizontal * 3.34);
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed('/cart'), // /cart
       child: Container(
-        height: 80,
+        height: SizeConfig.safeBlockHorizontal * 20,
         width: double.maxFinite,
         decoration: BoxDecoration(
           color: Constants.primaryColor,
@@ -43,12 +45,14 @@ class _BottomCartState extends State<BottomCart> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(12.0),
+              padding:
+                  EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34), // 12.0
               // ignore: lines_longer_than_80_chars
               child: Text('Your Basket (${_laundryProvider.getBasketQty()})'),
             ),
             Padding(
-              padding: EdgeInsets.all(12.0),
+              padding:
+                  EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34), // 12.0
               // ignore: lines_longer_than_80_chars
               child: Text(
                   // ignore: lines_longer_than_80_chars

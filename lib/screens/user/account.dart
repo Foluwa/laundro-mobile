@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/locale_provider.dart';
+import '../../providers/laundry_provider.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/language_picker_widget.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
@@ -16,21 +14,25 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  LaundryProvider _laundryProvider = LaundryProvider();
+
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final provider = Provider.of<LocaleProvider>(context, listen: false);
-
-      provider.clearLocale();
-    });
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   final provider = Provider.of<LocaleProvider>(context, listen: false);
+    //
+    //   provider.clearLocale();
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    _laundryProvider = Provider.of<LaundryProvider>(context);
     SizeConfig().init(context);
     // SizeConfig.safeBlockHorizontal * 7.65;
+    print(SizeConfig.safeBlockHorizontal * 20.65);
 
     // print('ACCOUNT ${SizeConfig.safeBlockHorizontal * 6.45}');
     return Scaffold(
@@ -73,9 +75,7 @@ class _AccountState extends State<Account> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print('pressed');
-                  },
+                  onTap: () => Navigator.of(context).pushNamed('/signup'),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
                     child: Row(
@@ -95,9 +95,7 @@ class _AccountState extends State<Account> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print('pressed');
-                  },
+                  // onTap: () => Navigator.of(context).pushNamed('/signup'),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
                     child: Row(
@@ -109,7 +107,7 @@ class _AccountState extends State<Account> {
                           semanticLabel: 'accessibility modes',
                         ),
                         const Text(
-                          'Create a new ',
+                          'Sign into an exisiting account ',
                           style: TextStyle(color: Colors.white),
                         ),
                       ],
@@ -119,25 +117,104 @@ class _AccountState extends State<Account> {
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const LanguagePickerWidget(),
-              Text(
-                AppLocalizations.of(context)!.language,
-                style:
-                    const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                AppLocalizations.of(context)!.helloWorld,
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                AppLocalizations.of(context)!.accounts,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ],
-          )
+
+          ///
+
+          Container(
+            margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
+            color: Colors.grey,
+            child: Column(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
+                    child: const Text(
+                      'Your details',
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.directions_transit,
+                          color: Colors.pink,
+                          size: 30,
+                          semanticLabel: 'accessibility modes',
+                        ),
+                        const Text(
+                          'Help',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  // onTap: () => Navigator.of(context).pushNamed('/signup'),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.directions_transit,
+                          color: Colors.pink,
+                          size: 30.0,
+                          semanticLabel: 'accessibility modes',
+                        ),
+                        const Text(
+                          'Terms of service',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  // onTap: () => Navigator.of(context).pushNamed('/signup'),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.directions_transit,
+                          color: Colors.pink,
+                          size: 30.0,
+                          semanticLabel: 'accessibility modes',
+                        ),
+                        const Text(
+                          'Privacy policy',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: [
+          //     const LanguagePickerWidget(),
+          //     Text(
+          //       AppLocalizations.of(context)!.language,
+          //       style:
+          //           const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+          //     ),
+          //     Text(
+          //       AppLocalizations.of(context)!.helloWorld,
+          //       style: const TextStyle(fontSize: 16),
+          //     ),
+          //     Text(
+          //       AppLocalizations.of(context)!.accounts,
+          //       style: const TextStyle(fontSize: 16),
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );
