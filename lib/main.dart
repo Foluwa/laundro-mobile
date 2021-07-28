@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
         title: Constants.appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme,
-          ),
+          // textTheme: GoogleFonts.latoTextTheme(
+          //   Theme.of(context).textTheme,
+          // ),
         ),
         debugShowCheckedModeBanner: Constants.showDebugBanner,
         // locale: locale.locale,

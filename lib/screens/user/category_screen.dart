@@ -64,7 +64,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
             pinned: true,
             floating: true,
-            expandedHeight: 200, // SizeConfig.safeBlockHorizontal * 55.60
+            expandedHeight: SizeConfig.safeBlockHorizontal *
+                55.60, //200, // SizeConfig.safeBlockHorizontal * 55.60
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
