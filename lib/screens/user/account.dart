@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/app_header.dart';
+import '../../widgets/dialog.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);

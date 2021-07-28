@@ -31,8 +31,11 @@ class MyApp extends StatelessWidget {
         title: Constants.appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          // textTheme: GoogleFonts.latoTextTheme(
-          //   Theme.of(context).textTheme,
+          textTheme: GoogleFonts.montserratTextTheme(
+            Theme.of(context).textTheme,
+          ),
+          //       latoTextTheme(
+          //       Theme.of(context).textTheme,
           // ),
         ),
         debugShowCheckedModeBanner: Constants.showDebugBanner,

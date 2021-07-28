@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:laundro/models/products.dart';
+import 'package:laundro/widgets/loading_list.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -31,6 +32,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
   bool screenLoading = true;
+  late List<Category>? subCategories;
 
   @override
   void initState() {
@@ -38,21 +40,20 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     getAllProducts().then((_) => print('fetch products'));
-
-    ///
-    // getCurrencies(); // .then((_) => print('fetch currency'));
-    // getCategories(); //.then((_) => print('fetch categories'));
-    // getAllProducts(); //.then((_) => print('fetch products'));
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
+    subCategories = _laundryProvider.getCategories;
+
+    print('subCategories $subCategories');
 
     // print('CURRENT CURRENCY ${_laundryProvider!.getCurrency!.currency}');
     return DefaultTabController(
-      length: _laundryProvider.getCategories?.length ?? 0,
+      //length: _laundryProvider.getCategories?.length ?? 0,
+      length: subCategories!.length,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -72,58 +73,103 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           ],
           bottom: TabBar(
             isScrollable: true,
-            indicatorWeight: 10.0, //SizeConfig.safeBlockHorizontal * 2.55, //
-            indicatorColor: Colors.black,
+            indicatorWeight: SizeConfig.safeBlockHorizontal * 1,
+            indicatorColor: Constants.white,
             tabs: _laundryProvider.getCategories!.map((title) {
-              return Tab(
-                icon: const Icon(Icons.local_laundry_service_outlined),
-                text: title.Name,
-              );
+              return subCategories!.length < 1
+                  ? Container()
+                  : Tab(
+                      icon: const Icon(Icons.local_laundry_service_outlined),
+                      // text: title.Name,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          title.Name,
+                          style: TextStyle(
+                            color: Constants.white,
+                            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          //style: tabStyle,
+                        ),
+                      ),
+                    );
             }).toList(),
           ),
         ),
-        body: TabBarView(
-          children: _laundryProvider.getCategories!.map((item) {
-            return RefreshWidget(
-              keyRefresh: RIKeys.riKey1, // keyRefresh,
-              onRefresh: callAllApis, //getCategories,
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: item.subCategory.subcategory.length,
-                itemBuilder: (context, index) => MediaQuery(
-                  data: const MediaQueryData(padding: EdgeInsets.zero),
-                  child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.only(left: 0.0, right: 0.0),
-                    title: item.subCategory.subcategory.isEmpty
-                        //TODO: Check if empty and display no product
-                        ? InkWell(
-                            onTap: () => null,
-                            child: const Center(child: Text('Empty')))
-                        : InkWell(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                '/category_details',
-                                arguments: item.subCategory.subcategory[index]),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 170,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.fitWidth,
-                                  image: NetworkImage(item
-                                      .subCategory.subcategory[index].img_url),
+        body: subCategories!.length < 1
+            ? Center(child: LoadingListPage())
+            : TabBarView(
+                //children: _laundryProvider.getCategories!.map((item) {
+                children: subCategories!.map((item) {
+                return RefreshWidget(
+                  keyRefresh: RIKeys.riKey1, // keyRefresh,
+                  onRefresh: callAllApis, //getCategories,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: item.subCategory.subcategory.length,
+                    itemBuilder: (context, index) => MediaQuery(
+                      data: const MediaQueryData(padding: EdgeInsets.zero),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 0.0, right: 0.0),
+                        title: item.subCategory.subcategory.isEmpty
+                            //TODO: Check if empty and display no product
+                            ? InkWell(
+                                onTap: () => null,
+                                child: const Center(child: Text('Empty')))
+                            : InkWell(
+                                onTap: () => Navigator.of(context).pushNamed(
+                                    '/category_details',
+                                    arguments:
+                                        item.subCategory.subcategory[index]),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          SizeConfig.safeBlockHorizontal * 51,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fitWidth,
+                                          image: NetworkImage(item.subCategory
+                                              .subcategory[index].img_url),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: SizeConfig.safeBlockHorizontal *
+                                          6.37, //25.0,
+                                      left: SizeConfig.safeBlockHorizontal *
+                                          3.85, //15
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            item.subCategory.subcategory[index]
+                                                .name,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              color: Constants.white,
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5.1,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          // Text(item.subCategory.subcategory[index]
+                                          //     .category_id
+                                          //     .toString())
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                              child: Text(
-                                  item.subCategory.subcategory[index].name),
-                            ),
-                          ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
+                );
+              }).toList()),
         bottomNavigationBar: const BottomCart(),
       ),
     );

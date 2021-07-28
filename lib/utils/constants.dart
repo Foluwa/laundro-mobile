@@ -11,6 +11,8 @@ class Constants {
   static Color bgColor = const Color(0xFF212332);
   static Color black = const Color(0xFF000000);
   static Color white = const Color(0xFFFFFFFF);
+  static Color silver = const Color(0xFFE0E0E0);
+  static Color silverhighlight = const Color(0xFFF5F5F5);
 
   /// SPACING
   var defaultPadding = 16.0;

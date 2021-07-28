@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/app_header.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
+import '../../widgets/app_header.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);

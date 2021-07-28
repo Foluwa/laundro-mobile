@@ -8,7 +8,7 @@ import '../models/products.dart';
 class LaundryProvider extends ChangeNotifier {
   List<Product> _products = [];
   List<Product> _baskets = [];
-  List<Category> _category = [];
+  List<Category>? _category = [];
   Currency? _currency;
 
   /// Return gets

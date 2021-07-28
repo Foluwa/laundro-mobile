@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
+
+import '../utils/constants.dart';
 
 // Widget formInput({label, controller, obscureText = false, passwordVisible}) {
 class FormInput extends StatefulWidget {
