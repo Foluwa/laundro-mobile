@@ -15,6 +15,8 @@ class _DialogBoxState extends State<DialogBox> {
   //       onClicked: () => showSimpleDialog(context),
   //     );
 
+  late Future<void> _launched;
+
   Widget build(BuildContext context) => GestureDetector(
         onTap: () => showSimpleDialog(context),
         child: Padding(
@@ -65,8 +67,6 @@ class _DialogBoxState extends State<DialogBox> {
           ],
         );
       });
-
-  late Future<void> _launched;
 
   Future<void> _openUrl(String url) async {
     if (await canLaunch(url)) {

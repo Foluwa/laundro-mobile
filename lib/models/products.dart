@@ -16,7 +16,6 @@ class Product {
   String name;
   String description;
   double price;
-  // SubCategory sub_category;
   int sub_category_id;
   int qty;
 
@@ -25,7 +24,6 @@ class Product {
     required this.name,
     required this.description,
     required this.price,
-    // this.sub_category,
     required this.sub_category_id,
     required this.qty,
   });
@@ -37,10 +35,28 @@ class Product {
       name: product['Name'],
       description: product['Description'],
       price: product['Price'].toDouble(),
-      // sub_category: product['sub_category'],
       sub_category_id: product['sub_category']['id'],
       qty: 0,
     );
+  }
+
+  Product.fromMap(Map<String, dynamic> res)
+      : id = res['id'],
+        name = res['name'],
+        description = res['description'],
+        price = res['price'],
+        sub_category_id = res['sub_category_id'],
+        qty = res['qty'];
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+      'sub_category_id': sub_category_id,
+      'qty': qty
+    };
   }
 
   @override

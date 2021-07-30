@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
-import '../../models/products.dart';
 import '../../providers/laundry_provider.dart';
+import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/bottom_cart.dart';
+import '../../widgets/single_product.dart';
 
 class CategoryScreen extends StatefulWidget {
   final dynamic subCat;
@@ -33,87 +33,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
-    // ignore: lines_longer_than_80_chars
     _products = _laundryProvider.getProducts!
         .where((e) => e.sub_category_id == widget.subCat.id)
         .toList();
+    // _products = _laundryProvider.getProducts!;
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            leading: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.cancel)),
-            title: Text(widget.subCat.name),
-            flexibleSpace: Stack(
-              children: <Widget>[
+              backgroundColor: Constants.primaryColor,
+              leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.cancel)),
+              title: Text(widget.subCat.name),
+              flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(children: <Widget>[
                 Positioned.fill(
                     child: Image.network(
                   widget.subCat.img_url,
                   fit: BoxFit.cover,
                 ))
-              ],
-            ),
-            pinned: true,
-            floating: true,
-            expandedHeight: SizeConfig.safeBlockHorizontal *
-                55.60, //200, // SizeConfig.safeBlockHorizontal * 55.60
-          ),
+              ])),
+              pinned: true,
+              floating: true,
+              expandedHeight: SizeConfig.safeBlockHorizontal * 55.60),
           SliverList(
               delegate: SliverChildBuilderDelegate(
-            (context, index) => ListTile(
-                title: Text('${_products[index].name}'),
-                subtitle: Text('${_products[index].description}'),
-                trailing: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text(
-                          // ignore: lines_longer_than_80_chars
-                          '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)}${_products[index].price}'),
-                      _laundryProvider.inCart(_products[index].id)
-                          ? Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    // add item into basket
-                                    print('add item into basket');
-                                    print(_products[index]);
-                                    Product dd = _products[index];
-                                    _laundryProvider.addOneItemToCart(dd);
-                                  },
-                                  icon: const Icon(Icons.add),
-                                  iconSize: 20,
-                                ),
-                                Text(
-                                    // ignore: lines_longer_than_80_chars
-                                    '${_laundryProvider.inCartQty(_products[index].id)}'),
-                                IconButton(
-                                  onPressed: () {
-                                    // remove item from basket
-                                    _laundryProvider
-                                        .removeOneItemToCart(_products[index]);
-                                  },
-                                  icon: const Icon(Icons.remove),
-                                  iconSize: 20,
-                                )
-                              ],
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                // add item into basket
-                                print('add item into basket');
-                                _laundryProvider
-                                    .addOneItemToCart(_products[index]);
-                                _laundryProvider.getBasketQty();
-                                _laundryProvider.getTotalPrice();
-                              },
-                              icon: const Icon(Icons.add_shopping_cart),
-                              iconSize: 20,
-                            ),
-                    ],
-                  ),
-                )),
+            (context, index) => SingleProduct(products: _products[index]),
             childCount: _products.length,
           )),
         ],

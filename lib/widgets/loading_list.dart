@@ -11,7 +11,7 @@ class LoadingListPage extends StatefulWidget {
 }
 
 class _LoadingListPageState extends State<LoadingListPage> {
-  bool _enabled = true;
+  final bool _enabled = true;
 
   @override
   Widget build(BuildContext context) {

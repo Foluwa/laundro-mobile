@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../utils/constants.dart';
 
 class Common {
   static Widget Loader({height, width}) => Container(
@@ -23,7 +24,19 @@ class Common {
         child: Shimmer.fromColors(
           baseColor: Constants.silver, //Colors.red,
           highlightColor: Constants.silverhighlight, //Colors.yellow,
-          child: LinearProgressIndicator(),
+          child: const LinearProgressIndicator(),
+        ),
+      );
+
+  static void showSnackBar(BuildContext context, {required String title}) =>
+      // Scaffold.of(context)
+      //   ..removeCurrentSnackBar()
+      //   ..showSnackBar(
+      //     SnackBar(content: Text(title)),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(title),
+          duration: const Duration(milliseconds: 300),
         ),
       );
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/screens/user/signup.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/user/account.dart';
@@ -9,6 +8,7 @@ import 'screens/user/category.dart';
 import 'screens/user/category_screen.dart';
 import 'screens/user/order_history.dart';
 import 'screens/user/search.dart';
+import 'screens/user/signup.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -43,9 +43,6 @@ class RouteGenerator {
       case '/signup':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignUp());
-      // case '/category_detail':
-      //   return PageTransition(
-      //       type: PageTransitionType.bottomToTop, child: ArticleDetail());
       // case '/walkthrough':
       //   return MaterialPageRoute(builder: (_) => WalkThroughPage());
       default:

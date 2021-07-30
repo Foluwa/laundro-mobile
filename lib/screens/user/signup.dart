@@ -16,15 +16,15 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(50),
         child: AppHeader(
           elevation: 0,
           fontSize: 25.0,
           title: 'Sign Up',
-          bg: Color(0xFF607D8B),
+          bg: const Color(0xFF607D8B),
           textColor: Colors.black,
           onCloseClicked: () => Navigator.pop(context),
-          backgroundColor: Color(0xFF607D8B),
+          backgroundColor: const Color(0xFF607D8B),
           //backgroundColor: null,
         ),
       ),

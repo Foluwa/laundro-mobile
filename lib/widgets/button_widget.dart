@@ -11,15 +11,15 @@ class ButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => RaisedButton(
+  Widget build(BuildContext context) => MaterialButton(
         child: Text(
           text,
           style: TextStyle(fontSize: 24),
         ),
-        shape: StadiumBorder(),
-        color: Theme.of(context).accentColor,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        textColor: Colors.white,
+        // shape: StadiumBorder(),
+        // color: Theme.of(context).accentColor,
+        // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        // textColor: Colors.white,
         onPressed: onClicked,
       );
 }

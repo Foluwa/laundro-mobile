@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/common.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/laundry_provider.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
 import '../utils/utils.dart';
+import 'common.dart';
 
 class BottomCart extends StatefulWidget {
   const BottomCart({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _BottomCartState extends State<BottomCart> {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
     currentCurrency = _laundryProvider.getCurrency?.currency;
-    var bottomCartStyle = TextStyle(
+    final bottomCartStyle = TextStyle(
       color: Constants.white,
       fontSize: SizeConfig.safeBlockHorizontal * 4.5,
       fontWeight: FontWeight.w900,

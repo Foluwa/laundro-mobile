@@ -79,7 +79,6 @@ class LaundryProvider extends ChangeNotifier {
 
   /// Computes quantity of all products in cart
   int getBasketQty() {
-    print('CALLING cart quantity');
     var total = 0;
     // print('LENGTH OF BASKET ${_baskets?.length}');
     var bb = _baskets;
@@ -132,6 +131,14 @@ class LaundryProvider extends ChangeNotifier {
       return 0;
     }
   }
+
+  /// Extract product id from data in cart
+  // List<int> extractProductId() {
+  //   // ignore: lines_longer_than_80_chars
+  //   var _basketProductId = _baskets.where((i) => i.id).toList();
+  //   print('IDS $_basketProductId');
+  //   return _basketProductId;
+  // }
 
   /// Clear basket
   void clearBasket() {
