@@ -37,26 +37,32 @@ class _CategoryScreenState extends State<CategoryScreen> {
         .where((e) => e.sub_category_id == widget.subCat.id)
         .toList();
     // _products = _laundryProvider.getProducts!;
+    print('DESCRIPTION ${widget.subCat.description.toString()}');
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-              backgroundColor: Constants.primaryColor,
-              leading: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.cancel)),
-              title: Text(widget.subCat.name),
-              flexibleSpace: FlexibleSpaceBar(
-                  background: Stack(children: <Widget>[
-                Positioned.fill(
-                    child: Image.network(
-                  widget.subCat.img_url,
-                  fit: BoxFit.cover,
-                ))
-              ])),
-              pinned: true,
-              floating: true,
-              expandedHeight: SizeConfig.safeBlockHorizontal * 55.60),
+            backgroundColor: Constants.primaryColor,
+            leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.cancel)),
+            title: Text(widget.subCat.name),
+            flexibleSpace: FlexibleSpaceBar(
+                background: Stack(children: <Widget>[
+              Positioned.fill(
+                  child: Image.network(
+                widget.subCat.img_url,
+                fit: BoxFit.cover,
+              ))
+            ])),
+            pinned: true,
+            floating: true,
+            expandedHeight: SizeConfig.safeBlockHorizontal * 55.60,
+
+            ///TODO: Add subcategory description
+            //bottom: Container(child: Text(widget.subCat.description)),
+          ),
+          // Text(),
           SliverList(
               delegate: SliverChildBuilderDelegate(
             (context, index) => SingleProduct(products: _products[index]),

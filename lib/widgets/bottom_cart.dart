@@ -34,39 +34,43 @@ class _BottomCartState extends State<BottomCart> {
       fontWeight: FontWeight.w900,
     );
     print('currentCurrency $currentCurrency');
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed('/cart'), // /cart
-      child: Container(
-        height: SizeConfig.safeBlockHorizontal * 20,
-        width: double.maxFinite,
-        decoration: BoxDecoration(color: Constants.primaryColor),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-              child: currentCurrency == null
-                  ? Common.simpleShimmer()
-                  : Text(
-                      'Cart (${_laundryProvider.getBasketQty()})',
-                      style: bottomCartStyle,
-                    ),
+    return currentCurrency == null
+        ? LinearProgressIndicator()
+        : GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed('/cart'), // /cart
+            child: Container(
+              height: SizeConfig.safeBlockHorizontal * 20,
+              width: double.maxFinite,
+              decoration: BoxDecoration(color: Constants.primaryColor),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+                    child: currentCurrency == null
+                        ? Common.simpleShimmer()
+                        : Text(
+                            'Cart (${_laundryProvider.getBasketQty()})',
+                            style: bottomCartStyle,
+                          ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+                    child: currentCurrency == null
+                        ? Common.simpleShimmer()
+                        : Text(
+                            // ignore: lines_longer_than_80_chars
+                            '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+                            style: bottomCartStyle,
+                          ),
+                    //
+                  ),
+                ],
+              ),
             ),
-            Padding(
-              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-              child: currentCurrency == null
-                  ? Common.simpleShimmer()
-                  : Text(
-                      // ignore: lines_longer_than_80_chars
-                      '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
-                      style: bottomCartStyle,
-                    ),
-              //
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

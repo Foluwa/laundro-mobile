@@ -56,6 +56,7 @@ class LaundryProvider extends ChangeNotifier {
     if (found != null) {
       found.qty += 1;
     } else {
+      p.qty += 1;
       _baskets.add(p);
     }
     notifyListeners();
@@ -70,6 +71,7 @@ class LaundryProvider extends ChangeNotifier {
     print('FOUNDYY $found');
     print('FOUND IS $found');
     if (found.qty == 1) {
+      found.qty -= 1;
       _baskets.remove(p);
     } else {
       found.qty -= 1;

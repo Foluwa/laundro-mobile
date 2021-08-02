@@ -15,7 +15,9 @@ class PersistBasketDB {
       onCreate: (database, version) async {
         await database.execute(
           // ignore: lines_longer_than_80_chars
-          'CREATE TABLE users(id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL,description TEXT NOT NULL,price DOUBLE NOT NULL,sub_category_id INTEGER NOT NULL,qty INTEGER NOT NULL)',
+          //'CREATE TABLE users(id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL,description TEXT NOT NULL,price DOUBLE NOT NULL,sub_category_id INTEGER NOT NULL,qty INTEGER NOT NULL)',
+          // ignore: lines_longer_than_80_chars
+          'CREATE TABLE users(id INTEGER PRIMARY KEY NOT NULL, qty INTEGER NOT NULL)',
         );
       },
       version: 1,
@@ -43,7 +45,7 @@ class PersistBasketDB {
   Future<void> deleteProduct(int id) async {
     final db = await initializeDB();
     await db.delete(
-      'users',
+      'products',
       where: 'id = ?',
       whereArgs: [id],
     );

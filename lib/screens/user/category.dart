@@ -58,6 +58,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
           automaticallyImplyLeading: false,
           backgroundColor: Constants.primaryColor,
           title: Text(Constants.appName),
+          // toolbarHeight: subCategories!.length < 1 ? 70 : null,
           actions: [
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/search'),
@@ -76,7 +77,9 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
             indicatorColor: Constants.white,
             tabs: _laundryProvider.getCategories!.map((title) {
               return subCategories!.length < 1
-                  ? Container()
+                  ? Container(
+       
+                    )
                   : Tab(
                       icon: const Icon(Icons.local_laundry_service_outlined),
                       // text: title.Name,
@@ -233,7 +236,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       data = products;
       //return products;
     }).catchError((error) {
-      print('ERROR CAUGHT $error');
+      print('ERROR CAUGHT ${error}');
       Common.showSnackBar(context, title: error.toString());
       // return error;
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/screens/user/checkout.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/user/account.dart';
@@ -40,6 +41,9 @@ class RouteGenerator {
       case '/cart':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const Cart());
+      case '/checkout':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop, child: const Checkout());
       case '/signup':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignUp());

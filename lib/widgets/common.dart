@@ -36,7 +36,7 @@ class Common {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(title),
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 30000),
         ),
       );
 }
