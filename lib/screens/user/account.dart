@@ -45,7 +45,8 @@ class _AccountState extends State<Account> {
               title: 'Accounts',
               bg: const Color(0xFF607D8B),
               textColor: Colors.black,
-              onCloseClicked: () => Navigator.pop(context),
+              // onCloseClicked: () => Navigator.pop(context),
+              onCloseClicked: () => Navigator.of(context).pushNamed('/'),
               backgroundColor: const Color(0xFF607D8B))),
       body: SingleChildScrollView(
         child: Column(
