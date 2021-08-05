@@ -5,10 +5,6 @@ import 'package:intl/intl.dart';
 
 class Utils {
   static void showSnackBar(BuildContext context, {required String title}) =>
-      // Scaffold.of(context)
-      //   ..removeCurrentSnackBar()
-      //   ..showSnackBar(
-      //     SnackBar(content: Text(title)),
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(title),
@@ -17,7 +13,7 @@ class Utils {
       );
 
   static String getCurrency(String locale) {
-    var format = NumberFormat.simpleCurrency(
+    final format = NumberFormat.simpleCurrency(
         locale: Platform.localeName, name: locale); //'NGN'
     return format.currencySymbol;
   }

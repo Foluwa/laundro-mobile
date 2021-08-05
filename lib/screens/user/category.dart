@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -30,6 +31,7 @@ class CategoryWidgetList extends StatefulWidget {
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
   LaundryApi api = LaundryApi();
   LaundryProvider _laundryProvider = LaundryProvider();
+  UserProvider _userProvider = UserProvider();
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
   bool screenLoading = true;
@@ -41,11 +43,16 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     getAllProducts().then((_) => print('fetch products'));
+
+    ///Todo validate the jwt in shared preference
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    _userProvider = Provider.of<UserProvider>(context);
+    var user = _userProvider.getUser;
+    print('USER $user');
     _laundryProvider = Provider.of<LaundryProvider>(context);
     subCategories = _laundryProvider.getCategories;
 
@@ -63,10 +70,12 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/search'),
                 icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/order_history'),
-                icon: const Icon(Icons.history)),
+            user != null
+                ? IconButton(
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/order_history'),
+                    icon: const Icon(Icons.history))
+                : SizedBox(),
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/account'),
                 icon: const Icon(Icons.person)),
@@ -77,9 +86,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
             indicatorColor: Constants.white,
             tabs: _laundryProvider.getCategories!.map((title) {
               return subCategories!.length < 1
-                  ? Container(
-       
-                    )
+                  ? Container()
                   : Tab(
                       icon: const Icon(Icons.local_laundry_service_outlined),
                       // text: title.Name,
@@ -139,11 +146,13 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                         ),
                                         Positioned(
                                             bottom:
+                                                // ignore: lines_longer_than_80_chars
                                                 SizeConfig.safeBlockHorizontal *
-                                                    6.37, //25.0,
+                                                    6.37,
                                             left:
+                                                // ignore: lines_longer_than_80_chars
                                                 SizeConfig.safeBlockHorizontal *
-                                                    3.85, //15
+                                                    3.85,
                                             child: Row(
                                               children: [
                                                 Text(
@@ -154,8 +163,8 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                                     maxLines: 2,
                                                     style: TextStyle(
                                                       color: Constants.white,
-                                                      // ignore: lines_longer_than_80_chars
                                                       fontSize: SizeConfig
+                                                              // ignore: lines_longer_than_80_chars
                                                               .safeBlockHorizontal *
                                                           5.1,
                                                       fontWeight:
@@ -180,9 +189,11 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
 
   /// Fetch Current Currency
   Future<Currency> getCurrencies() async {
-    setState(() {
-      screenLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        screenLoading = true;
+      });
+    }
     var data;
     await api.fetchCurrency().then((currencies) {
       _laundryProvider.setCurrency(currencies);
@@ -198,9 +209,11 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   /// Fetch Categories
   Future<CategoryList> getCategories() async {
     print('CALLING getCategories');
-    setState(() {
-      screenLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        screenLoading = true;
+      });
+    }
 
     var data;
     await api.fetchCategories().then((categories) {
@@ -214,16 +227,18 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       data = categories;
     }).catchError((error) {
       print('ERROR CAUGHT $error');
-      Common.showSnackBar(context, title: error.toString());
+      Common.showSnackBar(context, title: error.toString(), duration: 3000);
       // return error;
     });
     return data;
   }
 
   Future<ProductList> getAllProducts() async {
-    setState(() {
-      screenLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        screenLoading = true;
+      });
+    }
 
     var data;
     await api.fetchAllProducts().then((products) {
@@ -237,7 +252,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       //return products;
     }).catchError((error) {
       print('ERROR CAUGHT ${error}');
-      Common.showSnackBar(context, title: error.toString());
+      Common.showSnackBar(context, title: error.toString(), duration: 300);
       // return error;
     });
     return data;

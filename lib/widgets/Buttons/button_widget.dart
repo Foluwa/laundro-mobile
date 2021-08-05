@@ -6,6 +6,7 @@ class ButtonWidget extends StatelessWidget {
   final Color color;
   final double paddingValue;
   final TextStyle style;
+  final bool btnStatus;
 
   const ButtonWidget({
     required this.text,
@@ -13,6 +14,7 @@ class ButtonWidget extends StatelessWidget {
     required this.style,
     required this.paddingValue,
     required this.onClicked,
+    required this.btnStatus,
     Key? key,
   }) : super(key: key);
 
@@ -20,10 +22,12 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) => MaterialButton(
         color: color,
         padding: EdgeInsets.all(paddingValue),
-        child: Text(
-          text,
-          style: style,
-        ),
+        child: btnStatus
+            ? const CircularProgressIndicator()
+            : Text(
+                text,
+                style: style,
+              ),
         // shape: StadiumBorder(),
         // color: Theme.of(context).accentColor,
         // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

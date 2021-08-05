@@ -19,15 +19,15 @@ class _CheckoutState extends State<Checkout> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(50), // SizeConfig.safeBlockHorizontal * 3.34
+            const Size.fromHeight(50), // SizeConfig.safeBlockHorizontal * 3.34
         child: AppHeader(
           elevation: 0,
           fontSize: 25.0,
           title: 'Checkout',
-          bg: Color(0xFF607D8B),
+          bg: const Color(0xFF607D8B),
           textColor: Colors.black,
           onCloseClicked: () => Navigator.pop(context),
-          backgroundColor: Color(0xFF607D8B),
+          backgroundColor: const Color(0xFF607D8B),
           //backgroundColor: null,
         ),
       ),

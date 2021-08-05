@@ -25,6 +25,6 @@ class _LaunchScreenState extends State<LaunchScreen> {
     //     photoSize: 100.0,
     //     onClick: () => print('Laundro'),
     //     loaderColor: Colors.red);
-    return Container(child: const CategoryWidgetList());
+    return const CategoryWidgetList();
   }
 }

@@ -4,6 +4,10 @@ class ApiRoutes {
   static String baseUrl = Constants.baseUrl;
 
   /// USER ROUTES
+  static String register = '$baseUrl/auth/local/register';
+  static String login = '$baseUrl/auth/local';
+  static String resetPassword = '$baseUrl';
+  static String verifyMe = '$baseUrl/users/me';
 
   /// LAUNDRY ROUTES
   static String products = '$baseUrl/products';

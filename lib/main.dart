@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laundro/providers/user_provider.dart';
+// import 'package:laundro/utils/db/persist_basket.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/laundry_provider.dart';
@@ -11,6 +13,10 @@ import 'utils/constants.dart';
 // void main() => runApp(const MyApp());
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// Initialize sq-lite
+  // final db = SqliteDB();
+  // await db.countTable();
   runApp(const MyApp());
 }
 
@@ -22,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => LaundryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => LocaleProvider(),

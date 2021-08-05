@@ -15,6 +15,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
         onTap: () {
           print('Place order');
         }, // /cart
-        child: Text('kkkk'));
+        child: const Text('kkkk'));
   }
 }

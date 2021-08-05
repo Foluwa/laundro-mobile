@@ -1,6 +1,6 @@
 class FormValidate {
-  static String? validateEmail(String value) {
-    if (value.isEmpty) {
+  static String? validateEmail(String? value) {
+    if (value!.isEmpty) {
       // The form is empty
       return 'Enter email address';
     }
@@ -22,8 +22,8 @@ class FormValidate {
     return 'Email is not valid';
   }
 
-  static String? validatePassword(String value) {
-    if (value.length < 5) {
+  static String? validatePassword(String? value) {
+    if (value!.length < 5) {
       return 'Password less than 6 characters';
     }
     if (value.isEmpty) {
@@ -33,16 +33,16 @@ class FormValidate {
   }
 
   // validate name
-  static String? validateName(String value) {
-    if (value.length < 4) {
+  static String? validateName(String? value) {
+    if (value!.length < 4) {
       return 'Name can not be less than 4 characters';
     }
     return null;
   }
 
   // validate phone number
-  static String? validatePhoneNumber(String value) {
-    if (value.length < 11 || value.isEmpty) {
+  static String? validatePhoneNumber(String? value) {
+    if (value!.length < 11 || value.isEmpty) {
       return 'Number can not be less than 11 characters';
     }
     return null;

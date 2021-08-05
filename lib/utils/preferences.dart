@@ -1,12 +1,13 @@
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
-  // setJWT(String jwt) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // print('JWT $jwt');
-  //   await prefs.setString('JWT', jwt);
-  //   print("Jwt Set $jwt");
-  // }
+  // ignore: always_declare_return_types
+  setJWT(String jwt) async {
+    final prefs = await SharedPreferences.getInstance();
+    // print('JWT $jwt');
+    await prefs.setString('JWT', jwt);
+    print('Jwt Set $jwt');
+  }
   //
   // getJwt() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import '../models/categories.dart';
 import '../models/currency.dart';
 import '../models/products.dart';
+import '../utils/db/persist_basket.dart';
 
 class LaundryProvider extends ChangeNotifier {
   List<Product> _products = [];
-  List<Product> _baskets = [];
+  // List<Product> _baskets = [];
+  final List<Product> _baskets = [];
   List<Category>? _category = [];
   Currency? _currency;
 
@@ -16,6 +18,8 @@ class LaundryProvider extends ChangeNotifier {
   List<Product>? get getCart => _baskets;
   List<Category>? get getCategories => _category;
   Currency? get getCurrency => _currency;
+
+  late SqliteDB sqlQuery;
 
   /// Set Products Categories
   void setProducts(data) {
@@ -45,36 +49,37 @@ class LaundryProvider extends ChangeNotifier {
 
   /// Increament quantity of basket
   void addOneItemToCart(Product p) {
-    print(p);
     // check if already in basket
     // if in basket increament by one
-    print('Product_ID ${p.id}');
     // Product found =
     //     _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
     final found = _baskets.firstWhereOrNull((a) => a.id == p.id);
     print('FOUND IS $found');
     if (found != null) {
       found.qty += 1;
+      // increament product quantity in sqlite
     } else {
       p.qty += 1;
       _baskets.add(p);
+      // add one product into sqlite
     }
     notifyListeners();
   }
 
   /// remove
   void removeOneItemToCart(Product p) {
-    print('IN CART ${p.id}');
+    print('IN CART ${p}');
     // check if already in basket
     // if in basket increment by one
     final found = _baskets.firstWhere((e) => e.id == p.id);
-    print('FOUNDYY $found');
     print('FOUND IS $found');
     if (found.qty == 1) {
       found.qty -= 1;
       _baskets.remove(p);
+      // add remove product from sqlite
     } else {
       found.qty -= 1;
+      // decreament product quantity in sqlite
     }
     notifyListeners();
   }
@@ -83,8 +88,10 @@ class LaundryProvider extends ChangeNotifier {
   int getBasketQty() {
     var total = 0;
     // print('LENGTH OF BASKET ${_baskets?.length}');
-    var bb = _baskets;
-    if (bb != null) {
+    // var bb = _baskets;
+    final bb = _baskets;
+    // if (bb != null) {
+    if (bb.isNotEmpty) {
       for (var i = 0; i < bb.length; i++) {
         total += bb[i].qty;
       }
@@ -97,8 +104,9 @@ class LaundryProvider extends ChangeNotifier {
   /// Computes price of all products in cart
   double getTotalPrice() {
     var total = 0.0;
-    var bb = _baskets;
-    if (bb != null) {
+    final bb = _baskets;
+    // if (bb != null) {
+    if (bb.isNotEmpty) {
       for (var i = 0; i < bb.length; i++) {
         total += bb[i].price * bb[i].qty;
       }

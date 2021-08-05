@@ -15,7 +15,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
+        preferredSize: const Size.fromHeight(80),
         // child: AppHeader(
         //   title: 'Order History',
         //   elevation: 0,
@@ -32,14 +32,14 @@ class _OrderHistoryState extends State<OrderHistory> {
           elevation: 0,
           fontSize: 25.0,
           title: 'Order History',
-          bg: Color(0xFF607D8B),
+          bg: const Color(0xFF607D8B),
           textColor: Colors.black,
           onCloseClicked: () => Navigator.pop(context),
-          backgroundColor: Color(0xFF607D8B),
+          backgroundColor: const Color(0xFF607D8B),
           //backgroundColor: null,
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Order History'),
       ),
     );

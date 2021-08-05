@@ -4,19 +4,16 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/utils.dart';
 
 class DialogBox extends StatefulWidget {
+  const DialogBox({Key? key}) : super(key: key);
+
   @override
   _DialogBoxState createState() => _DialogBoxState();
 }
 
 class _DialogBoxState extends State<DialogBox> {
-  @override
-  // Widget build(BuildContext context) => ButtonWidget(
-  //       text: 'Simple Dialog',
-  //       onClicked: () => showSimpleDialog(context),
-  //     );
-
   late Future<void> _launched;
 
+  @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () => showSimpleDialog(context),
         child: Padding(
@@ -30,7 +27,7 @@ class _DialogBoxState extends State<DialogBox> {
                 semanticLabel: 'accessibility modes',
               ),
               const Text(
-                'Helpppp',
+                'Help',
                 style: TextStyle(color: Colors.white),
               ),
             ],
@@ -46,7 +43,7 @@ class _DialogBoxState extends State<DialogBox> {
               alignment: Alignment.center, child: Text('How can we help ?')),
           children: <Widget>[
             SimpleDialogOption(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               onPressed: () {
                 setState(() {
                   _launched = _openUrl('mailto:moronfoluwaakintola@gmail.com');
@@ -54,11 +51,13 @@ class _DialogBoxState extends State<DialogBox> {
                 Utils.showSnackBar(context, title: 'Selected Option 1');
                 Navigator.pop(context);
               },
-              child: Text('Send us an email', style: TextStyle(fontSize: 16)),
+              // ignore: lines_longer_than_80_chars
+              child: const Text('Send us an email',
+                  style: TextStyle(fontSize: 16)),
             ),
             SimpleDialogOption(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              child: Text('Phone call', style: TextStyle(fontSize: 16)),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              child: const Text('Phone call', style: TextStyle(fontSize: 16)),
               onPressed: () {
                 Utils.showSnackBar(context, title: 'Selected Option 2');
                 Navigator.pop(context);

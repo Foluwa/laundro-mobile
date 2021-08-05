@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     print('QUERY $query');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF607D8B),
+        backgroundColor: const Color(0xFF607D8B),
         title: buildSearch(),
       ),
       body: Column(

@@ -62,7 +62,7 @@ class _SingleProductState extends State<SingleProduct> {
                           Text(
                             // ignore: lines_longer_than_80_chars
                             '${_laundryProvider.inCartQty(widget.products.id)}',
-                            style: TextStyle(fontSize: 15.0),
+                            style: const TextStyle(fontSize: 15.0),
                           ),
                           IconButton(
                             onPressed: () {
@@ -88,7 +88,7 @@ class _SingleProductState extends State<SingleProduct> {
                             _laundryProvider.getBasketQty();
                             _laundryProvider.getTotalPrice();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add_shopping_cart_rounded,
                             size: 20,
                           ),

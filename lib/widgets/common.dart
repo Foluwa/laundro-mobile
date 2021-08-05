@@ -5,17 +5,10 @@ import 'package:shimmer/shimmer.dart';
 import '../utils/constants.dart';
 
 class Common {
-  static Widget Loader({height, width}) => Container(
-        child: SizedBox(
-          height: width ?? 50.0,
-          width: height ?? 50.0,
-          child: const CircularProgressIndicator(),
-        ),
-        // child: Image.asset(
-        //   "assets/logo/logo_maidoki_gif.gif",
-        //   height: width ?? 125.0,
-        //   width: height ?? 125.0,
-        // ),
+  static Widget Loader({height, width}) => SizedBox(
+        height: width ?? 50.0,
+        width: height ?? 50.0,
+        child: const CircularProgressIndicator(),
       );
 
   static Widget simpleShimmer() => SizedBox(
@@ -28,7 +21,11 @@ class Common {
         ),
       );
 
-  static void showSnackBar(BuildContext context, {required String title}) =>
+  static void showSnackBar(
+    BuildContext context, {
+    required String title,
+    required int duration,
+  }) =>
       // Scaffold.of(context)
       //   ..removeCurrentSnackBar()
       //   ..showSnackBar(
@@ -36,7 +33,9 @@ class Common {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(title),
-          duration: const Duration(milliseconds: 30000),
+          duration: Duration(milliseconds: duration),
         ),
       );
 }
+
+//['message']['messages']['message']

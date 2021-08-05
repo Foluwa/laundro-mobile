@@ -12,10 +12,10 @@ class LaundryApi {
   // bool addAccessToken;
   LaundryApi() {
     //print('Access Token $addAccessToken');
-    final options = BaseOptions(
-      connectTimeout: 100000,
-      receiveTimeout: 80000,
-    );
+    // final options = BaseOptions(
+    //   connectTimeout: 100000,
+    //   receiveTimeout: 80000,
+    // );
     // _dio = Dio(options);
     // if (this.addAccessToken) {
     //   print('adding interceptor');

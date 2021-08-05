@@ -35,7 +35,7 @@ class _BottomCartState extends State<BottomCart> {
     );
     print('currentCurrency $currentCurrency');
     return currentCurrency == null
-        ? LinearProgressIndicator()
+        ? const LinearProgressIndicator()
         : GestureDetector(
             onTap: () => Navigator.of(context).pushNamed('/cart'), // /cart
             child: Container(

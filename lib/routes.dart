@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/screens/user/checkout.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/user/account.dart';
 import 'screens/user/cart.dart';
 import 'screens/user/category.dart';
 import 'screens/user/category_screen.dart';
+import 'screens/user/checkout.dart';
 import 'screens/user/order_history.dart';
 import 'screens/user/search.dart';
+import 'screens/user/signin.dart';
 import 'screens/user/signup.dart';
 
 class RouteGenerator {
@@ -16,9 +17,11 @@ class RouteGenerator {
     // Getting args for navigator.pushNamed
     final args = settings.arguments;
     print('Route information: ' + settings.name!);
+
     switch (settings.name) {
       // case '/':
       //   return PageTransition(
+      // ignore: lines_longer_than_80_chars
       //       type: PageTransitionType.topToBottom, child: const LaunchScreen());
       // categories
       case '/':
@@ -37,7 +40,7 @@ class RouteGenerator {
             type: PageTransitionType.topToBottom, child: const Account());
       case '/search':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: SearchScreen());
+            type: PageTransitionType.bottomToTop, child: const SearchScreen());
       case '/cart':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const Cart());
@@ -47,6 +50,9 @@ class RouteGenerator {
       case '/signup':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignUp());
+      case '/signin':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop, child: const SignIn());
       // case '/walkthrough':
       //   return MaterialPageRoute(builder: (_) => WalkThroughPage());
       default:
