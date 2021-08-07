@@ -92,7 +92,7 @@ class _SignUpState extends State<SignUp> {
                   title: 'Terms and conditions',
                   checkedValue: true,
                   newValue: true,
-                  onPressed: () {},
+                  onPressed: termsCondi(true),
                 ),
                 ButtonWidget(
                     text: 'Register',
@@ -109,6 +109,8 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
+  Function(bool?)? termsCondi(bool value) {}
 
   void userSignUp() async {
     print('I GOT HERE');

@@ -50,8 +50,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
             flexibleSpace: FlexibleSpaceBar(
                 background: Stack(children: <Widget>[
               Positioned.fill(
-                  child: Image.network(
-                widget.subCat.img_url,
+                  child: FadeInImage.assetNetwork(
+                // widget.subCat.img_url,
+                // fit: BoxFit.cover,
+                image: widget.subCat.img_url,
+                placeholder: 'assets/spinner.gif', // your assets image path
                 fit: BoxFit.cover,
               ))
             ])),
@@ -62,7 +65,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ///TODO: Add subcategory description
             //bottom: Container(child: Text(widget.subCat.description)),
           ),
-          // Text(),
           SliverList(
               delegate: SliverChildBuilderDelegate(
             (context, index) => SingleProduct(products: _products[index]),

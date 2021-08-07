@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
+import '../../widgets/Buttons/button_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
+import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/account_details.dart';
 import '../../widgets/app_header.dart';
@@ -33,7 +34,7 @@ class _AccountState extends State<Account> {
     print(SizeConfig.safeBlockHorizontal * 20.65);
     _userProvider = Provider.of<UserProvider>(context);
     print('USER ${_userProvider.getUser}');
-    var user = _userProvider.getUser;
+    final user = _userProvider.getUser;
     print('USER $user');
 
     return Scaffold(
@@ -262,20 +263,32 @@ class _AccountState extends State<Account> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child: Container(
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                child: Text('Save'),
-                textColor: Constants.white,
-                color: Constants.primaryColor,
-                onPressed: () {
+              child: ButtonWidget(
+                text: 'Save',
+                color: Constants.white,
+                btnStatus: false,
+                onClicked: () {
                   print('SAVE WAS CLICKED!!');
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(FocusNode());
                   });
                 },
-              )),
+                style: const TextStyle(),
+                paddingValue: 8,
+              ),
+              // child: RaisedButton(
+              //   child: Text('Save'),
+              //   textColor: Constants.white,
+              //   color: Constants.primaryColor,
+              //   onPressed: () {
+              // print('SAVE WAS CLICKED!!');
+              // setState(() {
+              //   _status = true;
+              //   FocusScope.of(context).requestFocus(FocusNode());
+              // });
+              //   },
+              // ),
             ),
             flex: 2,
           ),
@@ -286,7 +299,7 @@ class _AccountState extends State<Account> {
               child: Container(
                   // ignore: deprecated_member_use
                   child: RaisedButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 textColor: Constants.white,
                 color: Colors.red,
                 onPressed: () {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -8,6 +7,7 @@ import '../../models/categories.dart';
 import '../../models/currency.dart';
 import '../../models/products.dart';
 import '../../providers/laundry_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/bottom_cart.dart';
@@ -51,7 +51,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _userProvider = Provider.of<UserProvider>(context);
-    var user = _userProvider.getUser;
+    final user = _userProvider.getUser;
     print('USER $user');
     _laundryProvider = Provider.of<LaundryProvider>(context);
     subCategories = _laundryProvider.getCategories;
@@ -75,7 +75,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/order_history'),
                     icon: const Icon(Icons.history))
-                : SizedBox(),
+                : const SizedBox(),
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/account'),
                 icon: const Icon(Icons.person)),
@@ -107,8 +107,8 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                 //children: _laundryProvider.getCategories!.map((item) {
                 children: subCategories!.map((item) {
                 return RefreshWidget(
-                  keyRefresh: RIKeys.riKey1, // keyRefresh,
-                  onRefresh: callAllApis, //getCategories,
+                  keyRefresh: RIKeys.riKey1,
+                  onRefresh: callAllApis,
                   child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: item.subCategory.subcategory.length,
@@ -134,14 +134,12 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                           height:
                                               SizeConfig.safeBlockHorizontal *
                                                   51,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.fitWidth,
-                                              image: NetworkImage(item
-                                                  .subCategory
-                                                  .subcategory[index]
-                                                  .img_url),
-                                            ),
+                                          child: FadeInImage.assetNetwork(
+                                            image: item.subCategory
+                                                .subcategory[index].img_url,
+                                            placeholder:
+                                                'assets/spinner.gif', // your assets image path
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                         Positioned(

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CheckboxOption extends StatefulWidget {
   final String title;
-  final bool checkedValue;
+  bool checkedValue = false;
   final bool newValue;
-  final VoidCallback? onPressed;
-  const CheckboxOption({
+  final Function(bool?)? onPressed;
+  CheckboxOption({
     Key? key,
     required this.checkedValue,
     required this.newValue,
@@ -24,12 +24,11 @@ class _CheckboxOptionState extends State<CheckboxOption> {
       title: Text(widget.title),
       value: widget.checkedValue,
       //onChanged: widget.onPressed,
-      onChanged: (wi) {},
-      // onChanged: (newValue) {
-      //   setState(() {
-      //     widget.checkedValue = widget.newValue;
-      //   });
-      // },
+      onChanged: (newValue) {
+        setState(() {
+          widget.checkedValue = newValue!;
+        });
+      },
       controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
     );
   }

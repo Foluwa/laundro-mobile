@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
@@ -18,9 +19,12 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   LaundryProvider _laundryProvider = LaundryProvider();
+  UserProvider _userProvider = UserProvider();
+
   @override
   Widget build(BuildContext context) {
     _laundryProvider = Provider.of<LaundryProvider>(context);
+    _userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -56,14 +60,27 @@ class _CartState extends State<Cart> {
                     .center, //Center Row contents horizontally,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ButtonWidget(
-                    btnStatus: false,
-                    text: 'Proceed', //Place Order
-                    onClicked: clickMe,
-                    color: Constants.primaryColor,
-                    style: TextStyle(fontSize: 30, color: Constants.white),
-                    paddingValue: 10,
-                  ),
+                  _userProvider.getUser == null
+                      ? ButtonWidget(
+                          btnStatus: false,
+                          text: 'Create account to continue', //Place Order
+                          onClicked: () =>
+                              Navigator.of(context).pushNamed('/account'),
+                          color: Constants.primaryColor,
+                          style:
+                              TextStyle(fontSize: 20, color: Constants.white),
+                          paddingValue: 10,
+                        )
+                      : ButtonWidget(
+                          btnStatus: false,
+                          text: 'Proceed', //Place Order
+                          onClicked: () =>
+                              Navigator.of(context).pushNamed('/checkout'),
+                          color: Constants.primaryColor,
+                          style:
+                              TextStyle(fontSize: 20, color: Constants.white),
+                          paddingValue: 10,
+                        ),
                 ],
               ),
             ),

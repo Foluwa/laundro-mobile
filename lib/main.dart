@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:laundro/providers/user_provider.dart';
+import 'providers/user_provider.dart';
 // import 'package:laundro/utils/db/persist_basket.dart';
 import 'package:provider/provider.dart';
 

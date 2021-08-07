@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/categories.dart';
 import '../models/currency.dart';
+import '../models/location.dart';
 import '../models/products.dart';
 import '../utils/db/persist_basket.dart';
 
@@ -11,15 +12,23 @@ class LaundryProvider extends ChangeNotifier {
   // List<Product> _baskets = [];
   final List<Product> _baskets = [];
   List<Category>? _category = [];
+  List<Location> _locations = [];
   Currency? _currency;
 
   /// Return gets
   List<Product>? get getProducts => _products;
   List<Product>? get getCart => _baskets;
   List<Category>? get getCategories => _category;
+  List<Location>? get getLocations => _locations;
   Currency? get getCurrency => _currency;
 
   late SqliteDB sqlQuery;
+
+  /// Set Delivery Locations
+  void setLocations(data) {
+    _locations = data;
+    notifyListeners();
+  }
 
   /// Set Products Categories
   void setProducts(data) {

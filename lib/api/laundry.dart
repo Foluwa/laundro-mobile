@@ -56,7 +56,6 @@ class LaundryApi {
     try {
       print('fetchAllLocations WAS CALLED');
       final response = await Dio().get(ApiRoutes.locations);
-      // print('RESPONSE ${response.data}');
       return LocationList.fromJson(response.data);
     } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();

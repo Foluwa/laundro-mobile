@@ -19,10 +19,10 @@ class Location {
     required this.location,
   });
 
-  factory Location.fromJson(Map<String, dynamic> currency) {
+  factory Location.fromJson(Map<String, dynamic> location) {
     return Location(
-      id: currency['id'],
-      location: currency['currency'],
+      id: location['id'],
+      location: location['Place'],
     );
   }
 

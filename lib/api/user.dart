@@ -35,7 +35,7 @@ class UserApi {
 
         final String jwt = response.data['jwt'];
         print('JWT $jwt');
-        var user = response.data;
+        final user = response.data;
         print('USER $user');
         final kk = User.fromJson(user);
         print('KKK $kk');

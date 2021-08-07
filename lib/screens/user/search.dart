@@ -28,22 +28,19 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     _laundryProvider = Provider.of<LaundryProvider>(context);
-    print('QUERY $query');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF607D8B),
-        title: buildSearch(),
-      ),
+          backgroundColor: const Color(0xFF607D8B), title: buildSearch()),
       body: Column(
         children: <Widget>[
           Expanded(
               child: products.isEmpty
-                  ? const Center(child: Text('no product found'))
+                  ? const Center(child: Text('No product found'))
                   : ListView.builder(
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         final product = products[index];
-                        return buildproduct(product);
+                        return buildProduct(product);
                       },
                     )),
         ],
@@ -52,72 +49,25 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  /// Build the list of products
+  Widget buildProduct(Product product) => SingleProduct(products: product);
+
+  /// Search box
   Widget buildSearch() => SearchWidget(
         text: query,
-        hintText: 'Product name or description',
+        hintText: 'Start typing to search',
         onChanged: searchProduct,
       );
 
-  // Widget buildproduct(Product product) => ListTile(
-  //       // leading: Image.network(
-  //       //   book.urlImage,
-  //       //   fit: BoxFit.cover,
-  //       //   width: 50,
-  //       //   height: 50,
-  //       // ),
-  //       title: Text(product.name),
-  //       // subtitle: Text(product.name),
-  //       subtitle: _laundryProvider.inCart(product.id)
-  //           ? Row(
-  //               children: [
-  //                 IconButton(
-  //                   onPressed: () {
-  //                     // add item into basket
-  //                     print('add item into basket');
-  //                     Product dd = product;
-  //                     _laundryProvider.addOneItemToCart(dd);
-  //                   },
-  //                   icon: const Icon(Icons.add),
-  //                   iconSize: 20,
-  //                 ),
-  //                 Text(
-  //                     // ignore: lines_longer_than_80_chars
-  //                     '${_laundryProvider.inCartQty(product.id)}'),
-  //                 IconButton(
-  //                   onPressed: () {
-  //                     // remove item from basket
-  //                     _laundryProvider.removeOneItemToCart(product);
-  //                   },
-  //                   icon: const Icon(Icons.remove),
-  //                   iconSize: 20,
-  //                 )
-  //               ],
-  //             )
-  //           : IconButton(
-  //               onPressed: () {
-  //                 // add item into basket
-  //                 print('add item into cart basket');
-  //                 _laundryProvider.addOneItemToCart(product);
-  //                 _laundryProvider.getBasketQty();
-  //                 _laundryProvider.getTotalPrice();
-  //               },
-  //               icon: const Icon(Icons.ac_unit_outlined),
-  //               iconSize: 20,
-  //             ),
-  // );
-
-  Widget buildproduct(Product product) => SingleProduct(products: product);
-
+  /// Search functionality
   void searchProduct(String query) {
     final displayProducts = _laundryProvider.getProducts!.where((book) {
       final nameLower = book.name.toLowerCase();
       final descriptionLower = book.description.toLowerCase();
       final searchLower = query.toLowerCase();
-
       return nameLower.contains(searchLower) ||
           descriptionLower.contains(searchLower);
     }).toList();
-
     setState(() {
       this.query = query;
       products = displayProducts;
