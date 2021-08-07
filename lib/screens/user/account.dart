@@ -67,13 +67,12 @@ class _AccountState extends State<Account> {
                                     MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  Text(
-                                    'Personal Information',
-                                    style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.blockSizeHorizontal * 6,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Text('Personal Information',
+                                      style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  5,
+                                          fontWeight: FontWeight.bold)),
                                   _status ? _getEditIcon() : Container()
                                 ],
                               )),
@@ -97,7 +96,7 @@ class _AccountState extends State<Account> {
                                 ],
                               )),
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 20.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -163,6 +162,7 @@ class _AccountState extends State<Account> {
                       )
                     : const Text(
                         'Your account has been blocked reach out to support'),
+            //Divider(),
             Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
                 color: Constants.white,
@@ -174,6 +174,8 @@ class _AccountState extends State<Account> {
                         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
                         child: const Text(
                           'Your details',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -190,7 +192,7 @@ class _AccountState extends State<Account> {
                               size: 30.0,
                               semanticLabel: 'accessibility modes',
                             ),
-                             Text(
+                            Text(
                               'Terms of service',
                               style: TextStyle(color: Constants.black),
                             ),
@@ -210,9 +212,9 @@ class _AccountState extends State<Account> {
                               size: 30.0,
                               semanticLabel: 'accessibility modes',
                             ),
-                             Text(
+                            Text(
                               'Privacy policy',
-                              style: TextStyle(color:Constants.black),
+                              style: TextStyle(color: Constants.black),
                             ),
                           ],
                         ),
@@ -296,20 +298,32 @@ class _AccountState extends State<Account> {
             flex: 2,
             child: Padding(
               padding: EdgeInsets.only(left: 10.0),
-              child: Container(
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                child: const Text('Cancel'),
-                textColor: Constants.white,
+              child: ButtonWidget(
+                text: 'Cancel',
+                //color: Constants.white,
                 color: Colors.red,
-                onPressed: () {
-                  print('CANCEL WAS CLICKED!!');
+                btnStatus: false,
+                onClicked: () {
+                  print('SAVE WAS CLICKED!!');
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(FocusNode());
                   });
                 },
-              )),
+                style: const TextStyle(),
+                paddingValue: 8,
+
+                // child: const Text('Cancel'),
+                // textColor: Constants.white,
+                // color: Colors.red,
+                // onPressed: () {
+                //   print('CANCEL WAS CLICKED!!');
+                //   setState(() {
+                //     _status = true;
+                //     FocusScope.of(context).requestFocus(FocusNode());
+                //   });
+                // },
+              ),
             ),
           ),
         ],

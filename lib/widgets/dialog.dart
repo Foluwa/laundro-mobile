@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../utils/constants.dart';
 import '../utils/utils.dart';
 
 class DialogBox extends StatefulWidget {
