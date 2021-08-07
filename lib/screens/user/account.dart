@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/Buttons/button_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
+import '../../widgets/Buttons/button_widget.dart';
 import '../../widgets/account_details.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/dialog.dart';
@@ -165,7 +165,7 @@ class _AccountState extends State<Account> {
                         'Your account has been blocked reach out to support'),
             Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
-                color: Colors.grey,
+                color: Constants.white,
                 child: Column(
                   children: <Widget>[
                     Align(
@@ -190,9 +190,9 @@ class _AccountState extends State<Account> {
                               size: 30.0,
                               semanticLabel: 'accessibility modes',
                             ),
-                            const Text(
+                             Text(
                               'Terms of service',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Constants.black),
                             ),
                           ],
                         ),
@@ -210,9 +210,9 @@ class _AccountState extends State<Account> {
                               size: 30.0,
                               semanticLabel: 'accessibility modes',
                             ),
-                            const Text(
+                             Text(
                               'Privacy policy',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color:Constants.black),
                             ),
                           ],
                         ),

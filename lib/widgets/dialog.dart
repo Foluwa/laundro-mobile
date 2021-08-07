@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laundro/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/utils.dart';
@@ -26,9 +27,9 @@ class _DialogBoxState extends State<DialogBox> {
                 size: 30.0,
                 semanticLabel: 'accessibility modes',
               ),
-              const Text(
+              Text(
                 'Help',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Constants.black),
               ),
             ],
           ),
