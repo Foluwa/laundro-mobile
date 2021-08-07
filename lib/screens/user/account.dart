@@ -112,7 +112,7 @@ class _AccountState extends State<Account> {
                                 ],
                               )),
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 20.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -128,7 +128,7 @@ class _AccountState extends State<Account> {
                                 ],
                               )),
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 20.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -136,7 +136,9 @@ class _AccountState extends State<Account> {
                                 children: <Widget>[
                                   Flexible(
                                     child: Padding(
-                                      padding: EdgeInsets.only(right: 10.0),
+                                      // ignore: lines_longer_than_80_chars
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
                                       child: TextFormField(
                                         decoration: const InputDecoration(
                                             hintText: 'Password'),
@@ -257,14 +259,14 @@ class _AccountState extends State<Account> {
 
   Widget _getActionButtons() {
     return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: ButtonWidget(
                 text: 'Save',
                 color: Constants.white,
@@ -297,7 +299,7 @@ class _AccountState extends State<Account> {
           Expanded(
             flex: 2,
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 10.0),
               child: ButtonWidget(
                 text: 'Cancel',
                 //color: Constants.white,
