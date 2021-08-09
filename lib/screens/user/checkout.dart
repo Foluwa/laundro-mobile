@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/widgets/Payments/payment_options.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -8,9 +9,9 @@ import '../../providers/laundry_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/form_validator.dart';
-import '../../widgets/Buttons/button_widget.dart';
 import '../../widgets/InputWidgets/input_widget.dart';
 import '../../widgets/app_header.dart';
+import '../../widgets/bottom_checkout.dart';
 import '../../widgets/common.dart';
 
 class NewObject {
@@ -32,7 +33,7 @@ class _CheckoutState extends State<Checkout> {
   // Declare Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _fullName = TextEditingController();
-  bool btnLoading = false;
+
   bool screenLoading = false;
   bool shouldPrefil = false;
   LaundryProvider _laundryProvider = LaundryProvider();
@@ -86,7 +87,7 @@ class _CheckoutState extends State<Checkout> {
             //   checkedValue: true,
             // ),
             CheckboxListTile(
-              title: Text('Prefill from user data'),
+              title: const Text('Prefill from user data'),
               value: shouldPrefil,
               // onChanged: prefillFunc(),
               onChanged: (newValue) {
@@ -106,16 +107,40 @@ class _CheckoutState extends State<Checkout> {
               textValidator: FormValidate.validateEmail,
             ),
             FormInput(
-              label: 'Full Name',
+              label: 'First Name',
               controller: _fullName,
               passwordVisible: false,
               obscureText: false,
               textValidator: FormValidate.validateEmail,
             ),
-            // names
-            // address
-            // phone number
-            // delivery location
+            FormInput(
+              label: 'Last Name',
+              controller: _fullName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail,
+            ),
+            FormInput(
+              label: 'Email Address',
+              controller: _fullName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail,
+            ),
+            FormInput(
+              label: 'Phone Number',
+              controller: _fullName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail,
+            ),
+            FormInput(
+              label: 'Pickup (Delivery) Address',
+              controller: _fullName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail,
+            ),
 
             // list of products
             // _laundryProvider.getCart!.length < 1
@@ -136,19 +161,14 @@ class _CheckoutState extends State<Checkout> {
             //   items: listUserType,
             // ),
             _laundryProvider.getLocations!.length < 1
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : buildDropdown(),
-            // proceed to payment
-            ButtonWidget(
-                text: 'Checkout',
-                onClicked: () => btnLoading ? null : checkoutCart(),
-                color: Colors.amber,
-                paddingValue: 6.0,
-                btnStatus: btnLoading,
-                style: const TextStyle())
+
+            const PaymentOptions(),
           ],
         ),
       ),
+      bottomSheet: const BottomCheckout(),
     );
   }
 
@@ -159,10 +179,6 @@ class _CheckoutState extends State<Checkout> {
   void clearForm() {
     //_emailController.text = "";
     _emailController.clear();
-  }
-
-  void checkoutCart() {
-    print('Checking out cart');
   }
 
   Widget buildDropdown() => SizedBox(

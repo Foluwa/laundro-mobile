@@ -128,7 +128,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                               arguments: item.subCategory
                                                   .subcategory[index]),
                                       child: Stack(children: [
-                                        Container(
+                                        SizedBox(
                                           width:
                                               MediaQuery.of(context).size.width,
                                           height:

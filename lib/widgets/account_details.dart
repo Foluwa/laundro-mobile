@@ -13,7 +13,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
-      color: Colors.grey,
+      // color: Colors.grey,
       child: Column(
         children: <Widget>[
           Align(
@@ -39,7 +39,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   const Text(
                     'Create a new account',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -59,7 +59,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   const Text(
                     'Sign into an existing account ',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -79,7 +79,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   const Text(
                     'Reset password ',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),

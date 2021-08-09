@@ -1,6 +1,9 @@
 class User {
   int id;
   String username;
+  String first_name;
+  String last_name;
+  String phone_number;
   String email;
   String provider;
   bool confirmed;
@@ -15,6 +18,9 @@ class User {
   User({
     required this.id,
     required this.username,
+    required this.first_name,
+    required this.last_name,
+    required this.phone_number,
     required this.email,
     required this.provider,
     required this.confirmed,
@@ -32,9 +38,12 @@ class User {
       jwt: user['jwt'],
       id: user['user']['id'],
       username: user['user']['username'],
+      first_name: user['user']['firstName'],
+      last_name: user['user']['lastName'],
+      phone_number: user['user']['phoneNumber'],
       email: user['user']['email'],
       provider: user['user']['provider'],
-      confirmed: user['user']['confirmed'],
+      confirmed: user['user']['confirmed'] ?? false,
       blocked: user['user']['blocked'] ?? false,
       role_id: user['user']['role']['id'],
       role_name: user['user']['role']['name'],
@@ -48,9 +57,12 @@ class User {
       : jwt = user['jwt'],
         id = user['user']['id'],
         username = user['user']['username'],
+        first_name = user['user']['firstName'],
+        last_name = user['user']['lastName'],
+        phone_number = user['user']['phoneNumber'],
         email = user['user']['email'],
         provider = user['user']['provider'],
-        confirmed = user['user']['confirmed'],
+        confirmed = user['user']['confirmed'] ?? false,
         blocked = user['user']['blocked'] ?? false,
         role_id = user['user']['role']['id'],
         role_name = user['user']['role']['name'],
@@ -63,6 +75,9 @@ class User {
       'jwt': jwt,
       'id': id,
       'username': username,
+      'first_name': first_name,
+      'last_name': last_name,
+      'phone_number': phone_number,
       'email': email,
       'provider': provider,
       'confirmed': confirmed,

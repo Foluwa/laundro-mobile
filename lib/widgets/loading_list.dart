@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/size_config.dart';
+import '../utils/size_config.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../utils/constants.dart';

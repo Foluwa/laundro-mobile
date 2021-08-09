@@ -10,7 +10,7 @@ import '../../utils/constants.dart';
 import '../../utils/form_validator.dart';
 import '../../utils/preferences.dart';
 import '../../widgets/Buttons/button_widget.dart';
-import '../../widgets/InputWidgets/checkbox_option.dart';
+import '../../widgets/InputWidgets/checkbox.dart';
 import '../../widgets/InputWidgets/input_widget.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/common.dart';
