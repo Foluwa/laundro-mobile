@@ -18,6 +18,6 @@ class Constants {
   var defaultPadding = 16.0;
 
   /// APIS
-  // without slash
-  static String baseUrl = 'https://laundro-staging-api.herokuapp.com';
+  static String baseUrl =
+      'https://laundro-staging-api.herokuapp.com'; // without slash
 }

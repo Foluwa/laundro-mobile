@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:laundro/widgets/language_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
@@ -55,7 +57,6 @@ class _AccountState extends State<Account> {
                     ? const AccountDetailsAuth()
                     : const Text(
                         'Your account has been blocked reach out to support'),
-
             Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
                 // color: Constants.white,
@@ -112,45 +113,31 @@ class _AccountState extends State<Account> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      // onTap: () => Navigator.of(context).pushNamed('/signup'),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.directions_transit,
-                              color: Colors.pink,
-                              size: 30.0,
-                              semanticLabel: 'accessibility modes',
-                            ),
-                            Text(
-                              'Change Language',
-                              style: TextStyle(color: Constants.black),
-                            ),
-                          ],
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                      child: Row(
+                        children: [
+                          LanguagePickerWidget(),
+                          Text(
+                            // ignore: lines_longer_than_80_chars
+                            '${AppLocalizations.of(context)!.language}',
+                            style: TextStyle(color: Constants.black),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 )),
-            // Row(
+            // Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
             //     const LanguagePickerWidget(),
             //     Text(
             //       AppLocalizations.of(context)!.language,
-            //       style:
-            // ignore: lines_longer_than_80_chars
-            //           const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             //     ),
-            //     Text(
-            //       AppLocalizations.of(context)!.helloWorld,
-            //       style: const TextStyle(fontSize: 16),
-            //     ),
+            //     Text(AppLocalizations.of(context)!.helloWorld),
             //     Text(
             //       AppLocalizations.of(context)!.accounts,
-            //       style: const TextStyle(fontSize: 16),
             //     ),
             //   ],
             // )

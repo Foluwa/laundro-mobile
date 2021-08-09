@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../providers/laundry_provider.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
-import 'package:provider/provider.dart';
-
 import 'Buttons/button_widget.dart';
 
 class BottomCheckout extends StatefulWidget {
@@ -43,7 +43,6 @@ class _BottomCheckoutState extends State<BottomCheckout> {
                 paddingValue: 6.0,
                 btnStatus: btnLoading,
                 style: const TextStyle()),
-            //
           ),
         ],
       ),

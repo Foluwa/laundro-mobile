@@ -32,10 +32,10 @@ class _AccountDetailsState extends State<AccountDetails> {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.directions_transit,
-                    color: Colors.pink,
+                    Icons.person,
+                    //color: Colors.pink,
                     size: 30,
-                    semanticLabel: 'accessibility modes',
+                    semanticLabel: 'Create a new account',
                   ),
                   const Text(
                     'Create a new account',
@@ -55,10 +55,10 @@ class _AccountDetailsState extends State<AccountDetails> {
                     Icons.directions_transit,
                     color: Colors.pink,
                     size: 30.0,
-                    semanticLabel: 'accessibility modes',
+                    semanticLabel: 'Sign into an existing account',
                   ),
                   const Text(
-                    'Sign into an existing account ',
+                    'Sign into an existing account',
                     style: TextStyle(color: Colors.black),
                   ),
                 ],

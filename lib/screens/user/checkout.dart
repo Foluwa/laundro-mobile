@@ -30,14 +30,16 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout> {
   LaundryApi api = LaundryApi();
+  LaundryProvider _laundryProvider = LaundryProvider();
+  UserProvider _userProvider = UserProvider();
+
   // Declare Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _fullName = TextEditingController();
 
   bool screenLoading = false;
   bool shouldPrefil = false;
-  LaundryProvider _laundryProvider = LaundryProvider();
-  UserProvider _userProvider = UserProvider();
+
 
   static final List<NewObject> items = <NewObject>[
     NewObject('Apple', Icons.access_alarms),
