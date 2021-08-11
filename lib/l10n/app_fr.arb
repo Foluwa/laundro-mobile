@@ -1,51 +1,117 @@
 {
+  "@@locale": "fr",
+
   "language": "Anglais",
-  "@language": {
-    "description": "La langue actuelle"
-  },
-  "helloWorld": "Bonjour tout le monde !",
-  "@helloWorld": {
-    "description": "Un message d'accueil du programmeur"
-  },
-  "hello": "Bonjour {nom d'utilisateur}",
-  "@hello": {
-    "description": "Un message de bienvenue",
-    "placeholders": {
-      "username": {
-        "type": "Chaîne"
-      }
-    }
-  },
+  "@language": {},
+
+  "@language": "{Description: La langue actuelle}",
+  "@@language": {},
+
+  "helloWorld": "Bonjour le monde!",
+  "@helloWorld": {},
+
+  "@helloWorld": "{Description: Un message d'accueil}",
+  "@@helloWorld": {},
+
+  "hello": "Bonjour {USERNAME}",
+  "@hello": {},
+
+  "@hello": "{Description: Un message de bienvenue, des espaces réservés: {nom d'utilisateur: {Type: String}}}",
+  "@@hello": {},
+
   "accounts": "Comptes",
+  "@accounts": {},
+
   "first_name": "Prénom",
+  "@first_name": {},
+
   "last_name": "Nom de famille",
-  "email": "La langue actuelle0",
-  "phone_number": "La langue actuelle1",
-  "home_address": "La langue actuelle2",
-  "pickup_address": "La langue actuelle3",
-  "password": "La langue actuelle4",
-  "confirm_password": "La langue actuelle5",
-  "settings": "La langue actuelle6",
-  "change_password": "La langue actuelle7",
-  "help": "La langue actuelle8",
-  "logout": "La langue actuelle9",
-  "terms_of_service": "Bonjour tout le monde !0",
-  "privacy_policy": "Bonjour tout le monde !1",
-  "cart": "Bonjour tout le monde !2",
-  "no_item_in_cart": "Bonjour tout le monde !3",
-  "item_in_cart": "Bonjour tout le monde !4",
-  "typing_to_search": "Bonjour tout le monde !5",
-  "no_products_found": "Bonjour tout le monde !6",
-  "order_history": "Bonjour tout le monde !7",
-  "order_details": "Bonjour tout le monde !8",
-  "order_status": "Bonjour tout le monde !9",
-  "create_new_account": "Un message d'accueil du programmeur0",
-  "sign_into_acount": "Un message d'accueil du programmeur1",
-  "reset_password": "Un message d'accueil du programmeur2",
-  "create_account_to_continue": "Un message d'accueil du programmeur3",
-  "proceed": "Un message d'accueil du programmeur4",
-  "back": "Un message d'accueil du programmeur5",
-  "checkout": "Un message d'accueil du programmeur6",
-  "prefill_form": "Un message d'accueil du programmeur7",
-  "total": "Un message d'accueil du programmeur8"
+  "@last_name": {},
+
+  "email": "Adresse e-mail",
+  "@email": {},
+
+  "phone_number": "Numéro de téléphone",
+  "@phone_number": {},
+
+  "home_address": "Adresse du domicile",
+  "@home_address": {},
+
+  "pickup_address": "Adresse de ramassage (livraison)",
+  "@pickup_address": {},
+
+  "password": "Mot de passe",
+  "@password": {},
+
+  "confirm_password": "Confirmez le mot de passe",
+  "@confirm_password": {},
+
+  "settings": "Paramètres",
+  "@settings": {},
+
+  "change_password": "Changer le mot de passe",
+  "@change_password": {},
+
+  "help": "Aider",
+  "@help": {},
+
+  "logout": "Se déconnecter",
+  "@logout": {},
+
+  "terms_of_service": "Conditions d'utilisation",
+  "@terms_of_service": {},
+
+  "privacy_policy": "Politique de confidentialité",
+  "@privacy_policy": {},
+
+  "cart": "Chariot",
+  "@cart": {},
+
+  "no_item_in_cart": "Aucun article dans le panier",
+  "@no_item_in_cart": {},
+
+  "item_in_cart": "Article dans le panier",
+  "@item_in_cart": {},
+
+  "typing_to_search": "Commencer à taper à la recherche",
+  "@typing_to_search": {},
+
+  "no_products_found": "Aucun produit trouvé",
+  "@no_products_found": {},
+
+  "order_history": "Historique des commandes",
+  "@order_history": {},
+
+  "order_details": "détails de la commande",
+  "@order_details": {},
+
+  "order_status": "Statut de la commande",
+  "@order_status": {},
+
+  "create_new_account": "Créer un nouveau compte",
+  "@create_new_account": {},
+
+  "sign_into_acount": "Connectez-vous dans un compte existitng",
+  "@sign_into_acount": {},
+
+  "reset_password": "réinitialiser le mot de passe",
+  "@reset_password": {},
+
+  "create_account_to_continue": "Créer un compte pour continuer",
+  "@create_account_to_continue": {},
+
+  "proceed": "Procéder",
+  "@proceed": {},
+
+  "back": "Arrière",
+  "@back": {},
+
+  "checkout": "Vérifier",
+  "@checkout": {},
+
+  "prefill_form": "Préfillage de données utilisateur",
+  "@prefill_form": {},
+
+  "total": "Total",
+  "@total": {}
 }

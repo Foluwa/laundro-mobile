@@ -23,7 +23,7 @@ class RefreshWidget extends StatefulWidget {
 class _RefreshWidgetState extends State<RefreshWidget> {
   @override
   Widget build(BuildContext context) =>
-      Platform.isAndroid ? buildAndroidList() : buildIOSList();
+      Platform.isAndroid ? buildAndroidList() : buildAndroidList();
 
   Widget buildAndroidList() => RefreshIndicator(
         key: widget.keyRefresh,
@@ -31,6 +31,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
         child: widget.child,
       );
 
+  //TODO: DOES NOT WORK ON IOS
   Widget buildIOSList() => CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [

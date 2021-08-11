@@ -33,30 +33,28 @@ class LanguagePickerWidget extends StatelessWidget {
     final locale = provider.locale;
 
     return DropdownButtonHideUnderline(
-      child: DropdownButton(
-        value: locale,
-        icon: Container(width: 12),
-        items: L10n.all.map(
-          (locale) {
-            final flag = L10n.getFlag(locale.languageCode);
-            return DropdownMenuItem(
-              child: Center(
+        child: DropdownButton(
+      value: locale,
+      icon: Container(width: 12),
+      items: L10n.all.map(
+        (locale) {
+          final flag = L10n.getFlag(locale.languageCode);
+          return DropdownMenuItem(
+            child: Center(
                 child: Text(
-                  flag,
-                  style: const TextStyle(fontSize: 32),
-                ),
-              ),
-              value: locale,
-              onTap: () {
-                final provider =
-                    Provider.of<LocaleProvider>(context, listen: false);
-                provider.setLocale(locale);
-              },
-            );
-          },
-        ).toList(),
-        onChanged: (_) {},
-      ),
-    );
+              flag,
+              style: const TextStyle(fontSize: 32),
+            )),
+            value: locale,
+            onTap: () {
+              final provider =
+                  Provider.of<LocaleProvider>(context, listen: false);
+              provider.setLocale(locale);
+            },
+          );
+        },
+      ).toList(),
+      onChanged: (_) {},
+    ));
   }
 }

@@ -73,6 +73,24 @@ class UserApi {
   }
 
   /// Forgot password
+  /// forgotPassword
+
+  Future forgotPassword(data) async {
+    try {
+      final response = await Dio().post(ApiRoutes.forgotPassword, data: data);
+      print('statusCode ${response.statusCode}');
+      // print('response ${response.data['user']}');
+      // return response.data;
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } on DioError catch (error) {
+      print('ERROR WAS KNOCKED! ${error}');
+      print('error WAS ! ${error.response}');
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
 
   /// Validate Token
 

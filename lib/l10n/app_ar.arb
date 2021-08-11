@@ -1,51 +1,117 @@
 {
-  "language": "الإنجليزية",
-  "@language": {
-    "description": "اللغة الحالية"
-  },
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "ترحيب مبرمج"
-  },
-  "hello": "مرحبًا {username}",
-  "@hello": {
-    "description": "رسالة ترحيب",
-    "placeholders": {
-      "username": {
-        "type": "سلسلة"
-      }
-    }
-  },
+  "@@locale": "ar",
+
+  "language": "إنجليزي",
+  "@language": {},
+
+  "@language": "{الوصف: اللغة الحالية}",
+  "@@language": {},
+
+  "helloWorld": "مرحبا بالعالم!",
+  "@helloWorld": {},
+
+  "@helloWorld": "{الوصف: تحية مبرمجة}",
+  "@@helloWorld": {},
+
+  "hello": "مرحبا {اسم المستخدم}",
+  "@hello": {},
+
+  "@hello": "{الوصف: رسالة ترحيب، العناصر النائبة: {اسم المستخدم: {النوع: string}}}",
+  "@@hello": {},
+
   "accounts": "حسابات",
-  "first_name": "الاسم الأول",
-  "last_name": "اسم العائلة",
-  "email": "اللغة الحالية0",
-  "phone_number": "اللغة الحالية1",
-  "home_address": "اللغة الحالية2",
-  "pickup_address": "اللغة الحالية3",
-  "password": "اللغة الحالية4",
-  "confirm_password": "اللغة الحالية5",
-  "settings": "اللغة الحالية6",
-  "change_password": "اللغة الحالية7",
-  "help": "اللغة الحالية8",
-  "logout": "اللغة الحالية9",
-  "terms_of_service": "Hello World!0",
-  "privacy_policy": "Hello World!1",
-  "cart": "Hello World!2",
-  "no_item_in_cart": "Hello World!3",
-  "item_in_cart": "Hello World!4",
-  "typing_to_search": "Hello World!5",
-  "no_products_found": "Hello World!6",
-  "order_history": "Hello World!7",
-  "order_details": "Hello World!8",
-  "order_status": "Hello World!9",
-  "create_new_account": "ترحيب مبرمج0",
-  "sign_into_acount": "ترحيب مبرمج1",
-  "reset_password": "ترحيب مبرمج2",
-  "create_account_to_continue": "ترحيب مبرمج3",
-  "proceed": "ترحيب مبرمج4",
-  "back": "ترحيب مبرمج5",
-  "checkout": "ترحيب مبرمج6",
-  "prefill_form": "ترحيب مبرمج7",
-  "total": "ترحيب مبرمج8"
+  "@accounts": {},
+
+  "first_name": "الاسم الاول",
+  "@first_name": {},
+
+  "last_name": "الكنية",
+  "@last_name": {},
+
+  "email": "عنوان البريد الإلكتروني",
+  "@email": {},
+
+  "phone_number": "رقم التليفون",
+  "@phone_number": {},
+
+  "home_address": "عنوان المنزل",
+  "@home_address": {},
+
+  "pickup_address": "بيك اب (التسليم) العنوان",
+  "@pickup_address": {},
+
+  "password": "كلمة المرور",
+  "@password": {},
+
+  "confirm_password": "تأكيد كلمة المرور",
+  "@confirm_password": {},
+
+  "settings": "إعدادات",
+  "@settings": {},
+
+  "change_password": "تغيير كلمة السر",
+  "@change_password": {},
+
+  "help": "يساعد",
+  "@help": {},
+
+  "logout": "تسجيل خروج",
+  "@logout": {},
+
+  "terms_of_service": "شروط الخدمة",
+  "@terms_of_service": {},
+
+  "privacy_policy": "سياسة الخصوصية",
+  "@privacy_policy": {},
+
+  "cart": "عربة التسوق",
+  "@cart": {},
+
+  "no_item_in_cart": "لا يوجد عنصر في العربة",
+  "@no_item_in_cart": {},
+
+  "item_in_cart": "البند في العربة",
+  "@item_in_cart": {},
+
+  "typing_to_search": "ابدأ في الكتابة للبحث",
+  "@typing_to_search": {},
+
+  "no_products_found": "لا توجد منتجات وجدت",
+  "@no_products_found": {},
+
+  "order_history": "تاريخ الطلب",
+  "@order_history": {},
+
+  "order_details": "تفاصيل الطلب",
+  "@order_details": {},
+
+  "order_status": "حالة الطلب",
+  "@order_status": {},
+
+  "create_new_account": "انشاء حساب جديد",
+  "@create_new_account": {},
+
+  "sign_into_acount": "تسجيل الدخول إلى حساب Exisitng",
+  "@sign_into_acount": {},
+
+  "reset_password": "إعادة تعيين كلمة المرور",
+  "@reset_password": {},
+
+  "create_account_to_continue": "إنشاء حساب للمتابعة",
+  "@create_account_to_continue": {},
+
+  "proceed": "يتابع",
+  "@proceed": {},
+
+  "back": "عودة",
+  "@back": {},
+
+  "checkout": "الدفع",
+  "@checkout": {},
+
+  "prefill_form": "Prefillion من بيانات المستخدم",
+  "@prefill_form": {},
+
+  "total": "مجموع",
+  "@total": {}
 }

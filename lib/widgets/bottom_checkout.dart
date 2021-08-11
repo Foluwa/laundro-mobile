@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/laundry_provider.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
+import '../utils/utils.dart';
 import 'Buttons/button_widget.dart';
 
 class BottomCheckout extends StatefulWidget {
@@ -17,6 +19,12 @@ class BottomCheckout extends StatefulWidget {
 class _BottomCheckoutState extends State<BottomCheckout> {
   LaundryProvider _laundryProvider = LaundryProvider();
   bool btnLoading = false;
+
+  final bottomCartStyle = TextStyle(
+    color: Constants.white,
+    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+    fontWeight: FontWeight.w900,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +39,17 @@ class _BottomCheckoutState extends State<BottomCheckout> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-              child: const Text('TOTAL')),
+            padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+            child: Text(
+              '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+              style: bottomCartStyle,
+            ),
+          ),
           Padding(
             padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-            // proceed to payment
+            //TODO: proceed to payment
             child: ButtonWidget(
-                text: 'Checkout',
+                text: AppLocalizations.of(context)!.checkout.toString(),
                 onClicked: () => btnLoading ? null : checkoutCart(),
                 color: Colors.amber,
                 paddingValue: 6.0,

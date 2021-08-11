@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/widgets/language_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
@@ -11,6 +10,7 @@ import '../../widgets/account_details.dart';
 import '../../widgets/account_details_auth.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/dialog.dart';
+import '../../widgets/language_picker_widget.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
@@ -59,82 +59,62 @@ class _AccountState extends State<Account> {
                         'Your account has been blocked reach out to support'),
             Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
-                // color: Constants.white,
-                child: Column(
-                  children: <Widget>[
-                    Align(
+                child: Column(children: <Widget>[
+                  Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
-                        // ignore: lines_longer_than_80_chars
-                        child: Text(
-                            AppLocalizations.of(context)!.settings.toString(),
-                            style: TextStyle(
-                                fontSize: SizeConfig.blockSizeHorizontal * 5,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    const DialogBox(),
-                    GestureDetector(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
+                          child: Text(
+                              AppLocalizations.of(context)!.settings.toString(),
+                              style: TextStyle(
+                                  fontSize: SizeConfig.blockSizeHorizontal * 5,
+                                  fontWeight: FontWeight.bold)))),
+                  const DialogBox(),
+                  GestureDetector(
                       // onTap: () => Navigator.of(context).pushNamed('/signup'),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.directions_transit,
-                              color: Colors.pink,
-                              size: 30.0,
-                              semanticLabel: 'accessibility modes',
-                            ),
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                          child: Row(children: [
+                            Icon(Icons.directions_transit,
+                                color: Colors.pink,
+                                size: 30.0,
+                                semanticLabel: AppLocalizations.of(context)!
+                                    .terms_of_service
+                                    .toString()),
                             Text(
-                              //'Terms of service',
-                              AppLocalizations.of(context)!
-                                  .terms_of_service
-                                  .toString(),
-                              style: TextStyle(color: Constants.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
+                                AppLocalizations.of(context)!
+                                    .terms_of_service
+                                    .toString(),
+                                style: TextStyle(color: Constants.black)),
+                          ]))),
+                  GestureDetector(
                       // onTap: () => Navigator.of(context).pushNamed('/signup'),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.directions_transit,
-                              color: Colors.pink,
-                              size: 30.0,
-                              semanticLabel: 'accessibility modes',
-                            ),
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                          child: Row(children: [
+                            Icon(Icons.directions_transit,
+                                color: Colors.pink,
+                                size: 30.0,
+                                semanticLabel: AppLocalizations.of(context)!
+                                    .privacy_policy
+                                    .toString()),
                             Text(
-                              AppLocalizations.of(context)!
-                                  .privacy_policy
-                                  .toString(),
-                              style: TextStyle(color: Constants.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
+                                AppLocalizations.of(context)!
+                                    .privacy_policy
+                                    .toString(),
+                                style: TextStyle(color: Constants.black)),
+                          ]))),
+                  Padding(
                       padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                      child: Row(
-                        children: [
-                          LanguagePickerWidget(),
-                          Text(
-                            // ignore: lines_longer_than_80_chars
-                            '${AppLocalizations.of(context)!.language}',
-                            style: TextStyle(color: Constants.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
+                      child: Row(children: [
+                        const LanguagePickerWidget(),
+                        Text(AppLocalizations.of(context)!.language,
+                            style: TextStyle(color: Constants.black)),
+                      ])),
+                ])),
             // Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
@@ -153,4 +133,7 @@ class _AccountState extends State<Account> {
       ),
     );
   }
+
+  /// RESET
+
 }

@@ -56,6 +56,8 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     _laundryProvider = Provider.of<LaundryProvider>(context);
     subCategories = _laundryProvider.getCategories;
 
+    print('SUBCATEGORY $subCategories');
+
     // print('CURRENT CURRENCY ${_laundryProvider!.getCurrency!.currency}');
     return DefaultTabController(
       //length: _laundryProvider.getCategories?.length ?? 0,
@@ -104,7 +106,8 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
         body: subCategories!.length < 1
             ? const Center(child: LoadingListPage())
             : TabBarView(
-                //children: _laundryProvider.getCategories!.map((item) {
+
+                ///children: _laundryProvider.getCategories!.map((item) {
                 children: subCategories!.map((item) {
                 return RefreshWidget(
                   keyRefresh: RIKeys.riKey1,
@@ -129,19 +132,18 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                                   .subcategory[index]),
                                       child: Stack(children: [
                                         SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height:
-                                              SizeConfig.safeBlockHorizontal *
-                                                  51,
-                                          child: FadeInImage.assetNetwork(
-                                            image: item.subCategory
-                                                .subcategory[index].img_url,
-                                            placeholder:
-                                                'assets/spinner.gif', // your assets image path
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    51,
+                                            child: FadeInImage.assetNetwork(
+                                                image: item.subCategory
+                                                    .subcategory[index].img_url,
+                                                placeholder:
+                                                    'assets/spinner.gif',
+                                                fit: BoxFit.cover)),
                                         Positioned(
                                             bottom:
                                                 // ignore: lines_longer_than_80_chars

@@ -6,8 +6,9 @@ class ApiRoutes {
   /// USER ROUTES
   static String register = '$baseUrl/auth/local/register';
   static String login = '$baseUrl/auth/local';
-  static String resetPassword = '$baseUrl';
   static String verifyMe = '$baseUrl/users/me';
+  static String forgotPassword = '$baseUrl/auth/forgot-password';
+  static String resetPassword = '$baseUrl';
 
   /// Business
   static String phoneNumber = '$baseUrl/phone-number';
