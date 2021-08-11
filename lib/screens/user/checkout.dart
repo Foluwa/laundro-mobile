@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:laundro/widgets/Payments/payment_options.dart';
 import 'package:provider/provider.dart';
 
@@ -32,14 +33,15 @@ class _CheckoutState extends State<Checkout> {
   LaundryApi api = LaundryApi();
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
-
   // Declare Controllers
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _firstName = TextEditingController();
+  final TextEditingController _lastName = TextEditingController();
+  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _homeAddress = TextEditingController();
 
   bool screenLoading = false;
   bool shouldPrefil = false;
-
 
   static final List<NewObject> items = <NewObject>[
     NewObject('Apple', Icons.access_alarms),
@@ -72,102 +74,98 @@ class _CheckoutState extends State<Checkout> {
         child: AppHeader(
             elevation: 0,
             fontSize: 25.0,
-            title: 'Checkout',
+            title:
+                AppLocalizations.of(context)!.settings.toString(), //'Checkout',
             bg: const Color(0xFF607D8B),
             textColor: Constants.white,
             onCloseClicked: () => Navigator.pop(context),
             backgroundColor: const Color(0xFF607D8B)),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // checkbox fill from user data
-            // CheckboxOption(
-            //   title: 'Prefill from user data',
-            //   newValue: shouldPrefil,
-            //   onPressed: prefill(),
-            //   checkedValue: true,
-            // ),
-            CheckboxListTile(
-              title: const Text('Prefill from user data'),
-              value: shouldPrefil,
-              // onChanged: prefillFunc(),
-              onChanged: (newValue) {
-                setState(() {
-                  shouldPrefil = !shouldPrefil;
-                });
-              },
-              controlAffinity:
-                  ListTileControlAffinity.leading, //  <-- leading Checkbox
-            ),
-
-            FormInput(
-              label: 'Email Address',
-              controller: _emailController,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-            FormInput(
-              label: 'First Name',
-              controller: _fullName,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-            FormInput(
-              label: 'Last Name',
-              controller: _fullName,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-            FormInput(
-              label: 'Email Address',
-              controller: _fullName,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-            FormInput(
-              label: 'Phone Number',
-              controller: _fullName,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-            FormInput(
-              label: 'Pickup (Delivery) Address',
-              controller: _fullName,
-              passwordVisible: false,
-              obscureText: false,
-              textValidator: FormValidate.validateEmail,
-            ),
-
-            // list of products
-            // _laundryProvider.getCart!.length < 1
-            //     ? const Center(
-            //         child: Text('No item in cart'),
-            //       )
-            //     : ListView.builder(
-            //         shrinkWrap: true,
-            //         scrollDirection: Axis.vertical,
-            //         itemCount: _laundryProvider
-            //             .getCart?.length, //item.subCategory.subcategory.length,
-            //         itemBuilder: (context, index) => Column(children: [
-            //           SingleProduct(products: _laundryProvider.getCart![index])
-            //         ]),
-            //       ),
-            //
-            // DropdownButton(
-            //   items: listUserType,
-            // ),
-            _laundryProvider.getLocations!.length < 1
-                ? const CircularProgressIndicator()
-                : buildDropdown(),
-
-            const PaymentOptions(),
-          ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // checkbox fill from user data provider
+              CheckboxListTile(
+                title: Text(AppLocalizations.of(context)!
+                    .prefill_form
+                    .toString()), // 'Prefill from user data'
+                value: shouldPrefil,
+                // onChanged: prefillFunc(),
+                onChanged: (newValue) {
+                  setState(() {
+                    shouldPrefil = !shouldPrefil;
+                  });
+                },
+                controlAffinity:
+                    ListTileControlAffinity.leading, //  <-- leading Checkbox
+              ),
+              FormInput(
+                label: 'Email Address',
+                controller: _emailController,
+                passwordVisible: false,
+                obscureText: false,
+                textValidator: FormValidate.validateEmail,
+              ),
+              FormInput(
+                label: 'First Name',
+                controller: _firstName,
+                passwordVisible: false,
+                obscureText: false,
+                textValidator: FormValidate.validateEmail,
+              ),
+              FormInput(
+                label: 'Last Name',
+                controller: _lastName,
+                passwordVisible: false,
+                obscureText: false,
+                textValidator: FormValidate.validateEmail,
+              ),
+              // FormInput(
+              //   label: 'Email Address',
+              //   controller: _fullName,
+              //   passwordVisible: false,
+              //   obscureText: false,
+              //   textValidator: FormValidate.validateEmail,
+              // ),
+              FormInput(
+                label: 'Phone Number',
+                controller: _phoneNumber,
+                passwordVisible: false,
+                obscureText: false,
+                textValidator: FormValidate.validateEmail,
+              ),
+              FormInput(
+                label: 'Pickup (Delivery) Address',
+                controller: _homeAddress,
+                passwordVisible: false,
+                obscureText: false,
+                textValidator: FormValidate.validateEmail,
+              ),
+              // list of products
+              // _laundryProvider.getCart!.length < 1
+              //     ? const Center(
+              //         child: Text('No item in cart'),
+              //       )
+              //     : ListView.builder(
+              //         shrinkWrap: true,
+              //         scrollDirection: Axis.vertical,
+              //         itemCount: _laundryProvider
+              //             .getCart?.length, //item.subCategory.subcategory.length,
+              //         itemBuilder: (context, index) => Column(children: [
+              //           SingleProduct(products: _laundryProvider.getCart![index])
+              //         ]),
+              //       ),
+              //
+              // DropdownButton(
+              //   items: listUserType,
+              // ),
+              _laundryProvider.getLocations!.length < 1
+                  ? const CircularProgressIndicator()
+                  : buildDropdown(),
+              const PaymentOptions(),
+            ],
+          ),
         ),
       ),
       bottomSheet: const BottomCheckout(),
@@ -176,11 +174,16 @@ class _CheckoutState extends State<Checkout> {
 
   void prefillForm() {
     _emailController.text = _userProvider.getUser!.email;
+    _firstName.text = _userProvider.getUser!.first_name;
+    _lastName.text = _userProvider.getUser!.last_name;
+    _phoneNumber.text = _userProvider.getUser!.phone_number;
   }
 
   void clearForm() {
-    //_emailController.text = "";
     _emailController.clear();
+    _firstName.clear();
+    _lastName.clear();
+    _phoneNumber.clear();
   }
 
   Widget buildDropdown() => SizedBox(

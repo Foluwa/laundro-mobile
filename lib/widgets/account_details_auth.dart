@@ -61,8 +61,9 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                   Flexible(
                     child: TextFormField(
                       //controller: firstNameController,
-                      initialValue: user!.username,
+                      initialValue: user!.first_name,
                       decoration: const InputDecoration(
+                        // ignore: lines_longer_than_80_chars
                         hintText: 'First Name',
                       ),
                       enabled: !_status,
@@ -80,7 +81,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                   Flexible(
                     child: TextFormField(
                       //controller: firstNameController,
-                      // initialValue: user.first_name,
+                      initialValue: user.last_name,
                       decoration: const InputDecoration(
                         hintText: 'Last Name',
                       ),
@@ -98,7 +99,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                 children: <Widget>[
                   Flexible(
                     child: TextFormField(
-                      // initialValue: user.email,
+                      initialValue: user.email,
                       decoration:
                           const InputDecoration(hintText: 'Email Address'),
                       enabled: !_status,
@@ -114,7 +115,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                 children: <Widget>[
                   Flexible(
                     child: TextFormField(
-                      //  initialValue: user.username,
+                      initialValue: user.phone_number,
                       decoration:
                           const InputDecoration(hintText: 'Phone Number'),
                       enabled: !_status,

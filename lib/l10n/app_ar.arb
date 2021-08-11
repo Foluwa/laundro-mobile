@@ -1,9 +1,51 @@
 {
-  "language": "العربية",
-      "@language":{
-    "description": "The current Language"
-},
-  "helloWorld": "!مرحبا بالعالم",
-  "hello": "{username} مرحبا",
-   "accounts":"حسابات"
+  "language": "الإنجليزية",
+  "@language": {
+    "description": "اللغة الحالية"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "ترحيب مبرمج"
+  },
+  "hello": "مرحبًا {username}",
+  "@hello": {
+    "description": "رسالة ترحيب",
+    "placeholders": {
+      "username": {
+        "type": "سلسلة"
+      }
+    }
+  },
+  "accounts": "حسابات",
+  "first_name": "الاسم الأول",
+  "last_name": "اسم العائلة",
+  "email": "اللغة الحالية0",
+  "phone_number": "اللغة الحالية1",
+  "home_address": "اللغة الحالية2",
+  "pickup_address": "اللغة الحالية3",
+  "password": "اللغة الحالية4",
+  "confirm_password": "اللغة الحالية5",
+  "settings": "اللغة الحالية6",
+  "change_password": "اللغة الحالية7",
+  "help": "اللغة الحالية8",
+  "logout": "اللغة الحالية9",
+  "terms_of_service": "Hello World!0",
+  "privacy_policy": "Hello World!1",
+  "cart": "Hello World!2",
+  "no_item_in_cart": "Hello World!3",
+  "item_in_cart": "Hello World!4",
+  "typing_to_search": "Hello World!5",
+  "no_products_found": "Hello World!6",
+  "order_history": "Hello World!7",
+  "order_details": "Hello World!8",
+  "order_status": "Hello World!9",
+  "create_new_account": "ترحيب مبرمج0",
+  "sign_into_acount": "ترحيب مبرمج1",
+  "reset_password": "ترحيب مبرمج2",
+  "create_account_to_continue": "ترحيب مبرمج3",
+  "proceed": "ترحيب مبرمج4",
+  "back": "ترحيب مبرمج5",
+  "checkout": "ترحيب مبرمج6",
+  "prefill_form": "ترحيب مبرمج7",
+  "total": "ترحيب مبرمج8"
 }

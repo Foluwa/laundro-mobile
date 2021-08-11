@@ -93,4 +93,10 @@ class UserApi {
       throw Exception('$errorMessage');
     }
   }
+
+  /// Fetch Phone number
+
+  /// Fetch Email Address
+
+  /// Fetch Terms and Conditions
 }

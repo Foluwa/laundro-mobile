@@ -33,7 +33,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           fontSize: 25.0,
           title: 'Order History',
           bg: const Color(0xFF607D8B),
-          textColor: Colors.black,
+          textColor: Colors.white,
           onCloseClicked: () => Navigator.pop(context),
           backgroundColor: const Color(0xFF607D8B),
           //backgroundColor: null,

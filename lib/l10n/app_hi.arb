@@ -1,6 +1,51 @@
 {
-  "language": "मानक हिन्दी",
-  "helloWorld": "नमस्ते दुनिया!",
-  "hello": "नमस्ते {username}",
-   "accounts":"हिसाब किताब"
+  "language": "अंग्रेज़ी",
+  "@language": {
+    "description": "वर्तमान भाषा"
+  },
+  "helloWorld": "हैलो वर्ल्ड!",
+  "@helloWorld": {
+    "description": "एक प्रोग्रामर ग्रीटिंग"
+  },
+  "hello": "हैलो {उपयोगकर्ता नाम}",
+  "@hello": {
+    "description": "एक स्वागत संदेश",
+    "placeholders": {
+      "username": {
+        "type": "स्ट्रिंग"
+      }
+    }
+  },
+  "accounts": "अकाउंट्स",
+  "first_name": "प्रथम नाम",
+  "last_name": "अंतिम नाम",
+  "email": "वर्तमान भाषा0",
+  "phone_number": "वर्तमान भाषा1",
+  "home_address": "वर्तमान भाषा2",
+  "pickup_address": "वर्तमान भाषा3",
+  "password": "वर्तमान भाषा4",
+  "confirm_password": "वर्तमान भाषा5",
+  "settings": "वर्तमान भाषा6",
+  "change_password": "वर्तमान भाषा7",
+  "help": "वर्तमान भाषा8",
+  "logout": "वर्तमान भाषा9",
+  "terms_of_service": "हैलो वर्ल्ड!0",
+  "privacy_policy": "हैलो वर्ल्ड!1",
+  "cart": "हैलो वर्ल्ड!2",
+  "no_item_in_cart": "हैलो वर्ल्ड!3",
+  "item_in_cart": "हैलो वर्ल्ड!4",
+  "typing_to_search": "हैलो वर्ल्ड!5",
+  "no_products_found": "हैलो वर्ल्ड!6",
+  "order_history": "हैलो वर्ल्ड!7",
+  "order_details": "हैलो वर्ल्ड!8",
+  "order_status": "हैलो वर्ल्ड!9",
+  "create_new_account": "एक प्रोग्रामर ग्रीटिंग0",
+  "sign_into_acount": "एक प्रोग्रामर ग्रीटिंग1",
+  "reset_password": "एक प्रोग्रामर ग्रीटिंग2",
+  "create_account_to_continue": "एक प्रोग्रामर ग्रीटिंग3",
+  "proceed": "एक प्रोग्रामर ग्रीटिंग4",
+  "back": "एक प्रोग्रामर ग्रीटिंग5",
+  "checkout": "एक प्रोग्रामर ग्रीटिंग6",
+  "prefill_form": "एक प्रोग्रामर ग्रीटिंग7",
+  "total": "एक प्रोग्रामर ग्रीटिंग8"
 }

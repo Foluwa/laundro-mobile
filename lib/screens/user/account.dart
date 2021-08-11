@@ -43,7 +43,7 @@ class _AccountState extends State<Account> {
           child: AppHeader(
               elevation: 0,
               fontSize: 25.0,
-              title: 'Accounts',
+              title: AppLocalizations.of(context)!.accounts,
               bg: const Color(0xFF607D8B),
               textColor: Constants.white,
               onCloseClicked: () => Navigator.of(context).pushNamed('/'),
@@ -66,7 +66,9 @@ class _AccountState extends State<Account> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
-                        child: Text('Settings',
+                        // ignore: lines_longer_than_80_chars
+                        child: Text(
+                            AppLocalizations.of(context)!.settings.toString(),
                             style: TextStyle(
                                 fontSize: SizeConfig.blockSizeHorizontal * 5,
                                 fontWeight: FontWeight.bold)),
@@ -86,7 +88,10 @@ class _AccountState extends State<Account> {
                               semanticLabel: 'accessibility modes',
                             ),
                             Text(
-                              'Terms of service',
+                              //'Terms of service',
+                              AppLocalizations.of(context)!
+                                  .terms_of_service
+                                  .toString(),
                               style: TextStyle(color: Constants.black),
                             ),
                           ],
@@ -106,7 +111,9 @@ class _AccountState extends State<Account> {
                               semanticLabel: 'accessibility modes',
                             ),
                             Text(
-                              'Privacy policy',
+                              AppLocalizations.of(context)!
+                                  .privacy_policy
+                                  .toString(),
                               style: TextStyle(color: Constants.black),
                             ),
                           ],

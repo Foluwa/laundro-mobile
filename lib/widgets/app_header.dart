@@ -27,7 +27,7 @@ class AppHeader extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(color: textColor, fontSize: fontSize),
-      ), //?? //'Header'),
+      ),
       leading: IconButton(
         icon: const Icon(Icons.cancel),
         onPressed: () =>

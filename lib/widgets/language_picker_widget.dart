@@ -4,8 +4,9 @@ import 'package:provider/provider.dart';
 import '../l10n/l10n.dart';
 import '../providers/locale_provider.dart';
 
-// ignore: use_key_in_widget_constructors
 class LanguageWidget extends StatelessWidget {
+  const LanguageWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
@@ -38,7 +39,6 @@ class LanguagePickerWidget extends StatelessWidget {
         items: L10n.all.map(
           (locale) {
             final flag = L10n.getFlag(locale.languageCode);
-
             return DropdownMenuItem(
               child: Center(
                 child: Text(
@@ -50,7 +50,6 @@ class LanguagePickerWidget extends StatelessWidget {
               onTap: () {
                 final provider =
                     Provider.of<LocaleProvider>(context, listen: false);
-
                 provider.setLocale(locale);
               },
             );

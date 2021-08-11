@@ -60,7 +60,6 @@ class _SingleProductState extends State<SingleProduct> {
                             iconSize: 15,
                           ),
                           Text(
-                            // ignore: lines_longer_than_80_chars
                             '${_laundryProvider.inCartQty(widget.products.id)}',
                             style: const TextStyle(fontSize: 15.0),
                           ),

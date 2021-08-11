@@ -13,7 +13,6 @@ import 'providers/user_provider.dart';
 import 'routes.dart';
 import 'utils/constants.dart';
 
-// void main() => runApp(const MyApp());
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -47,9 +46,6 @@ class MyApp extends StatelessWidget {
               textTheme: GoogleFonts.montserratTextTheme(
                 Theme.of(context).textTheme,
               ),
-              //       latoTextTheme(
-              //       Theme.of(context).textTheme,
-              // ),
             ),
             debugShowCheckedModeBanner: Constants.showDebugBanner,
             locale: provider.locale,

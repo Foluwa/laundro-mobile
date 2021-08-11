@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/laundry_provider.dart';
@@ -52,7 +53,7 @@ class _BottomCartState extends State<BottomCart> {
                     child: currentCurrency == null
                         ? Common.simpleShimmer()
                         : Text(
-                            'Cart (${_laundryProvider.getBasketQty()})',
+                            '${AppLocalizations.of(context)!.cart.toString()} (${_laundryProvider.getBasketQty()})',
                             style: bottomCartStyle,
                           ),
                   ),

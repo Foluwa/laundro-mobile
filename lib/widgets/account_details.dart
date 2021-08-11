@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountDetails extends StatefulWidget {
   const AccountDetails({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class _AccountDetailsState extends State<AccountDetails> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
-      // color: Colors.grey,
       child: Column(
         children: <Widget>[
           Align(
@@ -21,7 +21,7 @@ class _AccountDetailsState extends State<AccountDetails> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
               child: const Text(
-                'Your details (Not Signed In)',
+                'Account',
               ),
             ),
           ),
@@ -31,14 +31,17 @@ class _AccountDetailsState extends State<AccountDetails> {
               padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.person,
                     //color: Colors.pink,
                     size: 30,
-                    semanticLabel: 'Create a new account',
+                    semanticLabel: AppLocalizations.of(context)!
+                        .create_new_account
+                        .toString(), //'Create a new account',
                   ),
-                  const Text(
-                    'Create a new account',
+                  Text(
+                    //'Create a new account',
+                    AppLocalizations.of(context)!.create_new_account.toString(),
                     style: TextStyle(color: Colors.black),
                   ),
                 ],
@@ -51,14 +54,18 @@ class _AccountDetailsState extends State<AccountDetails> {
               padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.directions_transit,
                     color: Colors.pink,
                     size: 30.0,
-                    semanticLabel: 'Sign into an existing account',
+                    semanticLabel: AppLocalizations.of(context)!
+                        .sign_into_acount
+                        .toString(),
+                    //'Sign into an existing account',
                   ),
-                  const Text(
-                    'Sign into an existing account',
+                  Text(
+                    AppLocalizations.of(context)!.sign_into_acount.toString(),
+                    //'Sign into an existing account',
                     style: TextStyle(color: Colors.black),
                   ),
                 ],
@@ -77,8 +84,9 @@ class _AccountDetailsState extends State<AccountDetails> {
                     size: 30.0,
                     semanticLabel: 'accessibility modes',
                   ),
-                  const Text(
-                    'Reset password ',
+                  Text(
+                    AppLocalizations.of(context)!.reset_password.toString(),
+                    //'Reset password ',
                     style: TextStyle(color: Colors.black),
                   ),
                 ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/user.dart';
@@ -37,6 +38,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     _userProvider = Provider.of<UserProvider>(context);
+    emailController.text = 'moronfoluwaakintola@gmail.com';
+    passwordController.text = 'postman';
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -56,14 +59,18 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: [
                 FormInput(
-                  label: 'Email Address',
+                  label: AppLocalizations.of(context)!
+                      .email
+                      .toString(), //'Email Address',
                   controller: emailController,
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateEmail,
                 ),
                 FormInput(
-                  label: 'Password',
+                  label: AppLocalizations.of(context)!
+                      .password
+                      .toString(), //'Password',
                   controller: passwordController,
                   passwordVisible: true,
                   obscureText: true,

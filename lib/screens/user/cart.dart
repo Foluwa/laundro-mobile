@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../providers/user_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/Buttons/button_widget.dart';
@@ -63,7 +64,8 @@ class _CartState extends State<Cart> {
                   _userProvider.getUser == null
                       ? ButtonWidget(
                           btnStatus: false,
-                          text: 'Create account to continue', //Place Order
+                          text: AppLocalizations.of(context)!
+                              .create_new_account, //'Create account to continue', //Place Order
                           onClicked: () =>
                               Navigator.of(context).pushNamed('/account'),
                           color: Constants.primaryColor,
@@ -73,7 +75,8 @@ class _CartState extends State<Cart> {
                         )
                       : ButtonWidget(
                           btnStatus: false,
-                          text: 'Proceed', //Place Order
+                          text: AppLocalizations.of(context)!
+                              .proceed, //'Proceed', //Place Order
                           onClicked: () =>
                               Navigator.of(context).pushNamed('/checkout'),
                           color: Constants.primaryColor,
