@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
+import '../api/user.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
 import 'Buttons/button_widget.dart';
+import 'common.dart';
 
 class AccountDetailsAuth extends StatefulWidget {
   const AccountDetailsAuth({Key? key}) : super(key: key);
@@ -20,10 +22,15 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController homeAddressController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
   // Form key
   final _formKey = GlobalKey<FormState>();
+  UserApi api = UserApi();
 
   bool _status = true;
+  bool btnLoading = false;
+
   final FocusNode myFocusNode = FocusNode();
   late UserProvider _userProvider;
   @override
@@ -32,144 +39,131 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
     print('USER ${_userProvider.getUser}');
     final user = _userProvider.getUser;
 
-    //firstNameController.text = user!.phone_number;
+    emailController.text = user!.email;
+    firstNameController.text = user.first_name;
+    lastNameController.text = user.last_name;
+    homeAddressController.text = user.home_address;
+    phoneNumberController.text = user.phone_number;
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Text('Personal Information',
-                      style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 5,
-                          fontWeight: FontWeight.bold)),
-                  _status ? _getEditIcon() : Container()
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
+    return Card(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Text('Personal Information',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 5,
+                            fontWeight: FontWeight.bold)),
+                    _status ? _getEditIcon() : Container()
+                  ],
+                )),
+            Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Flexible(
+                        child: TextFormField(
+                            controller: emailController,
+                            readOnly: true,
+                            style: const TextStyle(color: Colors.grey),
+                            decoration: const InputDecoration(
+                                hintText: 'Email Address'),
+                            enabled: !_status))
+                  ],
+                )),
+            Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
                   Flexible(
-                    child: TextFormField(
-                      //controller: firstNameController,
-                      initialValue: user!.first_name,
-                      decoration: const InputDecoration(
-                        // ignore: lines_longer_than_80_chars
-                        hintText: 'First Name',
-                      ),
-                      enabled: !_status,
-                      autofocus: !_status,
-                    ),
-                  ),
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    child: TextFormField(
-                      //controller: firstNameController,
-                      initialValue: user.last_name,
-                      decoration: const InputDecoration(
-                        hintText: 'Last Name',
-                      ),
-                      enabled: !_status,
-                      autofocus: !_status,
-                    ),
-                  ),
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    child: TextFormField(
-                      initialValue: user.email,
-                      decoration:
-                          const InputDecoration(hintText: 'Email Address'),
-                      enabled: !_status,
-                    ),
-                  ),
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    child: TextFormField(
-                      initialValue: user.phone_number,
-                      decoration:
-                          const InputDecoration(hintText: 'Phone Number'),
-                      enabled: !_status,
-                    ),
-                  ),
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    child: TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Home Address'),
-                      enabled: !_status,
-                    ),
-                  ),
-                ],
-              )),
-          Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Flexible(
-                    child: Padding(
-                      // ignore: lines_longer_than_80_chars
-                      padding: const EdgeInsets.only(right: 10.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(hintText: 'Password'),
+                          controller: firstNameController,
+                          decoration: const InputDecoration(
+                            hintText: 'First Name',
+                          ),
+                          enabled: !_status,
+                          autofocus: !_status))
+                ])),
+            Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                  Flexible(
+                      child: TextFormField(
+                          controller: lastNameController,
+                          decoration:
+                              const InputDecoration(hintText: 'Last Name'),
+                          enabled: !_status,
+                          autofocus: !_status)),
+                ])),
+            Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Flexible(
+                        child: TextFormField(
+                            controller: phoneNumberController,
+                            decoration:
+                                const InputDecoration(hintText: 'Phone Number'),
+                            enabled: !_status))
+                  ],
+                )),
+            Padding(
+                padding: const EdgeInsets.only(
+                    left: 25.0, right: 25.0, top: 20.0, bottom: 20.0),
+                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                  Flexible(
+                      child: TextFormField(
+                    controller: homeAddressController,
+                    decoration: const InputDecoration(hintText: 'Home Address'),
+                    enabled: !_status,
+                  )),
+                ])),
+            /*  Padding(
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                      child: Padding(
+                        // ignore: lines_longer_than_80_chars
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: TextFormField(
+                          decoration:
+                              const InputDecoration(hintText: 'Password'),
+                          enabled: !_status,
+                          obscureText: true,
+                        ),
+                      ),
+                      flex: 2,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        decoration:
+                            const InputDecoration(hintText: 'Confirm Password'),
                         enabled: !_status,
                         obscureText: true,
                       ),
+                      flex: 2,
                     ),
-                    flex: 2,
-                  ),
-                  Flexible(
-                    child: TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Confirm Password'),
-                      enabled: !_status,
-                      obscureText: true,
-                    ),
-                    flex: 2,
-                  ),
-                ],
-              )),
-          !_status ? _getActionButtons() : Container(),
-        ],
+                  ],
+                )),*/
+            !_status ? _getActionButtons() : Container(),
+          ],
+        ),
       ),
     );
   }
@@ -190,68 +184,34 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: ButtonWidget(
-                text: 'Save',
-                color: Constants.white,
-                btnStatus: false,
-                onClicked: () {
-                  print('SAVE WAS CLICKED!!');
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  });
-                },
-                style: const TextStyle(),
-                paddingValue: 8,
-              ),
-              // child: RaisedButton(
-              //   child: Text('Save'),
-              //   textColor: Constants.white,
-              //   color: Constants.primaryColor,
-              //   onPressed: () {
-              // print('SAVE WAS CLICKED!!');
-              // setState(() {
-              //   _status = true;
-              //   FocusScope.of(context).requestFocus(FocusNode());
-              // });
-              //   },
-              // ),
-            ),
+                padding: const EdgeInsets.only(right: 10.0),
+                child: ButtonWidget(
+                    text: 'Save',
+                    color: Constants.white,
+                    btnStatus: false,
+                    onClicked: updateAccount,
+                    style: const TextStyle(),
+                    paddingValue: 8)),
             flex: 2,
           ),
           Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: ButtonWidget(
-                text: 'Cancel',
-                //color: Constants.white,
-                color: Colors.red,
-                btnStatus: false,
-                onClicked: () {
-                  print('SAVE WAS CLICKED!!');
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  });
-                },
-                style: const TextStyle(),
-                paddingValue: 8,
-
-                // child: const Text('Cancel'),
-                // textColor: Constants.white,
-                // color: Colors.red,
-                // onPressed: () {
-                //   print('CANCEL WAS CLICKED!!');
-                //   setState(() {
-                //     _status = true;
-                //     FocusScope.of(context).requestFocus(FocusNode());
-                //   });
-                // },
-              ),
-            ),
-          ),
+              flex: 2,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: ButtonWidget(
+                    text: 'Cancel',
+                    color: Colors.red,
+                    btnStatus: false,
+                    onClicked: () {
+                      setState(() {
+                        btnLoading = false;
+                        _status = true;
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      });
+                    },
+                    style: const TextStyle(),
+                    paddingValue: 8,
+                  ))),
         ],
       ),
     );
@@ -259,20 +219,57 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
 
   Widget _getEditIcon() {
     return GestureDetector(
-      child: CircleAvatar(
-        backgroundColor: Colors.red,
-        radius: 14.0,
-        child: Icon(
-          Icons.edit,
-          color: Constants.white,
-          size: 16.0,
-        ),
-      ),
+      child: btnLoading
+          ? const CircularProgressIndicator()
+          : CircleAvatar(
+              backgroundColor: Colors.red,
+              radius: 14.0,
+              child: Icon(
+                Icons.edit,
+                color: Constants.white,
+                size: 16.0,
+              )),
       onTap: () {
         setState(() {
           _status = false;
         });
       },
     );
+  }
+
+  void updateAccount() async {
+    print('SAVE WAS CLICKED!!');
+    if (mounted) {
+      setState(() {
+        btnLoading = true;
+        _status = true;
+        FocusScope.of(context).requestFocus(FocusNode());
+      });
+    }
+
+    // get all the data
+    final data = {
+      'firstName': firstNameController.text,
+      'lastName': lastNameController.text,
+      'homeAddress': homeAddressController.text,
+      'phoneNumber': phoneNumberController.text
+    };
+
+    // Make request
+    await api.updateInfo(_userProvider.getUser!.id, data).then((user) {
+      _userProvider.setCurrentUser(user);
+      Common.showSnackBar(context,
+          title: 'Profile updated successfully', duration: 300);
+    }).catchError((error) {
+      print('ERROR CAUGHT ${error}');
+      Common.showSnackBar(context, title: error.toString(), duration: 300);
+    });
+
+    // Setting state
+    if (mounted) {
+      setState(() {
+        btnLoading = false;
+      });
+    }
   }
 }

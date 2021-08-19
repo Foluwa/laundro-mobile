@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/api/user.dart';
+import 'package:laundro/models/user.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
@@ -30,6 +32,7 @@ class CategoryWidgetList extends StatefulWidget {
 
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
   LaundryApi api = LaundryApi();
+  UserApi userApi = UserApi();
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
@@ -40,6 +43,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   @override
   void initState() {
     super.initState();
+    // getUser().then((_) => print('fetch user'));
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     getAllProducts().then((_) => print('fetch products'));
@@ -185,6 +189,28 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     return getAllProducts().then((_) => print('fetch products'));
+  }
+
+  /// Fetch User from JWT
+  Future<User> getUser() async {
+    if (mounted) {
+      setState(() {
+        screenLoading = true;
+      });
+    }
+    var data;
+    // get jwt from sharedprerence
+    await userApi.fetchUser().then((user) {
+      // check if user is not null
+      if (user != null) {
+        _userProvider.setCurrentUser(user);
+      }
+      setState(() {
+        screenLoading = false;
+      });
+      data = user;
+    });
+    return data;
   }
 
   /// Fetch Current Currency

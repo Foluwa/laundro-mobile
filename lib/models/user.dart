@@ -13,6 +13,7 @@ class User {
   String role_type;
   String created_at;
   String updated_at;
+  String home_address;
   String jwt;
 
   User({
@@ -30,6 +31,7 @@ class User {
     required this.role_type,
     required this.created_at,
     required this.updated_at,
+    required this.home_address,
     required this.jwt,
   });
 
@@ -41,6 +43,7 @@ class User {
       first_name: user['user']['firstName'],
       last_name: user['user']['lastName'],
       phone_number: user['user']['phoneNumber'],
+      home_address: user['user']['homeAddress'],
       email: user['user']['email'],
       provider: user['user']['provider'],
       confirmed: user['user']['confirmed'] ?? false,
@@ -60,6 +63,7 @@ class User {
         first_name = user['user']['firstName'],
         last_name = user['user']['lastName'],
         phone_number = user['user']['phoneNumber'],
+        home_address = user['user']['homeAddress'],
         email = user['user']['email'],
         provider = user['user']['provider'],
         confirmed = user['user']['confirmed'] ?? false,
@@ -78,6 +82,7 @@ class User {
       'first_name': first_name,
       'last_name': last_name,
       'phone_number': phone_number,
+      'home_address': home_address,
       'email': email,
       'provider': provider,
       'confirmed': confirmed,

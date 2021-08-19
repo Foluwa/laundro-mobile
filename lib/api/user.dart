@@ -4,24 +4,40 @@ import '../models/currency.dart';
 import '../models/user.dart';
 import '../utils/api_routes.dart';
 import 'Exceptions/dio_exception.dart';
+import 'interceptors/auth_interceptor.dart';
 
 class UserApi {
-  // Dio _dio;
-  // bool addAccessToken;
+  Dio? _dio;
+  bool? addAccessToken;
   UserApi() {
-    //print('Access Token $addAccessToken');
-    // final options = BaseOptions(
-    //   connectTimeout: 100000,
-    //   receiveTimeout: 80000,
-    // );
-    // _dio = Dio(options);
-    // if (this.addAccessToken) {
-    //   print('adding interceptor');
-    //   _dio.interceptors.add(AuthInterceptor());
-    // }
+    // print('Access Token $addAccessToken');
+    final options = BaseOptions(
+      connectTimeout: 100000,
+      receiveTimeout: 80000,
+    );
+    _dio = Dio(options);
+    if (addAccessToken != null) {
+      print('adding interceptor');
+      _dio!.interceptors.add(AuthInterceptor());
+    }
   }
 
   /// Get User Profile
+  Future<User> fetchUser() async {
+    try {
+      ///TODO: Ask isreal how to add access token to request in flutter
+      final response = await Dio().get(ApiRoutes.verifyMe);
+      // if (response.statusCode == 200) {
+      //   // print('Currency ${response.data}');
+      //   // print('HERE ${Currency.fromJson(response.data)}');
+      //   return Currency.fromJson(response.data);
+      // }
+      return User.fromJson(response.data);
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
 
   /// Registration
   Future<User> registerUser(data) async {
@@ -72,9 +88,23 @@ class UserApi {
     }
   }
 
-  /// Forgot password
-  /// forgotPassword
+  /// Update User account
+  Future<User> updateInfo(userId, data) async {
+    try {
+      print('API LEVEL userId ${userId}');
+      print('API_LEVEL DATA ${data}');
+      final response =
+          await Dio().put('${ApiRoutes.user}/${userId}', data: data);
+      return User.fromJson(response.data);
+    } on DioError catch (error) {
+      print('ERROR WAS KNOCKED! ${error}');
+      print('error WAS ! ${error.response}');
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
 
+  /// Forgot password
   Future forgotPassword(data) async {
     try {
       final response = await Dio().post(ApiRoutes.forgotPassword, data: data);
@@ -91,8 +121,6 @@ class UserApi {
       throw Exception('$errorMessage');
     }
   }
-
-  /// Validate Token
 
   /// Reset/Update password
 

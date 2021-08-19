@@ -70,100 +70,98 @@ class _CheckoutState extends State<Checkout> {
       clearForm();
     }
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppHeader(
-            elevation: 0,
-            fontSize: 25.0,
-            title: AppLocalizations.of(context)!.checkout.toString(),
-            bg: const Color(0xFF607D8B),
-            textColor: Constants.white,
-            onCloseClicked: () => Navigator.pop(context),
-            backgroundColor: const Color(0xFF607D8B)),
-      ),
-      body: SingleChildScrollView(
-          child: Column(children: [
-        // checkbox fill from user data provider
-        CheckboxListTile(
-            title: Text(AppLocalizations.of(context)!.prefill_form.toString()),
-            value: shouldPrefil,
-            onChanged: (newValue) {
-              setState(() {
-                shouldPrefil = !shouldPrefil;
-              });
-            },
-            controlAffinity: ListTileControlAffinity.leading),
-        FormInput(
-          label: AppLocalizations.of(context)!.email.toString(),
-          controller: _emailController,
-          passwordVisible: false,
-          obscureText: false,
-          textValidator: FormValidate.validateEmail,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: AppHeader(
+              elevation: 0,
+              fontSize: 25.0,
+              title: AppLocalizations.of(context)!.checkout.toString(),
+              bg: const Color(0xFF607D8B),
+              textColor: Constants.white,
+              onCloseClicked: () => Navigator.pop(context),
+              backgroundColor: const Color(0xFF607D8B)),
         ),
-        FormInput(
-          label: AppLocalizations.of(context)!.first_name.toString(),
-          controller: _firstName,
-          passwordVisible: false,
-          obscureText: false,
-          textValidator: FormValidate.validateEmail,
-        ),
-        FormInput(
-          label: AppLocalizations.of(context)!.last_name.toString(),
-          controller: _lastName,
-          passwordVisible: false,
-          obscureText: false,
-          textValidator: FormValidate.validateEmail,
-        ),
-        // FormInput(
-        //   label: 'Email Address',
-        //   controller: _fullName,
-        //   passwordVisible: false,
-        //   obscureText: false,
-        //   textValidator: FormValidate.validateEmail,
-        // ),
-        FormInput(
-          label: AppLocalizations.of(context)!.phone_number.toString(),
-          controller: _phoneNumber,
-          passwordVisible: false,
-          obscureText: false,
-          textValidator: FormValidate.validateEmail,
-        ),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          // checkbox fill from user data provider
+          CheckboxListTile(
+              title:
+                  Text(AppLocalizations.of(context)!.prefill_form.toString()),
+              value: shouldPrefil,
+              onChanged: (newValue) {
+                setState(() {
+                  shouldPrefil = !shouldPrefil;
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading),
+          FormInput(
+              label: AppLocalizations.of(context)!.email.toString(),
+              controller: _emailController,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail),
+          FormInput(
+              label: AppLocalizations.of(context)!.first_name.toString(),
+              controller: _firstName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail),
+          FormInput(
+              label: AppLocalizations.of(context)!.last_name.toString(),
+              controller: _lastName,
+              passwordVisible: false,
+              obscureText: false,
+              textValidator: FormValidate.validateEmail),
+          // FormInput(
+          //   label: 'Email Address',
+          //   controller: _fullName,
+          //   passwordVisible: false,
+          //   obscureText: false,
+          //   textValidator: FormValidate.validateEmail,
+          // ),
 
-        ///TODO: Consider pickup time, date, delivery hour, and drop ins
-        ///so a user has to select either pickup or drop in
-        ///and conditional forms will display like that
-        FormInput(
-          label: AppLocalizations.of(context)!.pickup_address.toString(),
-          controller: _homeAddress,
-          passwordVisible: false,
-          obscureText: false,
-          textValidator: FormValidate.validateEmail,
-        ),
-        // list of products
-        _laundryProvider.getCart!.length < 1
-            ? const Center(
-                child: Text('No item in cart'),
-              )
-            // // CupertinoScrollbar Scrollbar
-            : ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: _laundryProvider
-                    .getCart?.length, //item.subCategory.subcategory.length,
-                itemBuilder: (context, index) => Column(children: [
-                      SingleProduct(products: _laundryProvider.getCart![index])
-                    ])),
+          FormInput(
+            label: AppLocalizations.of(context)!.phone_number.toString(),
+            controller: _phoneNumber,
+            passwordVisible: false,
+            obscureText: false,
+            textValidator: FormValidate.validateEmail,
+          ),
 
-        // DropdownButton(
-        //   items: listUserType,
-        // ),
-        _laundryProvider.getLocations!.length < 1
-            ? const CircularProgressIndicator()
-            : buildDropdown(),
-        const PaymentOptions(),
-      ])),
-      bottomSheet: const BottomCheckout(),
-    );
+          ///TODO: Consider pickup time, date, delivery hour, and drop ins
+          ///so a user has to select either pickup or drop in
+          ///and conditional forms will display like that
+          FormInput(
+            label: AppLocalizations.of(context)!.pickup_address.toString(),
+            controller: _homeAddress,
+            passwordVisible: false,
+            obscureText: false,
+            textValidator: FormValidate.validateEmail,
+          ),
+
+          /// list of products
+          _laundryProvider.getCart!.length < 1
+              ? const Center(child: Text('No item in cart'))
+              : ListView.builder(
+                  // CupertinoScrollbar Scrollbar
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: _laundryProvider
+                      .getCart?.length, //item.subCategory.subcategory.length,
+                  itemBuilder: (context, index) => Column(children: [
+                        SingleProduct(
+                            products: _laundryProvider.getCart![index])
+                      ])),
+
+          /// Payment option list
+          _laundryProvider.getLocations!.length < 1
+              ? const CircularProgressIndicator()
+              : buildDropdown(),
+          const PaymentOptions(),
+        ])),
+
+        /// Bottom sheet
+        bottomSheet: const BottomCheckout());
   }
 
   void prefillForm() {
@@ -171,6 +169,7 @@ class _CheckoutState extends State<Checkout> {
     _firstName.text = _userProvider.getUser!.first_name;
     _lastName.text = _userProvider.getUser!.last_name;
     _phoneNumber.text = _userProvider.getUser!.phone_number;
+    _homeAddress.text = _userProvider.getUser!.home_address;
   }
 
   void clearForm() {
@@ -178,6 +177,7 @@ class _CheckoutState extends State<Checkout> {
     _firstName.clear();
     _lastName.clear();
     _phoneNumber.clear();
+    _homeAddress.clear();
   }
 
   Widget buildDropdown() => SizedBox(

@@ -57,7 +57,8 @@ class _AccountState extends State<Account> {
                     ? const AccountDetailsAuth()
                     : const Text(
                         'Your account has been blocked reach out to support'),
-            Container(
+            Card(
+                elevation: 5,
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
                 child: Column(children: <Widget>[
                   Align(

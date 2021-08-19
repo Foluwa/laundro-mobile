@@ -38,23 +38,33 @@ class _BottomCheckoutState extends State<BottomCheckout> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          // Price Value
+          Padding(
+              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+              child: Text(
+                  // ignore: lines_longer_than_80_chars
+                  '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+                  style: bottomCartStyle)),
+
+          // Checkout Btn
           Padding(
             padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-            child: Text(
-              '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
-              style: bottomCartStyle,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-            //TODO: proceed to payment
-            child: ButtonWidget(
-                text: AppLocalizations.of(context)!.checkout.toString(),
-                onClicked: () => btnLoading ? null : checkoutCart(),
-                color: Colors.amber,
-                paddingValue: 6.0,
-                btnStatus: btnLoading,
-                style: const TextStyle()),
+            child: _laundryProvider.getCart!.length < 1
+                ? ButtonWidget(
+                    text: 'No item in cart',
+                    onClicked: () {},
+                    color: Colors.amber,
+                    paddingValue: 6.0,
+                    btnStatus: btnLoading,
+                    style: const TextStyle())
+                // TODO: proceed to payment
+                : ButtonWidget(
+                    text: AppLocalizations.of(context)!.checkout.toString(),
+                    onClicked: () => btnLoading ? null : checkoutCart(),
+                    color: Colors.amber,
+                    paddingValue: 6.0,
+                    btnStatus: btnLoading,
+                    style: const TextStyle()),
           ),
         ],
       ),
