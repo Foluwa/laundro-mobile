@@ -32,7 +32,7 @@ class CategoryWidgetList extends StatefulWidget {
 
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
   LaundryApi api = LaundryApi();
-  UserApi userApi = UserApi();
+  UserApi userApi = UserApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
@@ -43,7 +43,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   @override
   void initState() {
     super.initState();
-    // getUser().then((_) => print('fetch user'));
+    getUser().then((_) => print('fetch user'));
     getCurrencies().then((_) => print('fetch currency'));
     getCategories().then((_) => print('fetch categories'));
     getAllProducts().then((_) => print('fetch products'));
@@ -193,6 +193,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
 
   /// Fetch User from JWT
   Future<User> getUser() async {
+    print('USER_IN_CATEGORY');
     if (mounted) {
       setState(() {
         screenLoading = true;
@@ -200,11 +201,14 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     }
     var data;
     // get jwt from sharedprerence
+    print('AAAAAA');
     await userApi.fetchUser().then((user) {
       // check if user is not null
-      if (user != null) {
-        _userProvider.setCurrentUser(user);
-      }
+      print('USER_IN_CATEGORY2 $user');
+      _userProvider.setCurrentUser(user);
+      // if (user != null) {
+      //   _userProvider.setCurrentUser(user);
+      // }
       setState(() {
         screenLoading = false;
       });

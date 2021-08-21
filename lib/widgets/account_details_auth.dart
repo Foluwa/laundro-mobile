@@ -26,7 +26,8 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
   final TextEditingController phoneNumberController = TextEditingController();
   // Form key
   final _formKey = GlobalKey<FormState>();
-  UserApi api = UserApi();
+  //UserApi api = UserApi();
+  UserApi api = UserApi(addAccessToken: true);
 
   bool _status = true;
   bool btnLoading = false;
@@ -87,9 +88,8 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                   Flexible(
                       child: TextFormField(
                           controller: firstNameController,
-                          decoration: const InputDecoration(
-                            hintText: 'First Name',
-                          ),
+                          decoration:
+                              const InputDecoration(hintText: 'First Name'),
                           enabled: !_status,
                           autofocus: !_status))
                 ])),
@@ -114,6 +114,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                     Flexible(
                         child: TextFormField(
                             controller: phoneNumberController,
+                            keyboardType: TextInputType.number,
                             decoration:
                                 const InputDecoration(hintText: 'Phone Number'),
                             enabled: !_status))
@@ -121,7 +122,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                 )),
             Padding(
                 padding: const EdgeInsets.only(
-                    left: 25.0, right: 25.0, top: 20.0, bottom: 20.0),
+                    left: 25.0, right: 25.0, top: 20.0, bottom: 10.0),
                 child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
                   Flexible(
                       child: TextFormField(
@@ -130,6 +131,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                     enabled: !_status,
                   )),
                 ])),
+            !_status ? _getActionButtons() : Container(),
             /*  Padding(
                 padding:
                     const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
@@ -161,7 +163,6 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                     ),
                   ],
                 )),*/
-            !_status ? _getActionButtons() : Container(),
           ],
         ),
       ),
@@ -177,23 +178,23 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
 
   Widget _getActionButtons() {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      padding: const EdgeInsets.only(
+          left: 25.0, right: 25.0, top: 15.0, bottom: 15.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: ButtonWidget(
-                    text: 'Save',
-                    color: Constants.white,
-                    btnStatus: false,
-                    onClicked: updateAccount,
-                    style: const TextStyle(),
-                    paddingValue: 8)),
-            flex: 2,
-          ),
+              flex: 2,
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: ButtonWidget(
+                      text: 'Save',
+                      color: Constants.white,
+                      btnStatus: false,
+                      onClicked: updateAccount,
+                      style: const TextStyle(),
+                      paddingValue: 8))),
           Expanded(
               flex: 2,
               child: Padding(
@@ -220,7 +221,8 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
   Widget _getEditIcon() {
     return GestureDetector(
       child: btnLoading
-          ? const CircularProgressIndicator()
+          ? const SizedBox(
+              height: 20.0, width: 20.0, child: CircularProgressIndicator())
           : CircleAvatar(
               backgroundColor: Colors.red,
               radius: 14.0,
@@ -247,22 +249,28 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
       });
     }
 
+    //TODO: Check if user is putting emojis in comment it is causing 500 error
     // get all the data
     final data = {
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
-      'homeAddress': homeAddressController.text,
-      'phoneNumber': phoneNumberController.text
+      'firstName': firstNameController.text.toString(),
+      'lastName': lastNameController.text.toString(),
+      'homeAddress': homeAddressController.text.toString(),
+      'phoneNumber': phoneNumberController.text.toString()
     };
 
     // Make request
     await api.updateInfo(_userProvider.getUser!.id, data).then((user) {
+      print('USER_UPDATED_DATA $user');
       _userProvider.setCurrentUser(user);
+
       Common.showSnackBar(context,
-          title: 'Profile updated successfully', duration: 300);
+          title: 'Profile updated successfully', duration: 3000);
     }).catchError((error) {
-      print('ERROR CAUGHT ${error}');
-      Common.showSnackBar(context, title: error.toString(), duration: 300);
+      print('SPENSER  ${error}');
+      Common.showSnackBar(context,
+          //  'Profile NOT updated successfully'
+          title: 'Error encountered',
+          duration: 300);
     });
 
     // Setting state

@@ -21,7 +21,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   // Declare Controllers
   final TextEditingController emailController = TextEditingController();
   bool btnLoading = false;
-  UserApi api = UserApi();
+  UserApi api = UserApi(addAccessToken: false);
 
   @override
   Widget build(BuildContext context) {

@@ -33,7 +33,7 @@ class _SignUpState extends State<SignUp> {
   late User user;
   final _formKey = GlobalKey<FormState>();
   bool btnLoading = false;
-  UserApi api = UserApi();
+  UserApi api = UserApi(addAccessToken: false);
   UserProvider _userProvider = UserProvider();
   Preference prefs = Preference();
 
@@ -134,7 +134,7 @@ class _SignUpState extends State<SignUp> {
         print('INSIDE AWAIT2 ${data}');
         print('INSIDE AWAIT ${data.entries}');
         // preference
-        prefs.setJWT(user.jwt);
+        // prefs.setJWT(user.jwt);
         // provider
         _userProvider.setCurrentUser(user);
         Navigator.of(context).pushNamed('/account');

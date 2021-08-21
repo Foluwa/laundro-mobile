@@ -11,18 +11,18 @@ class Preference {
 
   //
   Future<String?>? getJwt() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     //Return String
     // print(prefs.getString('JWT'));
     // print(prefs.getString('JWT'));
     return prefs.getString('JWT');
   }
-  //
-  // // Clear all shared preferences
-  // clearPrefs() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   await preferences.clear();
-  // }
+
+  // Clear all shared preferences
+  void clearPrefs() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  }
   //
   // skipSlideShow() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();

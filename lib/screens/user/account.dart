@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
+import '../../utils/preferences.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/account_details.dart';
 import '../../widgets/account_details_auth.dart';
@@ -22,6 +23,8 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   //  LaundryProvider _laundryProvider = LaundryProvider();
   late UserProvider _userProvider;
+
+  Preference prefs = Preference();
 
   @override
   void initState() {
@@ -115,6 +118,26 @@ class _AccountState extends State<Account> {
                         Text(AppLocalizations.of(context)!.language,
                             style: TextStyle(color: Constants.black)),
                       ])),
+                  GestureDetector(
+                      onTap: () {
+                        print('LOG OUT !!!');
+                        prefs.clearPrefs();
+                        _userProvider.setCurrentUser(null);
+                        Navigator.of(context).pushNamed('/');
+                      },
+                      child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 0.0, 0, 10.0),
+                          child: Row(children: [
+                            Icon(Icons.logout,
+                                color: Colors.pink,
+                                size: 30.0,
+                                semanticLabel: AppLocalizations.of(context)!
+                                    .privacy_policy
+                                    .toString()),
+                            Text('LOGOUT',
+                                style: TextStyle(color: Constants.black)),
+                          ]))),
                 ])),
             // Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
