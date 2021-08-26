@@ -39,6 +39,7 @@ class _CheckoutState extends State<Checkout> {
   LaundryApi api = LaundryApi();
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
+  final _formKey = GlobalKey<FormState>();
   // Declare Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
@@ -48,17 +49,7 @@ class _CheckoutState extends State<Checkout> {
 
   bool screenLoading = false;
   bool shouldPrefil = false;
-
-  // static final List<NewObject> items = <NewObject>[
-  //   NewObject('Apple', Icons.access_alarms),
-  //   NewObject('Banana', Icons.mail),
-  //   NewObject('Orange', Icons.account_balance_wallet),
-  //   NewObject('Other Fruit', Icons.account_box),
-  // ];
-  // NewObject value = items.first;
-
-  Location? locationValue; // = items.first;
-  var formData;
+  Location? locationValue;
 
   @override
   void initState() {
@@ -79,6 +70,7 @@ class _CheckoutState extends State<Checkout> {
   Widget build(BuildContext context) {
     _laundryProvider = Provider.of<LaundryProvider>(context);
     _userProvider = Provider.of<UserProvider>(context);
+
     // value = _laundryProvider.getLocations!.first;
     print(_laundryProvider.getCart);
     print('_laundryProvider.getLocations  ${_laundryProvider.getLocations}');
@@ -102,6 +94,7 @@ class _CheckoutState extends State<Checkout> {
                 backgroundColor: const Color(0xFF607D8B))),
         body: SingleChildScrollView(
             child: Form(
+          key: _formKey,
           child: Column(children: [
             /// checkbox fill from user data provider
             CheckboxListTile(
@@ -125,13 +118,13 @@ class _CheckoutState extends State<Checkout> {
                 controller: _firstName,
                 passwordVisible: false,
                 obscureText: false,
-                textValidator: FormValidate.validateEmail),
+                textValidator: FormValidate.validateName),
             FormInput(
                 label: AppLocalizations.of(context)!.last_name.toString(),
                 controller: _lastName,
                 passwordVisible: false,
                 obscureText: false,
-                textValidator: FormValidate.validateEmail),
+                textValidator: FormValidate.validateName),
             // FormInput(
             //   label: 'Email Address',
             //   controller: _fullName,
@@ -145,7 +138,7 @@ class _CheckoutState extends State<Checkout> {
               controller: _phoneNumber,
               passwordVisible: false,
               obscureText: false,
-              textValidator: FormValidate.validateEmail,
+              textValidator: FormValidate.validatePhoneNumber,
             ),
 
             ///TODO: Consider pickup time, date, delivery hour, and drop ins
@@ -156,7 +149,7 @@ class _CheckoutState extends State<Checkout> {
                 controller: _homeAddress,
                 passwordVisible: false,
                 obscureText: false,
-                textValidator: FormValidate.validateEmail),
+                textValidator: FormValidate.validateHomeAddress),
 
             /// list of products
             /* _laundryProvider.getCart!.length < 1
@@ -234,13 +227,18 @@ class _CheckoutState extends State<Checkout> {
         ));
   }
 
-  void submitCheckoutForm() {
-    print(
-        // ignore: lines_longer_than_80_chars
-        'Location and Payment${locationValue!.location} ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
-    print('Details ${_emailController.text} ${_firstName.text}');
-    var data = {'email': _emailController.text, 'firstname': _firstName.text};
-    print('DATA $data');
+  void submitCheckoutForm() async {
+    final form = _formKey.currentState;
+
+    if (form!.validate()) {
+      form.save();
+      print(
+          // ignore: lines_longer_than_80_chars
+          'Location and Payment${locationValue!.location} ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
+      print('Details ${_emailController.text} ${_firstName.text}');
+      var data = {'email': _emailController.text, 'firstname': _firstName.text};
+      print('DATA $data');
+    }
   }
 
   void prefillForm() {
