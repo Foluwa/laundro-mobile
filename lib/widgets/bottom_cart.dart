@@ -53,6 +53,7 @@ class _BottomCartState extends State<BottomCart> {
                     child: currentCurrency == null
                         ? Common.simpleShimmer()
                         : Text(
+                      // ignore: lines_longer_than_80_chars
                             '${AppLocalizations.of(context)!.cart.toString()} (${_laundryProvider.getBasketQty()})',
                             style: bottomCartStyle,
                           ),

@@ -27,7 +27,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
+      margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       child: Column(
         children: <Widget>[
           Align(
@@ -81,47 +81,45 @@ class _AccountDetailsState extends State<AccountDetails> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                          content: Stack(
-                              overflow: Overflow.visible,
-                              children: <Widget>[
-                            Positioned(
-                                right: -40.0,
-                                top: -40.0,
-                                child: InkResponse(
-                                    onTap: () => Navigator.of(context).pop(),
-                                    child: const CircleAvatar(
-                                        child: Icon(Icons.close),
-                                        backgroundColor: Colors.red))),
-                            Form(
-                                key: _formKey,
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: FormInput(
-                                              label:
-                                                  AppLocalizations.of(context)!
-                                                      .email
-                                                      .toString(),
-                                              controller: emailController,
-                                              passwordVisible: false,
-                                              obscureText: false,
-                                              textValidator:
-                                                  FormValidate.validateEmail)),
-                                      Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ButtonWidget(
-                                              text: 'Reset Password',
-                                              onClicked: () => btnLoading
-                                                  ? null
-                                                  : userResetPassword(),
-                                              color: Colors.amber,
-                                              paddingValue: 6.0,
-                                              btnStatus: btnLoading,
-                                              style: const TextStyle()))
-                                    ])),
-                          ]));
+                          content:
+                              Stack(clipBehavior: Clip.none, children: <Widget>[
+                        Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                                onTap: () => Navigator.of(context).pop(),
+                                child: const CircleAvatar(
+                                    child: Icon(Icons.close),
+                                    backgroundColor: Colors.red))),
+                        Form(
+                            key: _formKey,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: FormInput(
+                                          label: AppLocalizations.of(context)!
+                                              .email
+                                              .toString(),
+                                          controller: emailController,
+                                          passwordVisible: false,
+                                          obscureText: false,
+                                          textValidator:
+                                              FormValidate.validateEmail)),
+                                  Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ButtonWidget(
+                                          text: 'Reset Password',
+                                          onClicked: () => btnLoading
+                                              ? null
+                                              : userResetPassword(),
+                                          color: Colors.amber,
+                                          paddingValue: 6.0,
+                                          btnStatus: btnLoading,
+                                          style: const TextStyle()))
+                                ])),
+                      ]));
                     });
               },
               child: Padding(

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/laundry_provider.dart';
 
 enum PaymentPlatforms { flutterwave, stripe, paytm }
 
@@ -12,9 +15,11 @@ class PaymentOptions extends StatefulWidget {
 
 class _PaymentOptionsState extends State<PaymentOptions> {
   PaymentPlatforms? _paymentPlatforms = PaymentPlatforms.flutterwave;
+  LaundryProvider _laundryProvider = LaundryProvider();
 
   @override
   Widget build(BuildContext context) {
+    _laundryProvider = Provider.of<LaundryProvider>(context);
     return Column(
       children: <Widget>[
         ListTile(
@@ -24,6 +29,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                 groupValue: _paymentPlatforms,
                 onChanged: (PaymentPlatforms? value) {
                   setState(() {
+                    _laundryProvider.setSelectedPayment(value);
                     _paymentPlatforms = value;
                   });
                 })),
@@ -34,6 +40,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                 groupValue: _paymentPlatforms,
                 onChanged: (PaymentPlatforms? value) {
                   setState(() {
+                    _laundryProvider.setSelectedPayment(value);
                     _paymentPlatforms = value;
                   });
                 })),
@@ -44,6 +51,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                 groupValue: _paymentPlatforms,
                 onChanged: (PaymentPlatforms? value) {
                   setState(() {
+                    _laundryProvider.setSelectedPayment(value);
                     _paymentPlatforms = value;
                   });
                 }))

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/widgets/Payments/payment_options.dart';
 
 import '../models/categories.dart';
 import '../models/currency.dart';
@@ -14,6 +15,7 @@ class LaundryProvider extends ChangeNotifier {
   List<Category>? _category = [];
   List<Location> _locations = [];
   Currency? _currency;
+  PaymentPlatforms? _selectedPayment;
 
   /// Return gets
   List<Product>? get getProducts => _products;
@@ -21,8 +23,15 @@ class LaundryProvider extends ChangeNotifier {
   List<Category>? get getCategories => _category;
   List<Location>? get getLocations => _locations;
   Currency? get getCurrency => _currency;
+  PaymentPlatforms? get getSelectedPayment => _selectedPayment;
 
   late SqliteDB sqlQuery;
+
+  /// Set selected payment
+  void setSelectedPayment(data) {
+    _selectedPayment = data;
+    notifyListeners();
+  }
 
   /// Set Delivery Locations
   void setLocations(data) {

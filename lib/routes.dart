@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'screens/onboarding.dart';
 import 'screens/user/account.dart';
 import 'screens/user/cart.dart';
 import 'screens/user/category.dart';
@@ -19,15 +20,13 @@ class RouteGenerator {
     print('Route information: ' + settings.name!);
 
     switch (settings.name) {
-      // case '/':
-      //   return PageTransition(
-      // ignore: lines_longer_than_80_chars
-      //       type: PageTransitionType.topToBottom, child: const LaunchScreen());
-      // categories
       case '/':
         return PageTransition(
+            type: PageTransitionType.bottomToTop, child: const Onboarding());
+      case '/home':
+        return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const CategoryWidgetList());
+            child: const CategoryWidgetList()); // CategoryWidgetList
       case '/category_details':
         return PageTransition(
             type: PageTransitionType.bottomToTop,

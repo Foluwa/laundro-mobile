@@ -102,6 +102,7 @@ class SqliteDB {
 //           // ignore: lines_longer_than_80_chars
 //           //'CREATE TABLE users(id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL,description TEXT NOT NULL,price DOUBLE NOT NULL,sub_category_id INTEGER NOT NULL,qty INTEGER NOT NULL)',
 //           // ignore: lines_longer_than_80_chars
+// ignore: lines_longer_than_80_chars
 //           'CREATE TABLE products(id INTEGER PRIMARY KEY NOT NULL, qty INTEGER NOT NULL)',
 //         );
 //       },
@@ -122,6 +123,7 @@ class SqliteDB {
 //   // Retrieve Data From SQLite
 //   Future<List<Product>> retrieveProducts() async {
 //     final Database db = await initializeDB();
+// ignore: lines_longer_than_80_chars
 //     final List<Map<String, Object?>> queryResult = await db.query('products');
 //     return queryResult.map((e) => Product.fromMap(e)).toList();
 //   }

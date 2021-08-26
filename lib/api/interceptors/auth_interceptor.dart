@@ -38,7 +38,7 @@ class AuthInterceptor extends Interceptor {
       //TODO: CHECK CONDITIONS
       if (error.response?.statusCode == 401 &&
           responseObject['subCode'] == 601) {
-        var data = await _refreshToken(error);
+        final data = await _refreshToken(error);
         return data;
       }
     }
@@ -48,7 +48,7 @@ class AuthInterceptor extends Interceptor {
 
   // Future<void> _refreshToken(error) async {
   Future<Response<dynamic>> _refreshToken(error) async {
-    var token = await myPrefs.getJwt();
+    final token = await myPrefs.getJwt();
     final response =
         await Dio().post(ApiRoutes.refreshToken, data: {'token': token});
     Dio().interceptors.responseLock.lock();

@@ -24,6 +24,10 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   // Declare Controllers
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController homeAddressController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
@@ -67,6 +71,20 @@ class _SignUpState extends State<SignUp> {
                   // onSaved: (String value) => user.username = value,
                 ),
                 FormInput(
+                  label: 'First Name',
+                  controller: firstNameController,
+                  passwordVisible: false,
+                  obscureText: false,
+                  textValidator: FormValidate.validateName,
+                ),
+                FormInput(
+                  label: 'Last Name',
+                  controller: lastNameController,
+                  passwordVisible: false,
+                  obscureText: false,
+                  textValidator: FormValidate.validateName,
+                ),
+                FormInput(
                   label: 'Email Address',
                   controller: emailController,
                   passwordVisible: false,
@@ -80,6 +98,13 @@ class _SignUpState extends State<SignUp> {
                   obscureText: false,
                   textValidator: FormValidate.validatePhoneNumber,
                   //onSaved: (String value) => user = value,
+                ),
+                FormInput(
+                  label: 'Home Address',
+                  controller: homeAddressController,
+                  passwordVisible: false,
+                  obscureText: false,
+                  textValidator: FormValidate.validateName,
                 ),
                 FormInput(
                   label: 'Password',
@@ -126,8 +151,12 @@ class _SignUpState extends State<SignUp> {
       final data = {
         'email': emailController.text,
         'username': usernameController.text,
-        'role': 'authenticated',
         'password': passwordController.text,
+        'firstName': firstNameController.text,
+        'lastName': lastNameController.text,
+        'phoneNumber': phoneNumberController.text,
+        'homeAddress': homeAddressController.text,
+        'role': 'authenticated',
       };
       print('DATA IS ${data.toString()}');
       await api.registerUser(jsonEncode(data)).then((user) {

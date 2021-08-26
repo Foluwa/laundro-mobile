@@ -47,6 +47,7 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
     phoneNumberController.text = user.phone_number;
 
     return Card(
+      margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       child: Form(
         key: _formKey,
         child: Column(

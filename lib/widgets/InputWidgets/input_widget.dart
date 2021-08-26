@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../utils/constants.dart';
 
+// Todo sprcify keyboard input type
+// keyboardType: TextInputType.number,
 class FormInput extends StatefulWidget {
   bool passwordVisible = false;
   bool obscureText;

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/api/user.dart';
-import 'package:laundro/models/user.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/laundry.dart';
+import '../../api/user.dart';
 import '../../models/categories.dart';
 import '../../models/currency.dart';
 import '../../models/products.dart';
+import '../../models/user.dart';
 import '../../providers/laundry_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';

@@ -24,10 +24,7 @@ class ButtonWidget extends StatelessWidget {
         padding: EdgeInsets.all(paddingValue),
         child: btnStatus
             ? const CircularProgressIndicator()
-            : Text(
-                text,
-                style: style,
-              ),
+            : Text(text, style: style),
         onPressed: onClicked,
       );
 }

@@ -49,7 +49,7 @@ class _AccountState extends State<Account> {
               title: AppLocalizations.of(context)!.accounts,
               bg: const Color(0xFF607D8B),
               textColor: Constants.white,
-              onCloseClicked: () => Navigator.of(context).pushNamed('/'),
+              onCloseClicked: () => Navigator.of(context).pushNamed('/home'),
               backgroundColor: const Color(0xFF607D8B))),
       body: SingleChildScrollView(
         child: Column(
@@ -62,7 +62,7 @@ class _AccountState extends State<Account> {
                         'Your account has been blocked reach out to support'),
             Card(
                 elevation: 5,
-                margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0, 0.0),
+                margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                 child: Column(children: <Widget>[
                   Align(
                       alignment: Alignment.centerLeft,
@@ -121,7 +121,8 @@ class _AccountState extends State<Account> {
                   GestureDetector(
                       onTap: () {
                         print('LOG OUT !!!');
-                        prefs.clearPrefs();
+                        //prefs.clearPrefs();
+                        prefs.removePref('JWT');
                         _userProvider.setCurrentUser(null);
                         Navigator.of(context).pushNamed('/');
                       },

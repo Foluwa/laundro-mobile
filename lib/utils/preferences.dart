@@ -18,11 +18,18 @@ class Preference {
     return prefs.getString('JWT');
   }
 
+  // Remove a pref
+  void removePref(String keyName) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove(keyName);
+  }
+
   // Clear all shared preferences
   void clearPrefs() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.clear();
   }
+
   //
   // skipSlideShow() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
