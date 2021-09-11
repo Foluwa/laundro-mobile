@@ -105,6 +105,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                                           controller: emailController,
                                           passwordVisible: false,
                                           obscureText: false,
+                                          textInputType: TextInputType.emailAddress,
                                           textValidator:
                                               FormValidate.validateEmail)),
                                   Padding(

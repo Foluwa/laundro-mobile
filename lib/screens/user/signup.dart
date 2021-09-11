@@ -68,6 +68,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateName,
+                  textInputType: TextInputType.text,
                   // onSaved: (String value) => user.username = value,
                 ),
                 FormInput(
@@ -76,6 +77,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateName,
+                  textInputType: TextInputType.text,
                 ),
                 FormInput(
                   label: 'Last Name',
@@ -83,6 +85,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateName,
+                  textInputType: TextInputType.text,
                 ),
                 FormInput(
                   label: 'Email Address',
@@ -90,6 +93,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateEmail,
+                  textInputType: TextInputType.emailAddress,
                 ),
                 FormInput(
                   label: 'Phone Number',
@@ -97,6 +101,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validatePhoneNumber,
+                  textInputType: TextInputType.phone,
                   //onSaved: (String value) => user = value,
                 ),
                 FormInput(
@@ -105,6 +110,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: false,
                   obscureText: false,
                   textValidator: FormValidate.validateName,
+                  textInputType: TextInputType.text,
                 ),
                 FormInput(
                   label: 'Password',
@@ -112,6 +118,7 @@ class _SignUpState extends State<SignUp> {
                   passwordVisible: true,
                   obscureText: true,
                   textValidator: FormValidate.validatePassword,
+                  textInputType: TextInputType.text,
                 ),
                 CheckboxOption(
                   title: 'Terms and conditions',

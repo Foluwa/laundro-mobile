@@ -1,17 +1,15 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/Payments/payment_options.dart';
 
 import '../models/categories.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
 import '../models/products.dart';
-import '../utils/db/persist_basket.dart';
+import '../widgets/Payments/payment_options.dart';
 
 class LaundryProvider extends ChangeNotifier {
   List<Product> _products = [];
-  // List<Product> _baskets = [];
-  final List<Product> _baskets = [];
+  List<Product> _baskets = [];
   List<Category>? _category = [];
   List<Location> _locations = [];
   Currency? _currency;
@@ -25,7 +23,11 @@ class LaundryProvider extends ChangeNotifier {
   Currency? get getCurrency => _currency;
   PaymentPlatforms? get getSelectedPayment => _selectedPayment;
 
-  late SqliteDB sqlQuery;
+  /// Add multiple products to cart to persist cart
+  void persistBasket(data) {
+    _baskets = data;
+    notifyListeners();
+  }
 
   /// Set selected payment
   void setSelectedPayment(data) {
@@ -60,7 +62,6 @@ class LaundryProvider extends ChangeNotifier {
   void addToCart(d) {
     print(d);
     d.qty += 1;
-    // update quantity of d to 1
     _baskets.add(d);
     notifyListeners();
   }
@@ -69,24 +70,20 @@ class LaundryProvider extends ChangeNotifier {
   void addOneItemToCart(Product p) {
     // check if already in basket
     // if in basket increament by one
-    // Product found =
-    //     _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
+    // Product found = _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
     final found = _baskets.firstWhereOrNull((a) => a.id == p.id);
     print('FOUND IS $found');
     if (found != null) {
       found.qty += 1;
-      // increament product quantity in sqlite
     } else {
       p.qty += 1;
       _baskets.add(p);
-      // add one product into sqlite
     }
     notifyListeners();
   }
 
-  /// remove
+  /// Removes one item from  basket(cart)
   void removeOneItemToCart(Product p) {
-    print('IN CART ${p}');
     // check if already in basket
     // if in basket increment by one
     final found = _baskets.firstWhere((e) => e.id == p.id);
@@ -94,21 +91,16 @@ class LaundryProvider extends ChangeNotifier {
     if (found.qty == 1) {
       found.qty -= 1;
       _baskets.remove(p);
-      // add remove product from sqlite
     } else {
       found.qty -= 1;
-      // decreament product quantity in sqlite
     }
     notifyListeners();
   }
 
-  /// Computes quantity of all products in cart
+  /// Computes quantity of all products in  basket(cart)
   int getBasketQty() {
     var total = 0;
-    // print('LENGTH OF BASKET ${_baskets?.length}');
-    // var bb = _baskets;
     final bb = _baskets;
-    // if (bb != null) {
     if (bb.isNotEmpty) {
       for (var i = 0; i < bb.length; i++) {
         total += bb[i].qty;
@@ -119,7 +111,7 @@ class LaundryProvider extends ChangeNotifier {
     }
   }
 
-  /// Computes price of all products in cart
+  /// Computes price of all products in basket(cart)
   double getTotalPrice() {
     var total = 0.0;
     final bb = _baskets;
@@ -134,11 +126,9 @@ class LaundryProvider extends ChangeNotifier {
     }
   }
 
-  /// Rturns boolean if a particular product exists in cart
+  /// Returns boolean if a particular product exists in basket(cart)
   bool inCart(id) {
-    print('IN CART ${id}');
     final found = _baskets.firstWhereOrNull((e) => e.id == id);
-    print('FOUNDYY $found');
     final ff = found;
     if (ff != null) {
       return true;
@@ -147,11 +137,9 @@ class LaundryProvider extends ChangeNotifier {
     }
   }
 
-  /// Return quntity of a particular product added to cart
+  /// Return quantity of a particular product added to basket(cart)
   int inCartQty(id) {
-    print('IN CART ${id}');
     final found = _baskets.firstWhereOrNull((e) => e.id == id);
-    print('FOUNDYY $found');
     final ff = found;
     if (ff != null) {
       return ff.qty;
@@ -160,15 +148,7 @@ class LaundryProvider extends ChangeNotifier {
     }
   }
 
-  /// Extract product id from data in cart
-  // List<int> extractProductId() {
-  //   // ignore: lines_longer_than_80_chars
-  //   var _basketProductId = _baskets.where((i) => i.id).toList();
-  //   print('IDS $_basketProductId');
-  //   return _basketProductId;
-  // }
-
-  /// Clear basket
+  /// Clears basket
   void clearBasket() {
     _baskets.clear();
     notifyListeners();

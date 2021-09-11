@@ -30,6 +30,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   @override
+  void dispose() {
+    //Hive.close();
+    // Hive.box('cart').close();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     _laundryProvider = Provider.of<LaundryProvider>(context);
@@ -65,6 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ///TODO: Add subcategory description
             //bottom: Container(child: Text(widget.subCat.description)),
           ),
+          // Check if _products is null or empty
           SliverList(
               delegate: SliverChildBuilderDelegate(
             (context, index) => SingleProduct(products: _products[index]),

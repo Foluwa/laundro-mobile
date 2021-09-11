@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laundro/utils/size_config.dart';
 
 class Constants {
   /// APP SETTINGS
@@ -25,10 +26,25 @@ class Constants {
   static const String OPEN_SANS = 'OpenSans';
   static const String SKIP = 'Skip';
   static const String NEXT = 'Next';
-  static const String SLIDER_HEADING_1 = 'Easy Exchange!';
-  static const String SLIDER_HEADING_2 = 'Easy to Use!';
-  static const String SLIDER_HEADING_3 = 'Connect with Others';
+  // static const String SLIDER_HEADING_1 = 'Easy Exchange!';
+  // static const String SLIDER_HEADING_2 = 'Easy to Use!';
+  // static const String SLIDER_HEADING_3 = 'Connect with Others';
   // ignore: lines_longer_than_80_chars
   static const String SLIDER_DESC =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultricies, erat vitae porta consequat.';
+
+  Color kPrimaryColor = Color(0xffFC9D45);
+  Color kSecondaryColor = Color(0xff573353);
+
+  static final kTitle = TextStyle(
+    fontFamily: 'Klasik',
+    fontSize: SizeConfig.blockSizeHorizontal * 7,
+    color: primaryColor,
+  );
+
+  static final kBodyText1 = TextStyle(
+    color: black, //primaryColor,
+    fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+    fontWeight: FontWeight.bold,
+  );
 }

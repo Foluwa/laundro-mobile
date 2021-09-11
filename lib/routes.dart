@@ -22,7 +22,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: const Onboarding());
+            type: PageTransitionType.bottomToTop,
+            child: const OnBoardingPage()); //Onboarding
       case '/home':
         return PageTransition(
             type: PageTransitionType.bottomToTop,

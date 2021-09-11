@@ -65,6 +65,7 @@ class _SignInState extends State<SignIn> {
                   controller: emailController,
                   passwordVisible: false,
                   obscureText: false,
+                  textInputType: TextInputType.emailAddress,
                   textValidator: FormValidate.validateEmail,
                 ),
                 FormInput(
@@ -74,6 +75,7 @@ class _SignInState extends State<SignIn> {
                   controller: passwordController,
                   passwordVisible: true,
                   obscureText: true,
+                  textInputType: TextInputType.text,
                   textValidator: FormValidate.validatePassword,
                 ),
                 ButtonWidget(

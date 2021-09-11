@@ -1,207 +1,142 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/slider.dart';
+import '../models/onboarding.dart';
 import '../utils/constants.dart';
-import 'slide_dots.dart';
-import 'slide_item.dart';
+import '../utils/size_config.dart';
+import '../widgets/Buttons/my_text_button.dart';
+import '../widgets/Buttons/onboard_nav_btn.dart';
 
-class Onboarding extends StatefulWidget {
-  const Onboarding({Key? key}) : super(key: key);
+class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
 
   @override
-  _OnboardingState createState() => _OnboardingState();
+  _OnBoardingPageState createState() => _OnBoardingPageState();
 }
 
-class _OnboardingState extends State<Onboarding> {
-  int _currentPage = 0;
-  final PageController _pageController = PageController(initialPage: 0);
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  int currentPage = 0;
+
+  PageController _pageController = PageController(initialPage: 0);
+
+  AnimatedContainer dotIndicator(index) {
+    return AnimatedContainer(
+      margin: const EdgeInsets.only(right: 5),
+      duration: const Duration(milliseconds: 400),
+      height: 12,
+      width: 12,
+      curve: Curves.fastOutSlowIn,
+      decoration: BoxDecoration(
+        color: currentPage == index
+            ? Constants.primaryColor
+            : Constants.secondaryColor,
+        // shape: BoxShape.circle,
+        // borderRadius: BorderRadius.all(),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    );
+  }
+
+  Future setSeenonboard() async {
+    final prefs = await SharedPreferences.getInstance();
+    // this will set seenOnboard to true when running onboard page for first time.
+    await prefs.setBool('seenOnboard', true);
+
+  }
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-    });
+    setSeenonboard();
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  void onPageChanged(int index) {
-    if (mounted) {
-      setState(() {
-        _currentPage = index;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) => topSliderLayout();
-
-  Widget topSliderLayout() => Scaffold(
-        body: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: <Widget>[
-                PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    controller: _pageController,
-                    onPageChanged: onPageChanged,
-                    itemCount: sliderArrayList.length,
-                    itemBuilder: (ctx, i) => SlideItem(i)),
-                Stack(
-                  alignment: AlignmentDirectional.topStart,
-                  children: <Widget>[
-                    const InkWell(
-                      // onTap: () => Navigator.of(context).pushNamed('/home'),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 15.0, bottom: 15.0),
-                          child: Text(
-                            Constants.NEXT,
-                            style: TextStyle(
-                              fontFamily: Constants.OPEN_SANS,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ),
-                      ),
+  Widget build(BuildContext context) {
+    // initialize size config
+    SizeConfig().init(context);
+    // final sizeH = SizeConfig.blockSizeHorizontal;
+    final sizeV = SizeConfig.blockSizeVertical;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+          child: Column(
+        children: [
+          Expanded(
+            flex: 9,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              itemCount: onboardingContents.length,
+              itemBuilder: (context, index) => Column(
+                children: [
+                  SizedBox(height: sizeV * 5),
+                  SizedBox(
+                      height: sizeV * 50,
+                      // child: Image.network(onboardingContents[index].image,
+                      //     fit: BoxFit.fill)),
+                      child: Image.asset(onboardingContents[index].image,
+                          fit: BoxFit.fill)),
+                  SizedBox(height: sizeV * 5),
+                  Text(onboardingContents[index].title,
+                      style: Constants.kTitle, textAlign: TextAlign.center),
+                  SizedBox(height: sizeV * 5),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: Constants.kBodyText1,
+                      children: [
+                        TextSpan(
+                            text:
+                                // ignore: lines_longer_than_80_chars
+                                'Choose items from our price list or skip ahead with "Instant Order" and we fill up.',
+                            style: TextStyle(color: Constants.primaryColor))
+                      ],
                     ),
-                    InkWell(
-                      onTap: () => Navigator.of(context).pushNamed('/home'),
-                      child: const Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 15.0, bottom: 15.0),
-                          child: Text(
-                            Constants.SKIP,
-                            style: TextStyle(
-                              fontFamily: Constants.OPEN_SANS,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          for (int i = 0; i < sliderArrayList.length; i++)
-                            if (i == _currentPage)
-                              SlideDots(true)
-                            else
-                              SlideDots(false)
-                        ],
-                      ),
-                    ),
-                  ],
-                )
+                  ),
+                  SizedBox(height: sizeV * 5),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                currentPage == onboardingContents.length - 1
+                    ? MyTextButton(
+                        buttonName: 'Get Started',
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/home'),
+                        bgColor: Constants.primaryColor)
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                            OnBoardNavBtn(
+                                name: 'Skip',
+                                onPressed: () =>
+                                    Navigator.of(context).pushNamed('/home')),
+                            Row(
+                                children: List.generate(
+                                    onboardingContents.length,
+                                    (index) => dotIndicator(index))),
+                            OnBoardNavBtn(
+                                name: 'Next',
+                                onPressed: () {
+                                  _pageController.nextPage(
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeInOut,
+                                  );
+                                })
+                          ]),
               ],
-            )),
-      );
+            ),
+          )
+        ],
+      )),
+    );
+  }
 }
-
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:introduction_screen/introduction_screen.dart';
-//
-// class OnBoardingPage extends StatefulWidget {
-//   const OnBoardingPage({Key? key}) : super(key: key);
-//   @override
-//   _OnBoardingPageState createState() => _OnBoardingPageState();
-// }
-//
-// class _OnBoardingPageState extends State<OnBoardingPage> {
-//   final introKey = GlobalKey<IntroductionScreenState>();
-//
-//   void _onIntroEnd(context) {
-//     Navigator.of(context).pushNamed('/categories');
-//   }
-//
-//   Widget _buildImage(String assetName, [double width = 350]) {
-//     return Image.asset('assets/$assetName', width: width);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     const bodyStyle = TextStyle(fontSize: 19.0);
-//
-//     const pageDecoration = PageDecoration(
-//       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-//       bodyTextStyle: bodyStyle,
-//       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-//       pageColor: Colors.white,
-//       imagePadding: EdgeInsets.zero,
-//     );
-//
-//     return IntroductionScreen(
-//       key: introKey,
-//       globalBackgroundColor: Colors.white,
-//       pages: [
-//         PageViewModel(
-//           title: 'Lorem Ipsum ',
-//           body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-//           // image: _buildImage('img1.jpg'),
-//           decoration: pageDecoration,
-//         ),
-//         PageViewModel(
-//           title: 'Lorem Ipsum ',
-//           bodyWidget: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: const [
-//               Text('Lorem ipsum ', style: bodyStyle),
-//               Text('dolor sit amet ', style: bodyStyle),
-//             ],
-//           ),
-//           decoration: pageDecoration,
-//           image: _buildImage('img2.jpg'),
-//         ),
-//       ],
-//       onDone: () => _onIntroEnd(context),
-//       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-//       showSkipButton: true,
-//       skipFlex: 0,
-//       nextFlex: 0,
-//       skip: const Text('Skip'),
-//       next: const Icon(Icons.arrow_forward),
-//       done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
-//       curve: Curves.fastLinearToSlowEaseIn,
-//       controlsMargin: const EdgeInsets.all(16),
-//       controlsPadding: kIsWeb
-//           ? const EdgeInsets.all(12.0)
-//           : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-//       dotsDecorator: const DotsDecorator(
-//         size: Size(10.0, 10.0),
-//         color: Color(0xFFBDBDBD),
-//         activeSize: Size(22.0, 10.0),
-//         activeShape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.all(Radius.circular(25.0)),
-//         ),
-//       ),
-//       dotsContainerDecorator: const ShapeDecoration(
-//         //color: Colors.black87,
-//         color: Colors.transparent,
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -121,10 +121,11 @@ class _AccountState extends State<Account> {
                   GestureDetector(
                       onTap: () {
                         print('LOG OUT !!!');
+                        //TODO: clear products in cart
                         //prefs.clearPrefs();
                         prefs.removePref('JWT');
                         _userProvider.setCurrentUser(null);
-                        Navigator.of(context).pushNamed('/');
+                        Navigator.of(context).pushNamed('/home');
                       },
                       child: Padding(
                           padding:

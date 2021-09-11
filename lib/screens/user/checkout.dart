@@ -16,6 +16,7 @@ import '../../widgets/InputWidgets/input_widget.dart';
 import '../../widgets/Payments/payment_options.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/common.dart';
+import '../tab_screen.dart';
 
 /// FLUTTER DROP IN
 /// https://www.coderzheaven.com/2019/04/16/dropdown-list-in-flutter/
@@ -49,7 +50,7 @@ class _CheckoutState extends State<Checkout> {
 
   bool screenLoading = false;
   bool shouldPrefil = false;
-  Location? locationValue;
+  // Location? locationValue;
 
   @override
   void initState() {
@@ -112,18 +113,21 @@ class _CheckoutState extends State<Checkout> {
                 controller: _emailController,
                 passwordVisible: false,
                 obscureText: false,
+                textInputType: TextInputType.emailAddress,
                 textValidator: FormValidate.validateEmail),
             FormInput(
                 label: AppLocalizations.of(context)!.first_name.toString(),
                 controller: _firstName,
                 passwordVisible: false,
                 obscureText: false,
+                textInputType: TextInputType.text,
                 textValidator: FormValidate.validateName),
             FormInput(
                 label: AppLocalizations.of(context)!.last_name.toString(),
                 controller: _lastName,
                 passwordVisible: false,
                 obscureText: false,
+                textInputType: TextInputType.text,
                 textValidator: FormValidate.validateName),
             // FormInput(
             //   label: 'Email Address',
@@ -138,6 +142,7 @@ class _CheckoutState extends State<Checkout> {
               controller: _phoneNumber,
               passwordVisible: false,
               obscureText: false,
+              textInputType: TextInputType.number,
               textValidator: FormValidate.validatePhoneNumber,
             ),
 
@@ -149,6 +154,8 @@ class _CheckoutState extends State<Checkout> {
                 controller: _homeAddress,
                 passwordVisible: false,
                 obscureText: false,
+                textInputType:
+                    TextInputType.streetAddress, //TextInputType.text,
                 textValidator: FormValidate.validateHomeAddress),
 
             /// list of products
@@ -165,14 +172,12 @@ class _CheckoutState extends State<Checkout> {
                               products: _laundryProvider.getCart![index])
                         ])),*/
 
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [const Text('Pickup'), const Text('Drop in')]),
+            SizedBox(height: 200, child: TabScreen()),
 
             /// Payment option list
-            _laundryProvider.getLocations!.length < 1
-                ? const CircularProgressIndicator()
-                : buildDropdown(),
+            // _laundryProvider.getLocations!.length < 1
+            //     ? const CircularProgressIndicator()
+            //     : buildDropdown(),
             const PaymentOptions(),
           ]),
         )),
@@ -232,9 +237,9 @@ class _CheckoutState extends State<Checkout> {
 
     if (form!.validate()) {
       form.save();
-      print(
-          // ignore: lines_longer_than_80_chars
-          'Location and Payment${locationValue!.location} ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
+      // print(
+      //     // ignore: lines_longer_than_80_chars
+      //     'Location and Payment${locationValue!.location} ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
       print('Details ${_emailController.text} ${_firstName.text}');
       var data = {'email': _emailController.text, 'firstname': _firstName.text};
       print('DATA $data');
@@ -257,32 +262,32 @@ class _CheckoutState extends State<Checkout> {
     _homeAddress.clear();
   }
 
-  Widget buildDropdown() => SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<Location>(
-                  //items: items
-                  // isExpanded: true,
-                  value: locationValue,
-                  hint: const Text('Select a Location'),
-                  items: _laundryProvider.getLocations!
-                      .map((item) => DropdownMenuItem<Location>(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Icon(item.icon),
-                                // const SizedBox(width: 8),
-                                Text(item.location, style: const TextStyle()),
-                                const SizedBox(width: 8),
-                                const Text('2.00', style: TextStyle())
-                              ]),
-                          value: item))
-                      .toList(),
-                  onChanged: (value) => setState(() {
-                        locationValue = value;
-                      })))));
+  // Widget buildDropdown() => SizedBox(
+  //     width: MediaQuery.of(context).size.width,
+  //     child: Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: DropdownButtonHideUnderline(
+  //             child: DropdownButton<Location>(
+  //                 //items: items
+  //                 // isExpanded: true,
+  //                 value: locationValue,
+  //                 hint: const Text('Select a Location'),
+  //                 items: _laundryProvider.getLocations!
+  //                     .map((item) => DropdownMenuItem<Location>(
+  //                         child: Row(
+  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                             children: [
+  //                               // Icon(item.icon),
+  //                               // const SizedBox(width: 8),
+  //                               Text(item.location, style: const TextStyle()),
+  //                               const SizedBox(width: 8),
+  //                               const Text('2.00', style: TextStyle())
+  //                             ]),
+  //                         value: item))
+  //                     .toList(),
+  //                 onChanged: (value) => setState(() {
+  //                       locationValue = value;
+  //                     })))));
 
   // Fetch all locations
   Future<LocationList> getAllLocations() async {

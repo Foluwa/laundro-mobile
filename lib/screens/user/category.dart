@@ -11,6 +11,7 @@ import '../../models/user.dart';
 import '../../providers/laundry_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
+import '../../utils/db/boxes.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/bottom_cart.dart';
 import '../../widgets/common.dart';
@@ -280,11 +281,40 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       });
       data = products;
       //return products;
+
+      // Persist cart
+      persistCart().then((_) => print('persist cart'));
     }).catchError((error) {
       print('ERROR CAUGHT ${error}');
       Common.showSnackBar(context, title: error.toString(), duration: 300);
       // return error;
     });
     return data;
+  }
+
+  Future persistCart() async {
+    if (_laundryProvider.getProducts != null) {
+      final cartData = Boxes.getCart();
+      // print('MAC CART KEYs IS ${cartData.keys}');
+      // print('MAC CART Values IS ${cartData.values.length}');
+      // print('MAC CART FIRST IS ${cartData.values.first}');
+      // print('MAC CART FIRST IS ${cartData.values.first.productId}');
+      // print('MAC CART FIRST IS ${cartData.values.first.qty}');
+      // print('MAC CART DB  ${cartData}');
+
+      List<Product> _baskets = [];
+      for (final inCart in cartData.values) {
+        if (inCart.qty > 0) {
+          final retrievedData = _laundryProvider.getProducts!
+              .firstWhere((i) => i.id == inCart.productId);
+          retrievedData.qty = inCart.qty;
+          print('retrievedData $retrievedData');
+          _baskets.add(retrievedData);
+        }
+      }
+
+      /// persist cart
+      _laundryProvider.persistBasket(_baskets);
+    }
   }
 }

@@ -7,9 +7,7 @@ class Utils {
   static void showSnackBar(BuildContext context, {required String title}) =>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(title),
-          duration: const Duration(milliseconds: 300),
-        ),
+            content: Text(title), duration: const Duration(milliseconds: 300)),
       );
 
   static String getCurrency(String locale) {
