@@ -11,7 +11,7 @@ import '../../models/user.dart';
 import '../../providers/laundry_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
-import '../../utils/db/boxes.dart';
+import '../../utils/boxes.dart';
 import '../../utils/size_config.dart';
 import '../../widgets/bottom_cart.dart';
 import '../../widgets/common.dart';

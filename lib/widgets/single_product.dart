@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/cart.dart';
 import '../models/products.dart';
 import '../providers/laundry_provider.dart';
-import '../utils/db/boxes.dart';
+import '../utils/boxes.dart';
 import '../utils/utils.dart';
 
 class SingleProduct extends StatefulWidget {
