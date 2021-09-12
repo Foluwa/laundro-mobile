@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:laundro/utils/size_config.dart';
 import 'package:laundro/utils/utils.dart';
 import 'package:laundro/widgets/Buttons/button_widget.dart';
+import 'package:laundro/widgets/Payments/payment_options.dart';
 import 'package:laundro/widgets/single_product.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,6 @@ import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 import '../utils/form_validator.dart';
 import '../widgets/InputWidgets/input_widget.dart';
-import '../widgets/Payments/payment_options.dart';
 import '../widgets/app_header.dart';
 import '../widgets/checkout_tab_screen.dart';
 import '../widgets/common.dart';
@@ -90,7 +90,6 @@ class _CheckoutState extends State<Checkout> {
               onCloseClicked: () => Navigator.pop(context),
               backgroundColor: const Color(0xFF607D8B))),
       body: SingleChildScrollView(
-          // physics: const ClampingScrollPhysics(),
           child: Form(
         key: _formKey,
         child: Column(children: [
@@ -142,7 +141,7 @@ class _CheckoutState extends State<Checkout> {
               controller: _homeAddress,
               passwordVisible: false,
               obscureText: false,
-              textInputType: TextInputType.streetAddress, //TextInputType.text,
+              textInputType: TextInputType.streetAddress,
               textValidator: FormValidate.validateHomeAddress),
 
           /// list of products
@@ -165,19 +164,12 @@ class _CheckoutState extends State<Checkout> {
                 ),
 
           /// Delivery tab
-          const SizedBox(height: 200, child: TabScreen()),
+          const SizedBox(height: 150, child: TabScreen()),
 
           /// Payment option list
-          // _laundryProvider.getLocations!.length < 1
-          //     ? const CircularProgressIndicator()
-          //     : buildDropdown(),
           const PaymentOptions(),
         ]),
       )),
-
-      /// Bottom sheet
-      // bottomSheet: BottomCheckout(submitForm: submitCheckoutForm));
-
       bottomSheet: Container(
         height: SizeConfig.safeBlockHorizontal * 20,
         width: double.maxFinite,
@@ -193,7 +185,6 @@ class _CheckoutState extends State<Checkout> {
                     // ignore: lines_longer_than_80_chars
                     '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
                     style: bottomCartStyle)),
-
             // Checkout Btn
             Padding(
                 padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
