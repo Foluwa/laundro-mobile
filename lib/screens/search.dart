@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/products.dart';
-import '../../providers/laundry_provider.dart';
-import '../../widgets/bottom_cart.dart';
-import '../../widgets/search_widget.dart';
-import '../../widgets/single_product.dart';
+import '../models/products.dart';
+import '../providers/laundry_provider.dart';
+import '../widgets/bottom_cart.dart';
+import '../widgets/search_widget.dart';
+import '../widgets/single_product.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);

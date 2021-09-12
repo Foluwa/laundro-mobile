@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/location.dart';
 import '../providers/laundry_provider.dart';
-import '../widgets/date_time_picker.dart';
+import 'date_time_picker.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);

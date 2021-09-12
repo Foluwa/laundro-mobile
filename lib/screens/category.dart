@@ -2,21 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../api/laundry.dart';
-import '../../api/user.dart';
-import '../../models/categories.dart';
-import '../../models/currency.dart';
-import '../../models/products.dart';
-import '../../models/user.dart';
-import '../../providers/laundry_provider.dart';
-import '../../providers/user_provider.dart';
-import '../../utils/constants.dart';
-import '../../utils/boxes.dart';
-import '../../utils/size_config.dart';
-import '../../widgets/bottom_cart.dart';
-import '../../widgets/common.dart';
-import '../../widgets/loading_list.dart';
-import '../../widgets/refresh_widget.dart';
+import '../api/laundry.dart';
+import '../api/user.dart';
+import '../models/categories.dart';
+import '../models/currency.dart';
+import '../models/products.dart';
+import '../models/user.dart';
+import '../providers/laundry_provider.dart';
+import '../providers/user_provider.dart';
+import '../utils/constants.dart';
+import '../utils/boxes.dart';
+import '../utils/size_config.dart';
+import '../widgets/bottom_cart.dart';
+import '../widgets/common.dart';
+import '../widgets/loading_list.dart';
+import '../widgets/refresh_widget.dart';
 
 class RIKeys {
   static const riKey1 = Key('__RIKEY1__');

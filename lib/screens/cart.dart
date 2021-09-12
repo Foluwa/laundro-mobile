@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/laundry_provider.dart';
-import '../../providers/user_provider.dart';
-import '../../utils/constants.dart';
-import '../../utils/size_config.dart';
-import '../../widgets/Buttons/button_widget.dart';
-import '../../widgets/app_header.dart';
-import '../../widgets/single_product.dart';
+import '../providers/laundry_provider.dart';
+import '../providers/user_provider.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
+import '../widgets/Buttons/button_widget.dart';
+import '../widgets/app_header.dart';
+import '../widgets/single_product.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);

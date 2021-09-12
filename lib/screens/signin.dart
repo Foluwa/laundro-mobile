@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../api/user.dart';
-import '../../models/user.dart';
-import '../../providers/user_provider.dart';
-import '../../utils/constants.dart';
-import '../../utils/form_validator.dart';
-import '../../utils/preferences.dart';
-import '../../widgets/Buttons/button_widget.dart';
-import '../../widgets/InputWidgets/input_widget.dart';
-import '../../widgets/app_header.dart';
-import '../../widgets/common.dart';
+import '../api/user.dart';
+import '../models/user.dart';
+import '../providers/user_provider.dart';
+import '../utils/constants.dart';
+import '../utils/form_validator.dart';
+import '../utils/preferences.dart';
+import '../widgets/Buttons/button_widget.dart';
+import '../widgets/InputWidgets/input_widget.dart';
+import '../widgets/app_header.dart';
+import '../widgets/common.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

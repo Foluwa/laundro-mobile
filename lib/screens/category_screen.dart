@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../api/laundry.dart';
-import '../../providers/laundry_provider.dart';
-import '../../utils/constants.dart';
-import '../../utils/size_config.dart';
-import '../../widgets/bottom_cart.dart';
-import '../../widgets/single_product.dart';
+import '../api/laundry.dart';
+import '../providers/laundry_provider.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
+import '../widgets/bottom_cart.dart';
+import '../widgets/single_product.dart';
 
 class CategoryScreen extends StatefulWidget {
   final dynamic subCat;

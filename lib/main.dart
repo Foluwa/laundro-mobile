@@ -24,16 +24,28 @@ Future main() async {
   Hive.registerAdapter(CartDBAdapter());
   await Hive.openBox<CartDB>('cart');
 
-  // to show status bar
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-    SystemUiOverlay.bottom,
-    SystemUiOverlay.top,
-  ]);
   // to load onboard for the first time only
   // final pref = await SharedPreferences.getInstance();
   // var seenOnboard = pref.getBool('seenOnboard') ?? false; //if null set to false
 
-  runApp(const MyApp());
+  /// OLD
+  /*
+  // to show status bar
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+    SystemUiOverlay.bottom,
+    SystemUiOverlay.top,
+    runApp(const MyApp());
+  ]);*/
+
+  /// Disable screen rotation
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  ).then((val) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

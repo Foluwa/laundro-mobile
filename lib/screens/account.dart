@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/user_provider.dart';
-import '../../utils/constants.dart';
-import '../../utils/preferences.dart';
-import '../../utils/size_config.dart';
-import '../../widgets/account_details.dart';
-import '../../widgets/account_details_auth.dart';
-import '../../widgets/app_header.dart';
-import '../../widgets/dialog.dart';
-import '../../widgets/language_picker_widget.dart';
+import '../providers/user_provider.dart';
+import '../utils/constants.dart';
+import '../utils/preferences.dart';
+import '../utils/size_config.dart';
+import '../widgets/account_details.dart';
+import '../widgets/account_details_auth.dart';
+import '../widgets/app_header.dart';
+import '../widgets/dialog.dart';
+import '../widgets/language_picker_widget.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);

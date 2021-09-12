@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/onboarding.dart';
-import 'screens/user/account.dart';
-import 'screens/user/cart.dart';
-import 'screens/user/category.dart';
-import 'screens/user/category_screen.dart';
-import 'screens/user/checkout.dart';
-import 'screens/user/order_history.dart';
-import 'screens/user/search.dart';
-import 'screens/user/signin.dart';
-import 'screens/user/signup.dart';
+import 'screens/account.dart';
+import 'screens/cart.dart';
+import 'screens/category.dart';
+import 'screens/category_screen.dart';
+import 'screens/checkout.dart';
+import 'screens/order_history.dart';
+import 'screens/search.dart';
+import 'screens/signin.dart';
+import 'screens/signup.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
