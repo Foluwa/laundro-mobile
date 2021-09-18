@@ -17,7 +17,7 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   int currentPage = 0;
 
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
   AnimatedContainer dotIndicator(index) {
     return AnimatedContainer(
@@ -39,9 +39,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   Future setSeenonboard() async {
     final prefs = await SharedPreferences.getInstance();
-    // this will set seenOnboard to true when running onboard page for first time.
+    // this will set seenOnboard
+    // to true when running onboard page for first time.
     await prefs.setBool('seenOnboard', true);
-
   }
 
   @override

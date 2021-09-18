@@ -68,9 +68,11 @@ class _SearchScreenState extends State<SearchScreen> {
       return nameLower.contains(searchLower) ||
           descriptionLower.contains(searchLower);
     }).toList();
-    setState(() {
-      this.query = query;
-      products = displayProducts;
-    });
+    if (mounted) {
+      setState(() {
+        this.query = query;
+        products = displayProducts;
+      });
+    }
   }
 }

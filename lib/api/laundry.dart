@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../models/categories.dart';
+import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
 import '../models/products.dart';

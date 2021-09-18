@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/utils/size_config.dart';
-import 'package:laundro/utils/utils.dart';
-import 'package:laundro/widgets/Buttons/button_widget.dart';
-import 'package:laundro/widgets/Payments/payment_options.dart';
-import 'package:laundro/widgets/single_product.dart';
 import 'package:provider/provider.dart';
 
 import '../api/laundry.dart';
@@ -14,10 +9,15 @@ import '../providers/laundry_provider.dart';
 import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 import '../utils/form_validator.dart';
+import '../utils/size_config.dart';
+import '../utils/utils.dart';
+import '../widgets/Buttons/button_widget.dart';
 import '../widgets/InputWidgets/input_widget.dart';
+import '../widgets/Payments/payment_options.dart';
 import '../widgets/app_header.dart';
 import '../widgets/checkout_tab_screen.dart';
 import '../widgets/common.dart';
+import '../widgets/single_product.dart';
 
 /// FLUTTER DROP IN
 /// https://www.coderzheaven.com/2019/04/16/dropdown-list-in-flutter/
@@ -164,7 +164,7 @@ class _CheckoutState extends State<Checkout> {
                 ),
 
           /// Delivery tab
-          const SizedBox(height: 150, child: TabScreen()),
+          const SizedBox(height: 200, child: TabScreen()),
 
           /// Payment option list
           const PaymentOptions(),
@@ -221,9 +221,13 @@ class _CheckoutState extends State<Checkout> {
       form.save();
       // print(
       //     // ignore: lines_longer_than_80_chars
-      //     'Location and Payment${locationValue!.location} ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
+      //     'Location and Payment${locationValue!.location}
+      //     ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
       print('Details ${_emailController.text} ${_firstName.text}');
-      var data = {'email': _emailController.text, 'firstname': _firstName.text};
+      final data = {
+        'email': _emailController.text,
+        'firstname': _firstName.text
+      };
       print('DATA $data');
     }
   }
@@ -257,11 +261,13 @@ class _CheckoutState extends State<Checkout> {
   //                 items: _laundryProvider.getLocations!
   //                     .map((item) => DropdownMenuItem<Location>(
   //                         child: Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                             mainAxisAlignment:
+  //                             MainAxisAlignment.spaceBetween,
   //                             children: [
   //                               // Icon(item.icon),
   //                               // const SizedBox(width: 8),
-  //                               Text(item.location, style: const TextStyle()),
+  //                               Text(item.location,
+  //                               style: const TextStyle()),
   //                               const SizedBox(width: 8),
   //                               const Text('2.00', style: TextStyle())
   //                             ]),

@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 
 import '../api/laundry.dart';
 import '../api/user.dart';
-import '../models/categories.dart';
+import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/products.dart';
 import '../models/user.dart';
 import '../providers/laundry_provider.dart';
 import '../providers/user_provider.dart';
-import '../utils/constants.dart';
 import '../utils/boxes.dart';
+import '../utils/constants.dart';
 import '../utils/size_config.dart';
 import '../widgets/bottom_cart.dart';
 import '../widgets/common.dart';
@@ -210,9 +210,11 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       // if (user != null) {
       //   _userProvider.setCurrentUser(user);
       // }
-      setState(() {
-        screenLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          screenLoading = false;
+        });
+      }
       data = user;
     });
     return data;
@@ -302,7 +304,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       // print('MAC CART FIRST IS ${cartData.values.first.qty}');
       // print('MAC CART DB  ${cartData}');
 
-      List<Product> _baskets = [];
+      final _baskets = <Product>[];
       for (final inCart in cartData.values) {
         if (inCart.qty > 0) {
           final retrievedData = _laundryProvider.getProducts!

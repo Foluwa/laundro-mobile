@@ -1,4 +1,4 @@
-import 'sub_categories.dart';
+import 'sub_category.dart';
 
 class CategoryList {
   List<Category> category;

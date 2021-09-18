@@ -205,11 +205,13 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                     color: Colors.red,
                     btnStatus: false,
                     onClicked: () {
-                      setState(() {
-                        btnLoading = false;
-                        _status = true;
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      });
+                      if (mounted) {
+                        setState(() {
+                          btnLoading = false;
+                          _status = true;
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        });
+                      }
                     },
                     style: const TextStyle(),
                     paddingValue: 8,
@@ -233,9 +235,11 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
                 size: 16.0,
               )),
       onTap: () {
-        setState(() {
-          _status = false;
-        });
+        if (mounted) {
+          setState(() {
+            _status = false;
+          });
+        }
       },
     );
   }

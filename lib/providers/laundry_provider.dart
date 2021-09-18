@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../models/categories.dart';
+import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
 import '../models/products.dart';
@@ -70,7 +70,8 @@ class LaundryProvider extends ChangeNotifier {
   void addOneItemToCart(Product p) {
     // check if already in basket
     // if in basket increament by one
-    // Product found = _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
+    // Product found =
+    // _baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
     final found = _baskets.firstWhereOrNull((a) => a.id == p.id);
     print('FOUND IS $found');
     if (found != null) {

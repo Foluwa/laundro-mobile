@@ -49,20 +49,18 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // _laundryProvider = Provider.of<LaundryProvider>(context);
     return Column(children: [
       SizedBox(
-        width: 500,
-        child: CupertinoSegmentedControl(
-          padding: EdgeInsets.all(15),
-          children: _tabs,
-          onValueChanged: _tabChanged,
-          borderColor: Colors.teal,
-          selectedColor: Colors.teal,
-          unselectedColor: Colors.white,
-          groupValue: _selectedIndex,
-        ),
-      ),
+          width: 500,
+          child: CupertinoSegmentedControl(
+            padding: const EdgeInsets.all(15),
+            children: _tabs,
+            onValueChanged: _tabChanged,
+            borderColor: Colors.teal,
+            selectedColor: Colors.teal,
+            unselectedColor: Colors.white,
+            groupValue: _selectedIndex,
+          )),
       Expanded(child: _showSelectedView()),
     ]);
   }
@@ -71,13 +69,13 @@ class _TabScreenState extends State<TabScreen> {
     var _selectedView;
     switch (_selectedIndex) {
       case 0:
-        _selectedView = PickUp();
+        _selectedView = const PickUp();
         break;
       // case 1:
       //   _selectedView = DropIn();
       //   break;
       default:
-        _selectedView = DropIn();
+        _selectedView = const DropIn();
         break;
     }
     return _selectedView;
@@ -85,6 +83,8 @@ class _TabScreenState extends State<TabScreen> {
 }
 
 class PickUp extends StatefulWidget {
+  const PickUp({Key? key}) : super(key: key);
+
   @override
   State<PickUp> createState() => _PickUpState();
 }
@@ -138,16 +138,6 @@ class DropIn extends StatefulWidget {
 class _DropInState extends State<DropIn> {
   @override
   Widget build(BuildContext context) {
-    return DateTimePicker();
-    // return SizedBox(
-    //   // height: 200,
-    //   child: CupertinoDatePicker(
-    //     mode: CupertinoDatePickerMode.date,
-    //     initialDateTime: DateTime(1969, 1, 1),
-    //     onDateTimeChanged: (DateTime newDateTime) {
-    //       // Do something
-    //     },
-    //   ),
-    // );
+    return const DateTimePicker();
   }
 }

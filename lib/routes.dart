@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/screens/single_order.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'screens/onboarding.dart';
 import 'screens/account.dart';
 import 'screens/cart.dart';
 import 'screens/category.dart';
 import 'screens/category_screen.dart';
 import 'screens/checkout.dart';
+import 'screens/onboarding.dart';
 import 'screens/order_history.dart';
 import 'screens/search.dart';
 import 'screens/signin.dart';
@@ -35,6 +36,9 @@ class RouteGenerator {
       case '/order_history':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const OrderHistory());
+      case '/single_order':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop, child: SingleOrder());
       case '/account':
         return PageTransition(
             type: PageTransitionType.topToBottom, child: const Account());

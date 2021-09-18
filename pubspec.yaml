@@ -37,6 +37,7 @@ dependency_overrides:
 #  cached_network_image: ^3.1.0
   cupertino_icons: ^1.0.3
   dio: ^4.0.0
+#  flutter_showcase:
   google_fonts: ^2.1.0
 #  introduction_screen: ^2.1.0
 #  liquid_swipe: ^2.0.2
@@ -44,11 +45,10 @@ dependency_overrides:
   hive_flutter: ^1.1.0
   page_transition: ^2.0.2
   path: ^1.8.0
-#  path_provider: ^2.0.3
   provider: ^5.0.0
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
-#  sqflite: ^2.0.0+3
+  timeline_tile: ^2.0.0
   url_launcher: ^6.0.9
 
 dev_dependencies:
@@ -84,3 +84,4 @@ flutter:
   assets:
       - assets/
       - assets/images/
+      - assets/images/delivery/

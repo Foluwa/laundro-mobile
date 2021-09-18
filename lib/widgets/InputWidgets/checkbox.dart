@@ -25,9 +25,11 @@ class _CheckboxOptionState extends State<CheckboxOption> {
       value: widget.checkedValue,
       //onChanged: widget.onPressed,
       onChanged: (newValue) {
-        setState(() {
-          widget.checkedValue = newValue!;
-        });
+        if (mounted) {
+          setState(() {
+            widget.checkedValue = newValue!;
+          });
+        }
       },
       controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
     );

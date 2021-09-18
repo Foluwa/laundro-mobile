@@ -23,8 +23,8 @@ class Constants {
   static String baseUrl =
       'https://laundro-staging-api.herokuapp.com'; // without slash
 
-  Color kPrimaryColor = Color(0xffFC9D45);
-  Color kSecondaryColor = Color(0xff573353);
+  Color kPrimaryColor = const Color(0xffFC9D45);
+  Color kSecondaryColor = const Color(0xff573353);
 
   static final kTitle = TextStyle(
     fontFamily: 'Klasik',
