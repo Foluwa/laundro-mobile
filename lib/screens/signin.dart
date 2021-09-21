@@ -78,13 +78,40 @@ class _SignInState extends State<SignIn> {
                   textInputType: TextInputType.text,
                   textValidator: FormValidate.validatePassword,
                 ),
-                ButtonWidget(
-                    text: 'Sign In',
-                    onClicked: () => btnLoading ? null : userSignIn(),
-                    color: Colors.amber,
-                    paddingValue: 6.0,
-                    btnStatus: btnLoading,
-                    style: const TextStyle())
+                // ButtonWidget(
+                //     text: 'Sign In',
+                //     onClicked: () => btnLoading ? null : userSignIn(),
+                //     color: Colors.amber,
+                //     paddingValue: 6.0,
+                //     btnStatus: btnLoading,
+                //     style: const TextStyle())
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                  child: MaterialButton(
+                    elevation: 5.0,
+                    shape: btnLoading
+                        ? const CircleBorder()
+                        : RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9.0)),
+                    onPressed: () => btnLoading ? null : userSignIn(),
+                    padding: const EdgeInsets.all(12),
+                    color: Constants.bgColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: btnLoading
+                          ? CircularProgressIndicator(
+                              backgroundColor: Constants.white,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  Colors.yellow))
+                          : const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 18.0),
+                            ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

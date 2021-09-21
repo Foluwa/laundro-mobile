@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/screens/single_order.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/account.dart';
@@ -13,6 +12,7 @@ import 'screens/order_history.dart';
 import 'screens/search.dart';
 import 'screens/signin.dart';
 import 'screens/signup.dart';
+import 'screens/single_order.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -38,7 +38,7 @@ class RouteGenerator {
             type: PageTransitionType.bottomToTop, child: const OrderHistory());
       case '/single_order':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: SingleOrder());
+            type: PageTransitionType.bottomToTop, child: const SingleOrder());
       case '/account':
         return PageTransition(
             type: PageTransitionType.topToBottom, child: const Account());

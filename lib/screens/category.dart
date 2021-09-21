@@ -6,7 +6,7 @@ import '../api/laundry.dart';
 import '../api/user.dart';
 import '../models/category.dart';
 import '../models/currency.dart';
-import '../models/products.dart';
+import '../models/product.dart';
 import '../models/user.dart';
 import '../providers/laundry_provider.dart';
 import '../providers/user_provider.dart';
@@ -95,8 +95,14 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
               return subCategories!.length < 1
                   ? Container()
                   : Tab(
-                      icon: const Icon(Icons.local_laundry_service_outlined),
-                      // text: title.Name,
+                      // // icon: const Icon(Icons.local_laundry_service_outlined),
+                      // icon: Image.network(
+                      //   'https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/2x/external-laundry-hygiene-kiranshastry-lineal-color-kiranshastry-2.png',
+                      //   width: 40.0,
+                      //   height: 40.0,
+                      // ),
+                      // // text: 'laundry image',
+                      // // text: title.Name,
                       child: Align(
                           alignment: Alignment.center,
                           child: Text(title.Name,

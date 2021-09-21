@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/order_timeline.dart';
 
 import '../widgets/app_header.dart';
+import '../widgets/order_timeline.dart';
 
 class SingleOrder extends StatefulWidget {
-  // const SingleOrder({required Key key}) : super(key: key);
+  const SingleOrder({Key? key}) : super(key: key);
 
   @override
   _SingleOrderState createState() => _SingleOrderState();

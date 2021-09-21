@@ -13,21 +13,24 @@ class LocationList {
 class Location {
   int id;
   String location;
+  double price;
 
   Location({
     required this.id,
     required this.location,
+    required this.price,
   });
 
   factory Location.fromJson(Map<String, dynamic> location) {
     return Location(
       id: location['id'],
       location: location['Place'],
+      price: location['Price'],
     );
   }
 
   @override
   String toString() {
-    return 'id: ${id}, location: ${location}';
+    return 'id: ${id}, location: ${location}, price: ${price}';
   }
 }

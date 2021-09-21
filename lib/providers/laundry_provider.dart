@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
-import '../models/products.dart';
+import '../models/product.dart';
 import '../widgets/Payments/payment_options.dart';
 
 class LaundryProvider extends ChangeNotifier {

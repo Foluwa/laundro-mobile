@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cart.dart';
-import '../models/products.dart';
+import '../models/product.dart';
 import '../providers/laundry_provider.dart';
 import '../utils/boxes.dart';
 import '../utils/utils.dart';

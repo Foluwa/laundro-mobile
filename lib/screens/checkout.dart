@@ -61,6 +61,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   bool btnLoading = false;
+  bool checkoutBtnLoading = false;
 
   final bottomCartStyle = TextStyle(
     color: Constants.white,
@@ -197,17 +198,46 @@ class _CheckoutState extends State<Checkout> {
                         btnStatus: btnLoading,
                         style: const TextStyle())
                     // TODO: proceed to payment
-                    : ButtonWidget(
-                        text: AppLocalizations.of(context)!.checkout.toString(),
-                        // onClicked: () => btnLoading ? null : checkoutCart(),
-                        onClicked: submitCheckoutForm,
-                        // onClicked: () {
-                        //   print('I was cliecked!!');
-                        // },
-                        color: Colors.amber,
-                        paddingValue: 6.0,
-                        btnStatus: btnLoading,
-                        style: const TextStyle())),
+                    // : ButtonWidget(
+                    //     text: AppLocalizations.of(context)!.checkout.toString(),
+                    //     // onClicked: () => btnLoading ? null : checkoutCart(),
+                    //     onClicked: submitCheckoutForm,
+                    //     // onClicked: () {
+                    //     //   print('I was cliecked!!');
+                    //     // },
+                    //     color: Colors.amber,
+                    //     paddingValue: 6.0,
+                    //     btnStatus: btnLoading,
+                    //     style: const TextStyle())),
+
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3.0),
+                        child: MaterialButton(
+                          elevation: 5.0,
+                          shape: checkoutBtnLoading
+                              ? const CircleBorder()
+                              : RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9.0)),
+                          onPressed: () =>
+                              checkoutBtnLoading ? null : checkoutCart(),
+                          padding: const EdgeInsets.all(3.0),
+                          color: Constants.bgColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: checkoutBtnLoading
+                                ? CircularProgressIndicator(
+                                    backgroundColor: Constants.white,
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                            Colors.yellow))
+                                : const Text(
+                                    'Checkout',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18.0),
+                                  ),
+                          ),
+                        ),
+                      )),
           ],
         ),
       ),
@@ -301,5 +331,11 @@ class _CheckoutState extends State<Checkout> {
       // return error;
     });
     return data;
+  }
+
+  void checkoutCart() {
+    setState(() {
+      checkoutBtnLoading = true;
+    });
   }
 }

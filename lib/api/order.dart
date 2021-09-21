@@ -1,20 +1,28 @@
+import 'package:dio/dio.dart';
+
+import 'interceptors/auth_interceptor.dart';
+
 class OrderApi {
-  // Dio _dio;
-  // bool addAccessToken;
+  late Dio _dio;
+  late bool addAccessToken;
   OrderApi() {
-    //print('Access Token $addAccessToken');
-    // final options = BaseOptions(
-    //   connectTimeout: 100000,
-    //   receiveTimeout: 80000,
-    // );
-    // _dio = Dio(options);
-    // if (this.addAccessToken) {
-    //   print('adding interceptor');
-    //   _dio.interceptors.add(AuthInterceptor());
-    // }
+    print('Access Token $addAccessToken');
+    final options = BaseOptions(
+      connectTimeout: 100000,
+      receiveTimeout: 80000,
+    );
+    _dio = Dio(options);
+    if (addAccessToken) {
+      print('adding interceptor');
+      _dio.interceptors.add(AuthInterceptor());
+    }
   }
 
-  /// Fetch Categories and Sub-Categories
+  /// Fetch Orders
+
+  /// Create Orders
+
+  /// Update Orders
   // Future<Orders> fetchUserOrders() async {
   //   print('FetchCategories WAS CALLED');
   //   try {

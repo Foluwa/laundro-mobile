@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
-import '../models/products.dart';
+import '../models/product.dart';
 import '../utils/api_routes.dart';
 import 'Exceptions/dio_exception.dart';
 
