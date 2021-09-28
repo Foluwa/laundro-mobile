@@ -19,7 +19,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  LaundryApi api = LaundryApi();
+  LaundryApi api = LaundryApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   bool screenLoading = true;
   late List _products;

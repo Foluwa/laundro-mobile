@@ -32,7 +32,7 @@ class CategoryWidgetList extends StatefulWidget {
 }
 
 class _CategoryWidgetListState extends State<CategoryWidgetList> {
-  LaundryApi api = LaundryApi();
+  LaundryApi api = LaundryApi(addAccessToken: false);
   UserApi userApi = UserApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();

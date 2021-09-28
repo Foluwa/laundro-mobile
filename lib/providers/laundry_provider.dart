@@ -14,6 +14,7 @@ class LaundryProvider extends ChangeNotifier {
   List<Location> _locations = [];
   Currency? _currency;
   PaymentPlatforms? _selectedPayment;
+  Location? _userSelectedLocation;
 
   /// Return gets
   List<Product>? get getProducts => _products;
@@ -22,6 +23,13 @@ class LaundryProvider extends ChangeNotifier {
   List<Location>? get getLocations => _locations;
   Currency? get getCurrency => _currency;
   PaymentPlatforms? get getSelectedPayment => _selectedPayment;
+  Location? get getSelectedLocation => _userSelectedLocation;
+
+  /// Set user selected location
+  void setUserLocation(location){
+    _userSelectedLocation = location;
+    notifyListeners();
+  }
 
   /// Add multiple products to cart to persist cart
   void persistBasket(data) {

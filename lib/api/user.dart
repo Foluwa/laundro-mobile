@@ -8,7 +8,7 @@ import 'Exceptions/dio_exception.dart';
 import 'interceptors/auth_interceptor.dart';
 
 class UserApi {
-  Dio? _dio;
+  late Dio _dio;
   bool? addAccessToken;
   Preference prefs = Preference();
   UserApi({required bool addAccessToken}) {
@@ -20,7 +20,7 @@ class UserApi {
     _dio = Dio(options);
     if (addAccessToken == true) {
       print('adding interceptor');
-      _dio!.interceptors.add(AuthInterceptor());
+      _dio.interceptors.add(AuthInterceptor());
     }
   }
 
@@ -29,7 +29,7 @@ class UserApi {
     try {
       ///TODO: Ask isreal how to add access token to request in flutter
       // final response = await Dio().get(ApiRoutes.verifyMe);
-      final response = await _dio!.get(ApiRoutes.verifyMe);
+      final response = await _dio.get(ApiRoutes.verifyMe);
       // if (response.statusCode == 200) {
       //   // print('Currency ${response.data}');
       //   // print('HERE ${Currency.fromJson(response.data)}');
@@ -47,7 +47,7 @@ class UserApi {
     print('REGISTER WAS CALLED $data');
     try {
       print('ATTEMPTING POST');
-      final response = await Dio().post(ApiRoutes.register, data: data);
+      final response = await _dio.post(ApiRoutes.register, data: data);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('statusCode ${response.statusCode}');
         print('response ${response.data['user']}');
@@ -78,7 +78,7 @@ class UserApi {
   Future<User> authenticateUser(data) async {
     try {
       // final response = await Dio().post(ApiRoutes.login, data: data);
-      final response = await _dio!.post(ApiRoutes.login, data: data);
+      final response = await _dio.post(ApiRoutes.login, data: data);
       // if (response.statusCode == 200 || response.statusCode == 201) {
       print('statusCode ${response.statusCode}');
       print('response ${response.data['user']}');
@@ -106,7 +106,7 @@ class UserApi {
       print('API_LEVEL DATA ${data}');
       //await Dio().put('${ApiRoutes.user}/${userId}', data: data);
       final response =
-          await _dio!.put('${ApiRoutes.user}/${userId}', data: data);
+          await _dio.put('${ApiRoutes.user}/${userId}', data: data);
       print('response $response');
       print('responseDATA ${response.data}');
       return User.fromJson(response.data);
@@ -129,7 +129,7 @@ class UserApi {
   /// Forgot password
   Future forgotPassword(data) async {
     try {
-      final response = await Dio().post(ApiRoutes.forgotPassword, data: data);
+      final response = await _dio.post(ApiRoutes.forgotPassword, data: data);
       print('statusCode ${response.statusCode}');
       // print('response ${response.data['user']}');
       // return response.data;
@@ -149,7 +149,7 @@ class UserApi {
   /// Fetch currency
   Future<Currency> fetchCurrency() async {
     try {
-      final response = await Dio().get(ApiRoutes.currency);
+      final response = await _dio.get(ApiRoutes.currency);
       // if (response.statusCode == 200) {
       //   // print('Currency ${response.data}');
       //   // print('HERE ${Currency.fromJson(response.data)}');

@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:laundro/utils/api_routes.dart';
 
+import 'Exceptions/dio_exception.dart';
 import 'interceptors/auth_interceptor.dart';
 
 class OrderApi {
   late Dio _dio;
-  late bool addAccessToken;
-  OrderApi() {
+  bool? addAccessToken;
+  OrderApi({required bool addAccessToken}) {
     print('Access Token $addAccessToken');
     final options = BaseOptions(
       connectTimeout: 100000,
@@ -21,6 +23,21 @@ class OrderApi {
   /// Fetch Orders
 
   /// Create Orders
+  Future createOrder(data) async {
+    print('REGISTER WAS CALLED $data');
+    try {
+      final response = await _dio.post(ApiRoutes.orders, data: data);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('response.data ${response.data}');
+        return response.data;
+      }
+    } on DioError catch (error) {
+      print('ERROR WAS KNOCKED! ${error}');
+      print('error WAS ! ${error.response}');
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
 
   /// Update Orders
   // Future<Orders> fetchUserOrders() async {

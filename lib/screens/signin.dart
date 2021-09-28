@@ -10,7 +10,6 @@ import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 import '../utils/form_validator.dart';
 import '../utils/preferences.dart';
-import '../widgets/Buttons/button_widget.dart';
 import '../widgets/InputWidgets/input_widget.dart';
 import '../widgets/app_header.dart';
 import '../widgets/common.dart';
@@ -38,7 +37,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     _userProvider = Provider.of<UserProvider>(context);
-    emailController.text = 'moronfoluwaakintola@gmail.com';
+    emailController.text = 'adeoyeakin14@gmail.com';
     passwordController.text = 'postman';
     return Scaffold(
       appBar: PreferredSize(

@@ -23,9 +23,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // ignore: lines_longer_than_80_chars
         ListTile(
           title: Text(
+              // ignore: lines_longer_than_80_chars
               'Date:  ${pickedDate.day}-${pickedDate.month}-${pickedDate.year}'),
           trailing: const Icon(Icons.keyboard_arrow_down),
           onTap: _pickDate,

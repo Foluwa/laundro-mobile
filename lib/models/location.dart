@@ -3,9 +3,9 @@ class LocationList {
   LocationList({required this.location});
 
   factory LocationList.fromJson(location) {
-    print('INSIDE LocationList $location');
     final operations = location as List;
     final data = operations.map((f) => Location.fromJson(f)).toList();
+    print('INSIDE LocationList $data');
     return LocationList(location: data);
   }
 }
@@ -25,12 +25,12 @@ class Location {
     return Location(
       id: location['id'],
       location: location['Place'],
-      price: location['Price'],
+      price: location['Price'].toDouble(),
     );
   }
 
   @override
   String toString() {
-    return 'id: ${id}, location: ${location}, price: ${price}';
+    return 'id: ${id}, location: ${location}, price: ${price.toDouble()}';
   }
 }

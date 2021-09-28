@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:laundro/utils/boxes.dart';
 import 'package:provider/provider.dart';
 
 import '../api/laundry.dart';
+import '../api/order.dart';
 import '../models/location.dart';
 import '../providers/laundry_provider.dart';
 import '../providers/user_provider.dart';
@@ -38,7 +40,8 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
-  LaundryApi api = LaundryApi();
+  LaundryApi api = LaundryApi(addAccessToken: true);
+  OrderApi orderAPI = OrderApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
   final _formKey = GlobalKey<FormState>();
@@ -48,6 +51,7 @@ class _CheckoutState extends State<Checkout> {
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
   final TextEditingController _homeAddress = TextEditingController();
+  final TextEditingController _orderNotes = TextEditingController();
 
   bool screenLoading = false;
   bool shouldPrefil = false;
@@ -167,6 +171,18 @@ class _CheckoutState extends State<Checkout> {
           /// Delivery tab
           const SizedBox(height: 200, child: TabScreen()),
 
+          /// Order Notes
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                  controller: _orderNotes,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  minLines: 2,
+                  maxLines: 15,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), hintText: 'Order notes'))),
+
           /// Payment option list
           const PaymentOptions(),
         ]),
@@ -213,38 +229,36 @@ class _CheckoutState extends State<Checkout> {
                     : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 3.0),
                         child: MaterialButton(
-                          elevation: 5.0,
-                          shape: checkoutBtnLoading
-                              ? const CircleBorder()
-                              : RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(9.0)),
-                          onPressed: () =>
-                              checkoutBtnLoading ? null : checkoutCart(),
-                          padding: const EdgeInsets.all(3.0),
-                          color: Constants.bgColor,
-                          child: Padding(
+                            elevation: 5.0,
+                            shape: checkoutBtnLoading
+                                ? const CircleBorder()
+                                : RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(9.0)),
+                            onPressed: () =>
+                                checkoutBtnLoading ? null : checkoutCart(),
                             padding: const EdgeInsets.all(3.0),
-                            child: checkoutBtnLoading
-                                ? CircularProgressIndicator(
-                                    backgroundColor: Constants.white,
-                                    valueColor:
-                                        const AlwaysStoppedAnimation<Color>(
-                                            Colors.yellow))
-                                : const Text(
-                                    'Checkout',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18.0),
-                                  ),
-                          ),
-                        ),
-                      )),
+                            color: Constants.bgColor,
+                            child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: checkoutBtnLoading
+                                    ? CircularProgressIndicator(
+                                        backgroundColor: Constants.white,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                                Colors.yellow))
+                                    : const Text(
+                                        'Checkout',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.0),
+                                      ))))),
           ],
         ),
       ),
     );
   }
 
-  void submitCheckoutForm() async {
+  /*void submitCheckoutForm() async {
     final form = _formKey.currentState;
 
     if (form!.validate()) {
@@ -260,7 +274,7 @@ class _CheckoutState extends State<Checkout> {
       };
       print('DATA $data');
     }
-  }
+  }*/
 
   void prefillForm() {
     _emailController.text = _userProvider.getUser!.email;
@@ -308,6 +322,7 @@ class _CheckoutState extends State<Checkout> {
   //                     })))));
 
   // Fetch all locations
+
   Future<LocationList> getAllLocations() async {
     if (mounted) {
       setState(() {
@@ -333,9 +348,32 @@ class _CheckoutState extends State<Checkout> {
     return data;
   }
 
-  void checkoutCart() {
+  void checkoutCart() async {
     setState(() {
       checkoutBtnLoading = true;
     });
+
+    final cartData = Boxes.getCart();
+
+    var data = {
+      'order_first_name': _firstName.text,
+      'order_last_name': _lastName.text,
+      'order_phone_number': _phoneNumber.text,
+      'order_address': _homeAddress.text,
+      'order_notes': _orderNotes.text,
+      'drop_in_time': '2021-09-29T15:48:58.000Z',
+      'delivery_pickup_time': '2021-09-28T15:48:58.000Z',
+      'products': cartData,
+      'location': _laundryProvider.getSelectedLocation!.id,
+      'payment_method': 'stripe',
+    };
+
+    print('ORDER $data');
+
+    // await orderAPI.createOrder(data).then((response) {
+    //   print('RESPONSE $response');
+    // });
   }
+
+  //
 }

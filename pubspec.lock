@@ -235,13 +235,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  flutter_paystack:
-    dependency: "direct overridden"
-    description:
-      name: flutter_paystack
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.5+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -252,6 +245,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutterwave:
+    dependency: "direct overridden"
+    description:
+      name: flutterwave
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -656,6 +656,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  tripledes_nullsafety:
+    dependency: transitive
+    description:
+      name: tripledes_nullsafety
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   typed_data:
     dependency: transitive
     description:
@@ -733,6 +740,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.13"
   win32:
     dependency: transitive
     description:

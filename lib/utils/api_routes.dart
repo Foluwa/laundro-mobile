@@ -23,4 +23,7 @@ class ApiRoutes {
   static String categories = '$baseUrl/categories';
   static String sub_categories = '$baseUrl/sub-categories';
   static String currency = '$baseUrl/currency';
+
+  /// ORDERS
+  static String orders = '$baseUrl/orders';
 }

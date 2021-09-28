@@ -37,7 +37,8 @@ dependency_overrides:
 #  cached_network_image: ^3.1.0
   cupertino_icons: ^1.0.3
   dio: ^4.0.0
-  flutter_paystack: ^1.0.5+1
+#  flutter_paystack: ^1.0.5+1
+  flutterwave: ^1.0.1
 #  flutter_showcase:
   google_fonts: ^2.1.0
 #  introduction_screen: ^2.1.0

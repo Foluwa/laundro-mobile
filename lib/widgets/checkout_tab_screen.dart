@@ -1,6 +1,6 @@
-//https://sravanpabolu.medium.com/create-a-tabbar-without-defaulttabcontroller-in-flutter-831b680335e2
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/location.dart';
@@ -119,12 +119,18 @@ class _PickUpState extends State<PickUp> {
                             // const SizedBox(width: 8),
                             Text(item.location, style: const TextStyle()),
                             const SizedBox(width: 8),
-                            const Text('2.00', style: TextStyle())
+                            Text(
+                                // ignore: lines_longer_than_80_chars
+                                '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)}${item.price.toString()}',
+                                style: const TextStyle())
                           ]),
                       value: item))
                   .toList(),
               onChanged: (value) => setState(() {
                     locationValue = value;
+
+                    // set location in state
+                    _laundryProvider.setUserLocation(value);
                   }))));
 }
 
