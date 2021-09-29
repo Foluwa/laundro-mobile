@@ -26,4 +26,7 @@ class ApiRoutes {
 
   /// ORDERS
   static String orders = '$baseUrl/orders';
+
+  /// Flutterwave
+  static String flutterwave = '$baseUrl/flutterwave';
 }

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:laundro/models/order.dart';
+import 'package:laundro/models/payment/flutterwave.dart';
 import 'package:laundro/utils/api_routes.dart';
 
 import 'Exceptions/dio_exception.dart';
@@ -21,6 +23,19 @@ class OrderApi {
   }
 
   /// Fetch Orders
+  Future<OrderList> fetchUserOrders() async {
+    print('FetchCategories WAS CALLED');
+    try {
+      final response = await _dio.get(ApiRoutes.orders);
+      print('AKIN ${response}');
+      print('FOLUWA  ${response.data}');
+      return OrderList.fromJson(response.data);
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+
+      throw Exception('$errorMessage');
+    }
+  }
 
   /// Create Orders
   Future createOrder(data) async {
@@ -34,6 +49,19 @@ class OrderApi {
     } on DioError catch (error) {
       print('ERROR WAS KNOCKED! ${error}');
       print('error WAS ! ${error.response}');
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
+
+  /// Fetch API keys
+  Future<Flutterwave> fetchFlutterWaveKeys() async {
+    print('fetchFlutterWaveKeys WAS CALLED');
+    try {
+      final response = await _dio.get(ApiRoutes.flutterwave);
+      print('Flutterwave Keys ${response}');
+      return Flutterwave.fromJson(response.data);
+    } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw Exception('$errorMessage');
     }

@@ -38,7 +38,8 @@ class RouteGenerator {
             type: PageTransitionType.bottomToTop, child: const OrderHistory());
       case '/single_order':
         return PageTransition(
-            type: PageTransitionType.bottomToTop, child: const SingleOrder());
+            type: PageTransitionType.bottomToTop,
+            child: SingleOrder(order: args));
       case '/account':
         return PageTransition(
             type: PageTransitionType.topToBottom, child: const Account());

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:laundro/models/payment/flutterwave.dart';
 import 'package:laundro/utils/boxes.dart';
+import 'package:laundro/widgets/Payments/flutterwave_payment.dart';
 import 'package:provider/provider.dart';
 
 import '../api/laundry.dart';
@@ -61,6 +63,7 @@ class _CheckoutState extends State<Checkout> {
   void initState() {
     super.initState();
     getAllLocations().then((_) => print('fetch locations'));
+    getFlutterwaveKeys().then((_) => print('fetch fluttwerwave'));
     // locationValue = initialVal;
   }
 
@@ -323,6 +326,17 @@ class _CheckoutState extends State<Checkout> {
 
   // Fetch all locations
 
+  void _bottomSheetMore(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (builder) {
+        return const FlutterwavePayment(
+          title: 'Foluwa Fulttewww',
+        );
+      },
+    );
+  }
+
   Future<LocationList> getAllLocations() async {
     if (mounted) {
       setState(() {
@@ -349,31 +363,74 @@ class _CheckoutState extends State<Checkout> {
   }
 
   void checkoutCart() async {
-    setState(() {
-      checkoutBtnLoading = true;
-    });
+    print('PRINT USER CLICKED SIGNOUT');
+    final form = _formKey.currentState;
 
-    final cartData = Boxes.getCart();
+    if (form!.validate()) {
+      form.save();
 
-    var data = {
-      'order_first_name': _firstName.text,
-      'order_last_name': _lastName.text,
-      'order_phone_number': _phoneNumber.text,
-      'order_address': _homeAddress.text,
-      'order_notes': _orderNotes.text,
-      'drop_in_time': '2021-09-29T15:48:58.000Z',
-      'delivery_pickup_time': '2021-09-28T15:48:58.000Z',
-      'products': cartData,
-      'location': _laundryProvider.getSelectedLocation!.id,
-      'payment_method': 'stripe',
-    };
+      if (mounted) {
+        setState(() {
+          checkoutBtnLoading = true;
+        });
+      }
 
-    print('ORDER $data');
+      final cartData = Boxes.getCart();
+      //final result = cartData.values.cast<Map<CartDB, dynamic>>();
 
-    // await orderAPI.createOrder(data).then((response) {
-    //   print('RESPONSE $response');
-    // });
+      // final result = <List>[];
+      // for (final inCart in cartData.values) {
+      //   result.add(inCart);
+      // }
+      final result = [
+        {'id': 11, 'qty': 2},
+        {'id': 10, 'qty': 4},
+        {'id': 5, 'qty': 6}
+      ];
+
+      print('ROQEEB ${result}');
+
+      var data = {
+        'order_first_name': _firstName.text,
+        'order_last_name': _lastName.text,
+        'order_phone_number': _phoneNumber.text,
+        'order_address': _homeAddress.text,
+        'order_notes': _orderNotes.text,
+        'is_drop_in': true,
+
+        'drop_in_time': '2021-09-29T15:48:58.000Z',
+        'delivery_pickup_time': '2021-09-28T15:48:58.000Z',
+        'location_id': 1,
+
+        'delivery_address': _homeAddress.text,
+        'user_products': result, //cartData,
+        'location': _laundryProvider.getSelectedLocation!.id,
+        'payment_method': 'stripe',
+      };
+
+      print('ORDER $data');
+
+      await orderAPI.createOrder(data).then((response) {
+        print('CREATE ORDER RESPONSE $response');
+        setState(() {
+          checkoutBtnLoading = false;
+        });
+        _bottomSheetMore(context);
+      });
+    }
   }
 
-  //
+  /// Fetch Payment API keys
+  Future<Flutterwave> getFlutterwaveKeys() async {
+    var keys;
+    await orderAPI.fetchFlutterWaveKeys().then((keys) {
+      print('KEYS ${keys}');
+      print('KEYS ${keys.encryptionKey}');
+      return keys;
+    }).catchError((error) {
+      print('ERROR CAUGHT ${error}');
+      Common.showSnackBar(context, title: error.toString(), duration: 300);
+    });
+    return keys;
+  }
 }

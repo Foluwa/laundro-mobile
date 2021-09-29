@@ -1,107 +1,102 @@
-// import 'location.dart';
-// import 'product.dart';
-//
-// /// User [
-// // [User] User [User making the request]
-// // [String] Order Id
-// // [String] Email Address
-// // [String] First Name [User the request is being made for]
-// // [String] Last Name
-// // [Long Number] Phone Number
-// // [String] Home Address
-//
-// /// Product
-// // [Products] Products
-//
-// /// Location
-// // [String] Home Region
-// // ________________
-// // [String] delivery Price
-//
-// /// ORDER
-// // [String] Status
-// // Delivery Address
-// // Additional Notes
-// // [Bool] isDropIn
-// // [String] payment_method  (Platform)
-// // ________________
-// // [Double] Product Price
-// // [Double] Total [Home Price + Product Price]
-//
-// // [String] Created_date
-// // [String] Updated_date
-//
-// /// ProductList
-// class OrderList {
-//   List<Order> order;
-//   OrderList({required this.order});
-//
-//   factory OrderList.fromJson(product) {
-//     print('INSIDE OrderList $product');
-//     final operations = product as List;
-//     final data = operations.map((f) => Order.fromJson(f)).toList();
-//     return OrderList(order: data);
-//   }
-// }
-//
-// class Order {
-//   int id;
-//   String order_id;
-//   String payment_method;
-//   Location user_location;
-//   double total_price;
-//   double delivery_price;
-//   String additional_notes;
-//   String delivery_address;
-//   String delivery_pickup_time;
-//   bool is_drop_in;
-//   bool drop_in_time;
-//   Product product;
-//   //User user;
-//
-//   Order({
-//     required this.id,
-//     required this.order_id,
-//     required this.description,
-//     required this.price,
-//     required this.sub_category_id,
-//     required this.qty,
-//   });
-//
-//   factory Order.fromJson(Map<String, dynamic> order) {
-//     // print('PRICE: ${product['Price']}');
-//     return Order(
-//       id: order['id'],
-//       name: order['Name'],
-//       description: order['Description'],
-//       price: order['Price'].toDouble(),
-//       sub_category_id: order['sub_category']['id'],
-//       qty: 0,
-//     );
-//   }
-//
-//   Order.fromMap(Map<String, dynamic> res)
-//       : id = res['id'],
-//         name = res['name'],
-//         description = res['description'],
-//         price = res['price'],
-//         sub_category_id = res['sub_category_id'],
-//         qty = res['qty'];
-//
-//   Map<String, Object?> toMap() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'description': description,
-//       'price': price,
-//       'sub_category_id': sub_category_id,
-//       'qty': qty
-//     };
-//   }
-//
-//   @override
-//   String toString() {
-//     // ignore: lines_longer_than_80_chars
-//     return 'id: ${id}, name: $name, sub_category_id $sub_category_id, Quantity $qty';
-//   }
-// }
+class OrderList {
+  List<Order> orders;
+  OrderList({required this.orders});
+  factory OrderList.fromJson(category) {
+    final operations = category as List;
+    print('INSIDE OrderListOperations $operations');
+    final data = operations.map((f) => Order.fromJson(f)).toList();
+    return OrderList(orders: data);
+  }
+}
+
+class Order {
+  // int id;
+  String orderId;
+  String orderFirstName;
+  String orderLastName;
+  String orderPhoneNumber;
+  String orderAddress;
+  String orderNotes;
+  String deliveryAddress;
+  String deliveryPickupTime;
+  String dropInTime;
+  String paymentMethod;
+  String status;
+  double totalPrice;
+  double deliveryPrice;
+  //Location deliveryLocation;
+  // ProductList products;
+  // User user;
+  String publishedAt;
+  String createdAt;
+  String updatedAt;
+
+  Order({
+    required this.orderId,
+    required this.orderFirstName,
+    required this.orderLastName,
+    required this.orderPhoneNumber,
+    required this.orderAddress,
+    required this.orderNotes,
+    required this.deliveryAddress,
+    required this.deliveryPickupTime,
+    required this.dropInTime,
+    required this.paymentMethod,
+    required this.status,
+    required this.totalPrice,
+    required this.deliveryPrice,
+    //required this.deliveryLocation,
+    // required this.products,
+    // required this.user,
+    required this.publishedAt,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Order.fromJson(order) {
+    print('INSIDE FROMJSON $order');
+    return Order(
+      orderId: order['order_id'] ?? '',
+      orderFirstName: order['order_first_name'] ?? '',
+      orderLastName: order['order_last_name'] ?? '',
+      orderPhoneNumber: order['order_phone_number'] ?? '',
+      orderAddress: order['order_address'] ?? '',
+      orderNotes: order['order_notes'] ?? '',
+      deliveryAddress: order['delivery_address'] ?? '',
+      deliveryPickupTime: order['delivery_pickup_time'] ?? '',
+      dropInTime: order['drop_in_time'] ?? '',
+      paymentMethod: order['payment_method'] ?? '',
+      status: order['status'] ?? '',
+      totalPrice: order['total_price'].toDouble() ?? '',
+      deliveryPrice: order['delivery_price'].toDouble() ?? '',
+      //deliveryLocation: order['delivery_location'] ?? '',
+      // products: order['products'] ?? '',
+      // user: order['user'] ?? '',
+      publishedAt: order['published_at'] ?? '',
+      createdAt: order['created_at'] ?? '',
+      updatedAt: order['updated_at'] ?? '',
+    );
+  }
+
+  // Map toJson(){
+  //   Map<String, dynamic> data = {
+  //     'bank': this.bank,
+  //     'user_id': this.userId,
+  //     'bank_account': this.bankAccount,
+  //     'bank_code': this.bankCode,
+  //     'processor_transfer_code': this.processorTransferCode,
+  //
+  //   };
+  //   //extract keys without null data
+  //
+  //   data.removeWhere((key, value) => key == null || value == null);
+  //
+  //
+  //   return data;
+  // }
+
+  @override
+  String toString() {
+    return 'id: ${orderId}, name: ${orderFirstName}';
+  }
+}

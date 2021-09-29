@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:laundro/providers/order_provider.dart';
+import 'package:laundro/providers/payment_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => PaymentProvider()),
+          ChangeNotifierProvider(create: (context) => OrderProvider()),
           ChangeNotifierProvider(create: (context) => LaundryProvider()),
           ChangeNotifierProvider(create: (context) => UserProvider()),
           ChangeNotifierProvider(create: (context) => LocaleProvider()),
