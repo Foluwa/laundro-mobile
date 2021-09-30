@@ -191,9 +191,13 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                                           ),
                                           Column(
                                             children: [
-                                              Text('   ',
+                                              Text('Starting from \$100',
                                                   style: TextStyle(
                                                     color: Constants.white,
+                                                    fontSize: SizeConfig
+                                                            .safeBlockHorizontal *
+                                                        5.1,
+                                                    fontWeight: FontWeight.w500,
                                                   ))
                                             ],
                                           )
