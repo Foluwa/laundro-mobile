@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/models/payment/flutterwave.dart';
-import 'package:laundro/utils/boxes.dart';
-import 'package:laundro/widgets/Payments/flutterwave_payment.dart';
 import 'package:provider/provider.dart';
 
 import '../api/laundry.dart';
 import '../api/order.dart';
 import '../models/location.dart';
+import '../models/payment/flutterwave.dart';
 import '../providers/laundry_provider.dart';
 import '../providers/user_provider.dart';
+import '../utils/boxes.dart';
 import '../utils/constants.dart';
 import '../utils/form_validator.dart';
 import '../utils/size_config.dart';
 import '../utils/utils.dart';
 import '../widgets/Buttons/button_widget.dart';
 import '../widgets/InputWidgets/input_widget.dart';
+import '../widgets/Payments/flutterwave_payment.dart';
 import '../widgets/Payments/payment_options.dart';
 import '../widgets/app_header.dart';
 import '../widgets/checkout_tab_screen.dart';
@@ -97,167 +97,251 @@ class _CheckoutState extends State<Checkout> {
               textColor: Constants.white,
               onCloseClicked: () => Navigator.pop(context),
               backgroundColor: const Color(0xFF607D8B))),
-      body: SingleChildScrollView(
-          child: Form(
+      body: Form(
         key: _formKey,
-        child: Column(children: [
-          /// checkbox fill from user data provider
-          CheckboxListTile(
-              title:
-                  Text(AppLocalizations.of(context)!.prefill_form.toString()),
-              value: shouldPrefil,
-              onChanged: (newValue) {
-                setState(() {
-                  shouldPrefil = !shouldPrefil;
-                });
-              },
-              controlAffinity: ListTileControlAffinity.leading),
-          FormInput(
-              label: AppLocalizations.of(context)!.email.toString(),
-              controller: _emailController,
-              passwordVisible: false,
-              obscureText: false,
-              textInputType: TextInputType.emailAddress,
-              textValidator: FormValidate.validateEmail),
-          FormInput(
-              label: AppLocalizations.of(context)!.first_name.toString(),
-              controller: _firstName,
-              passwordVisible: false,
-              obscureText: false,
-              textInputType: TextInputType.text,
-              textValidator: FormValidate.validateName),
-          FormInput(
-              label: AppLocalizations.of(context)!.last_name.toString(),
-              controller: _lastName,
-              passwordVisible: false,
-              obscureText: false,
-              textInputType: TextInputType.text,
-              textValidator: FormValidate.validateName),
-          FormInput(
-              label: AppLocalizations.of(context)!.phone_number.toString(),
-              controller: _phoneNumber,
-              passwordVisible: false,
-              obscureText: false,
-              textInputType: TextInputType.number,
-              textValidator: FormValidate.validatePhoneNumber),
+        child: SingleChildScrollView(
+          child: Column(children: [
+            /// checkbox fill from user data provider
+            CheckboxListTile(
+                title:
+                    Text(AppLocalizations.of(context)!.prefill_form.toString()),
+                value: shouldPrefil,
+                onChanged: (newValue) {
+                  setState(() {
+                    shouldPrefil = !shouldPrefil;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading),
+            FormInput(
+                label: AppLocalizations.of(context)!.email.toString(),
+                controller: _emailController,
+                passwordVisible: false,
+                obscureText: false,
+                textInputType: TextInputType.emailAddress,
+                textValidator: FormValidate.validateEmail),
+            FormInput(
+                label: AppLocalizations.of(context)!.first_name.toString(),
+                controller: _firstName,
+                passwordVisible: false,
+                obscureText: false,
+                textInputType: TextInputType.text,
+                textValidator: FormValidate.validateName),
+            FormInput(
+                label: AppLocalizations.of(context)!.last_name.toString(),
+                controller: _lastName,
+                passwordVisible: false,
+                obscureText: false,
+                textInputType: TextInputType.text,
+                textValidator: FormValidate.validateName),
+            FormInput(
+                label: AppLocalizations.of(context)!.phone_number.toString(),
+                controller: _phoneNumber,
+                passwordVisible: false,
+                obscureText: false,
+                textInputType: TextInputType.number,
+                textValidator: FormValidate.validatePhoneNumber),
 
-          ///TODO: Consider pickup time, date, delivery hour, and drop ins
-          /// so a user has to select either pickup or drop in
-          /// and conditional forms will display like that
-          FormInput(
-              label: AppLocalizations.of(context)!.pickup_address.toString(),
-              controller: _homeAddress,
-              passwordVisible: false,
-              obscureText: false,
-              textInputType: TextInputType.streetAddress,
-              textValidator: FormValidate.validateHomeAddress),
+            ///TODO: Consider pickup time, date, delivery hour, and drop ins
+            /// so a user has to select either pickup or drop in
+            /// and conditional forms will display like that
+            FormInput(
+                label: AppLocalizations.of(context)!.pickup_address.toString(),
+                controller: _homeAddress,
+                passwordVisible: false,
+                obscureText: false,
+                textInputType: TextInputType.streetAddress,
+                textValidator: FormValidate.validateHomeAddress),
 
-          /// list of products
-          _laundryProvider.getCart!.length < 1
-              ? const Center(child: Text('No item in cart'))
-              : Column(
-                  children: [
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        // CupertinoScrollbar Scrollbar
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: _laundryProvider.getCart
-                            ?.length, //item.subCategory.subcategory.length,
-                        itemBuilder: (context, index) => Column(children: [
-                              SingleProduct(
-                                  products: _laundryProvider.getCart![index]),
-                            ])),
-                  ],
-                ),
+            /// list of products
+            _laundryProvider.getCart!.length < 1
+                ? const Center(child: Text('No item in cart'))
+                : Column(
+                    children: [
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          // CupertinoScrollbar Scrollbar
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: _laundryProvider.getCart
+                              ?.length, //item.subCategory.subcategory.length,
+                          itemBuilder: (context, index) => Column(children: [
+                                SingleProduct(
+                                    products: _laundryProvider.getCart![index]),
+                              ])),
+                    ],
+                  ),
 
-          /// Delivery tab
-          const SizedBox(height: 200, child: TabScreen()),
+            /// Delivery tab
+            const SizedBox(height: 200, child: TabScreen()),
 
-          /// Order Notes
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                  controller: _orderNotes,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  minLines: 2,
-                  maxLines: 15,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Order notes'))),
-
-          /// Payment option list
-          const PaymentOptions(),
-        ]),
-      )),
-      bottomSheet: Container(
-        height: SizeConfig.safeBlockHorizontal * 20,
-        width: double.maxFinite,
-        decoration: BoxDecoration(color: Constants.primaryColor),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            // Price Value
+            /// Order Notes
             Padding(
-                padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-                child: Text(
-                    // ignore: lines_longer_than_80_chars
-                    '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
-                    style: bottomCartStyle)),
-            // Checkout Btn
-            Padding(
-                padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-                child: _laundryProvider.getCart!.length < 1
-                    ? ButtonWidget(
-                        text: 'No item in cart',
-                        onClicked: () {},
-                        color: Colors.amber,
-                        paddingValue: 6.0,
-                        btnStatus: btnLoading,
-                        style: const TextStyle())
-                    // TODO: proceed to payment
-                    // : ButtonWidget(
-                    //     text: AppLocalizations.of(context)!.checkout.toString(),
-                    //     // onClicked: () => btnLoading ? null : checkoutCart(),
-                    //     onClicked: submitCheckoutForm,
-                    //     // onClicked: () {
-                    //     //   print('I was cliecked!!');
-                    //     // },
-                    //     color: Colors.amber,
-                    //     paddingValue: 6.0,
-                    //     btnStatus: btnLoading,
-                    //     style: const TextStyle())),
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                    controller: _orderNotes,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    minLines: 2,
+                    maxLines: 15,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Order notes'))),
 
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 3.0),
-                        child: MaterialButton(
-                            elevation: 5.0,
-                            shape: checkoutBtnLoading
-                                ? const CircleBorder()
-                                : RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9.0)),
-                            onPressed: () =>
-                                checkoutBtnLoading ? null : checkoutCart(),
-                            padding: const EdgeInsets.all(3.0),
-                            color: Constants.bgColor,
-                            child: Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: checkoutBtnLoading
-                                    ? CircularProgressIndicator(
-                                        backgroundColor: Constants.white,
-                                        valueColor:
-                                            const AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow))
-                                    : const Text(
-                                        'Checkout',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ))))),
-          ],
+            /// Payment option list
+            const PaymentOptions(),
+
+            // CHECKOUT BUTTON
+            Container(
+              height: SizeConfig.safeBlockHorizontal * 20,
+              width: double.maxFinite,
+              decoration: BoxDecoration(color: Constants.primaryColor),
+              // height: 50,
+              // width: double.maxFinite,
+              // decoration: BoxDecoration(
+              //
+              //     color: Colors.deepOrange,
+              //     borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))
+              // ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  // Price Value
+                  Padding(
+                      padding:
+                          EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+                      child: Text(
+                          // ignore: lines_longer_than_80_chars
+                          '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+                          style: bottomCartStyle)),
+                  // Checkout Btn
+                  Padding(
+                      padding:
+                          EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+                      child: _laundryProvider.getCart!.length < 1
+                          ? ButtonWidget(
+                              text: 'No item in cart',
+                              onClicked: () {},
+                              color: Colors.amber,
+                              paddingValue: 6.0,
+                              btnStatus: btnLoading,
+                              style: const TextStyle())
+                          // TODO: proceed to payment
+                          // : ButtonWidget(
+                          //     text: AppLocalizations.of(context)!.checkout.toString(),
+                          //     // onClicked: () => btnLoading ? null : checkoutCart(),
+                          //     onClicked: submitCheckoutForm,
+                          //     // onClicked: () {
+                          //     //   print('I was cliecked!!');
+                          //     // },
+                          //     color: Colors.amber,
+                          //     paddingValue: 6.0,
+                          //     btnStatus: btnLoading,
+                          //     style: const TextStyle())),
+
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 3.0),
+                              child: MaterialButton(
+                                  elevation: 5.0,
+                                  shape: checkoutBtnLoading
+                                      ? const CircleBorder()
+                                      : RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(9.0)),
+                                  onPressed: () => checkoutBtnLoading
+                                      ? null
+                                      : checkoutCart(),
+                                  padding: const EdgeInsets.all(3.0),
+                                  color: Constants.bgColor,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: checkoutBtnLoading
+                                          ? CircularProgressIndicator(
+                                              backgroundColor: Constants.white,
+                                              valueColor:
+                                                  const AlwaysStoppedAnimation<
+                                                      Color>(Colors.yellow))
+                                          : const Text(
+                                              'Checkout',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18.0),
+                                            ))))),
+                ],
+              ),
+            )
+          ]),
         ),
       ),
+      // bottomSheet: Container(
+      //   height: SizeConfig.safeBlockHorizontal * 20,
+      //   width: double.maxFinite,
+      //   decoration: BoxDecoration(color: Constants.primaryColor),
+      //   child: Row(
+      //     mainAxisSize: MainAxisSize.max,
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: <Widget>[
+      //       // Price Value
+      //       Padding(
+      //           padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+      //           child: Text(
+      //               // ignore: lines_longer_than_80_chars
+      //               '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+      //               style: bottomCartStyle)),
+      //       // Checkout Btn
+      //       Padding(
+      //           padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+      //           child: _laundryProvider.getCart!.length < 1
+      //               ? ButtonWidget(
+      //                   text: 'No item in cart',
+      //                   onClicked: () {},
+      //                   color: Colors.amber,
+      //                   paddingValue: 6.0,
+      //                   btnStatus: btnLoading,
+      //                   style: const TextStyle())
+      //               // TODO: proceed to payment
+      //               // : ButtonWidget(
+      //               //     text: AppLocalizations.of(context)!.checkout.toString(),
+      //               //     // onClicked: () => btnLoading ? null : checkoutCart(),
+      //               //     onClicked: submitCheckoutForm,
+      //               //     // onClicked: () {
+      //               //     //   print('I was cliecked!!');
+      //               //     // },
+      //               //     color: Colors.amber,
+      //               //     paddingValue: 6.0,
+      //               //     btnStatus: btnLoading,
+      //               //     style: const TextStyle())),
+      //
+      //               : Padding(
+      //                   padding: const EdgeInsets.symmetric(vertical: 3.0),
+      //                   child: MaterialButton(
+      //                       elevation: 5.0,
+      //                       shape: checkoutBtnLoading
+      //                           ? const CircleBorder()
+      //                           : RoundedRectangleBorder(
+      //                               borderRadius: BorderRadius.circular(9.0)),
+      //                       onPressed: () =>
+      //                           checkoutBtnLoading ? null : checkoutCart(),
+      //                       padding: const EdgeInsets.all(3.0),
+      //                       color: Constants.bgColor,
+      //                       child: Padding(
+      //                           padding: const EdgeInsets.all(3.0),
+      //                           child: checkoutBtnLoading
+      //                               ? CircularProgressIndicator(
+      //                                   backgroundColor: Constants.white,
+      //                                   valueColor:
+      //                                       const AlwaysStoppedAnimation<Color>(
+      //                                           Colors.yellow))
+      //                               : const Text(
+      //                                   'Checkout',
+      //                                   style: TextStyle(
+      //                                       color: Colors.white,
+      //                                       fontSize: 18.0),
+      //                                 ))))),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
@@ -416,6 +500,8 @@ class _CheckoutState extends State<Checkout> {
           checkoutBtnLoading = false;
         });
         _bottomSheetMore(context);
+
+        //TODO: Clear cart, checkout page data, form field
       });
     }
   }

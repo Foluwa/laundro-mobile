@@ -124,66 +124,86 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                   keyRefresh: RIKeys.riKey1,
                   onRefresh: callAllApis,
                   child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: item.subCategory.subcategory.length,
-                      itemBuilder: (context, index) => MediaQuery(
-                          data: const MediaQueryData(padding: EdgeInsets.zero),
-                          child: ListTile(
-                              contentPadding:
-                                  const EdgeInsets.only(left: 0.0, right: 0.0),
-                              title: item.subCategory.subcategory.isEmpty
-                                  //TODO: Check if empty and display no product
-                                  ? InkWell(
-                                      onTap: () => null,
-                                      child: const Center(child: Text('Empty')))
-                                  : InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed('/category_details',
-                                              arguments: item.subCategory
-                                                  .subcategory[index]),
-                                      child: Stack(children: [
-                                        SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height:
-                                                SizeConfig.safeBlockHorizontal *
-                                                    51,
-                                            child: FadeInImage.assetNetwork(
-                                                image: item.subCategory
-                                                    .subcategory[index].img_url,
-                                                placeholder:
-                                                    'assets/spinner.gif',
-                                                fit: BoxFit.cover)),
-                                        Positioned(
-                                            bottom:
-                                                // ignore: lines_longer_than_80_chars
-                                                SizeConfig.safeBlockHorizontal *
-                                                    6.37,
-                                            left:
-                                                // ignore: lines_longer_than_80_chars
-                                                SizeConfig.safeBlockHorizontal *
-                                                    3.85,
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                    item
-                                                        .subCategory
-                                                        .subcategory[index]
-                                                        .name,
-                                                    maxLines: 2,
-                                                    style: TextStyle(
-                                                      color: Constants.white,
-                                                      fontSize: SizeConfig
-                                                              // ignore: lines_longer_than_80_chars
-                                                              .safeBlockHorizontal *
-                                                          5.1,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ))
-                                              ],
-                                            ))
-                                      ]))))),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: item.subCategory.subcategory.length,
+                    itemBuilder: (context, index) => MediaQuery(
+                      data: const MediaQueryData(padding: EdgeInsets.zero),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 0.0, right: 0.0),
+                        title: item.subCategory.subcategory.isEmpty
+                            //TODO: Check if empty and display no product
+                            ? InkWell(
+                                onTap: () => null,
+                                child: const Center(child: Text('Empty')))
+                            : InkWell(
+                                onTap: () => Navigator.of(context).pushNamed(
+                                    '/category_details',
+                                    arguments:
+                                        item.subCategory.subcategory[index]),
+                                child: Stack(children: [
+                                  Container(
+                                      child: SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  51,
+                                          child: FadeInImage.assetNetwork(
+                                              image: item.subCategory
+                                                  .subcategory[index].img_url,
+                                              placeholder: 'assets/spinner.gif',
+                                              fit: BoxFit.cover)),
+                                      foregroundDecoration: const BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                            Color(0xCC000000),
+                                            Color(0x00000000),
+                                            Color(0x00000000),
+                                            Color(0xCC000000),
+                                          ])),
+                                      width: double.infinity),
+                                  Positioned(
+                                      // ignore: lines_longer_than_80_chars
+                                      bottom:
+                                          SizeConfig.safeBlockHorizontal * 6.37,
+                                      left:
+                                          // ignore: lines_longer_than_80_chars
+                                          SizeConfig.safeBlockHorizontal * 3.85,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                  '${item.subCategory.subcategory[index].name}',
+                                                  style: TextStyle(
+                                                    color: Constants.white,
+                                                    fontSize: SizeConfig
+                                                            .safeBlockHorizontal *
+                                                        5.1,
+                                                    fontWeight: FontWeight.w500,
+                                                  )),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text('   ',
+                                                  style: TextStyle(
+                                                    color: Constants.white,
+                                                  ))
+                                            ],
+                                          )
+                                        ],
+                                      ))
+                                ]),
+                              ),
+                      ),
+                    ),
+                  ),
                 );
               }).toList()),
         bottomNavigationBar: const BottomCart(),

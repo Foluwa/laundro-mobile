@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/utils.dart';
+import '../utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/location.dart';

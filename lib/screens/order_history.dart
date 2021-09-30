@@ -35,7 +35,10 @@ class _OrderHistoryState extends State<OrderHistory> {
   Widget build(BuildContext context) {
     _orderProvider = Provider.of<OrderProvider>(context);
 
-    final lengthOfOrders = _orderProvider.getOrders!.orders;
+    final userO = _orderProvider.getOrders;
+
+    final lengthOfOrders;
+    lengthOfOrders = userO!.orders;
 
     return Scaffold(
         appBar: PreferredSize(

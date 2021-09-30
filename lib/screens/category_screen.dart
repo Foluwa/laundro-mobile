@@ -58,12 +58,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
             flexibleSpace: FlexibleSpaceBar(
                 background: Stack(children: <Widget>[
               Positioned.fill(
-                  child: FadeInImage.assetNetwork(
-                // widget.subCat.img_url,
-                // fit: BoxFit.cover,
-                image: widget.subCat.img_url,
-                placeholder: 'assets/spinner.gif', // your assets image path
-                fit: BoxFit.cover,
+                  child: Container(
+                foregroundDecoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                      Color(0xCC000000),
+                      Color(0x00000000),
+                      Color(0x00000000),
+                      Color(0xCC000000),
+                    ])),
+                child: FadeInImage.assetNetwork(
+                  image: widget.subCat.img_url,
+                  placeholder: 'assets/spinner.gif', // your assets image path
+                  fit: BoxFit.cover,
+                ),
               ))
             ])),
             pinned: true,

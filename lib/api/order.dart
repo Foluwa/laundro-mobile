@@ -26,7 +26,7 @@ class OrderApi {
   Future<OrderList> fetchUserOrders() async {
     print('FetchCategories WAS CALLED');
     try {
-      final response = await _dio.get(ApiRoutes.orders);
+      final response = await _dio.get('${ApiRoutes.userOrders}');
       print('AKIN ${response}');
       print('FOLUWA  ${response.data}');
       return OrderList.fromJson(response.data);
