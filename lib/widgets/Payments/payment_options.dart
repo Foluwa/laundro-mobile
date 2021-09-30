@@ -45,7 +45,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                   });
                 })),
         ListTile(
-            title: const Text('Paytm'),
+            title: const Text('Razorpay'),
             leading: Radio<PaymentPlatforms>(
                 value: PaymentPlatforms.paytm,
                 groupValue: _paymentPlatforms,

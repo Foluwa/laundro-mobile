@@ -28,17 +28,16 @@ class _OrderHistoryState extends State<OrderHistory> {
   void initState() {
     super.initState();
     getUserOrders().then((_) => print('fetch orders'));
-    //myFuture = getUserOrders();
   }
 
   @override
   Widget build(BuildContext context) {
     _orderProvider = Provider.of<OrderProvider>(context);
 
-    final userO = _orderProvider.getOrders;
-
-    final lengthOfOrders;
-    lengthOfOrders = userO!.orders;
+    // final userO = _orderProvider.getOrders;
+    //
+    // final lengthOfOrders;
+    // lengthOfOrders = userO!.orders;
 
     return Scaffold(
         appBar: PreferredSize(
@@ -53,13 +52,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                 backgroundColor: const Color(0xFF607D8B))),
         // body: _orderProvider.getOrders!.orders.length < 1
         body: ListView.builder(
-          itemCount:
-              lengthOfOrders.length, //_orderProvider.getOrders!.orders.length,
+          itemCount: _orderProvider.getOrders!.orders
+              .length, //_orderProvider.getOrders!.orders.length,
           itemBuilder: (context, index) {
-            // ProjectModel project = projectSnap.data[index];
-            // final Order project = _orderProvider.getOrders!.orders[index];
             return GestureDetector(
-              // SINGLE_ORDER
               onTap: () => Navigator.of(context).pushNamed('/single_order',
                   arguments: _orderProvider.getOrders!.orders[index]),
               child: ListTile(

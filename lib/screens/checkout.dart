@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../api/laundry.dart';
 import '../api/order.dart';
@@ -16,7 +19,7 @@ import '../utils/size_config.dart';
 import '../utils/utils.dart';
 import '../widgets/Buttons/button_widget.dart';
 import '../widgets/InputWidgets/input_widget.dart';
-import '../widgets/Payments/flutterwave_payment.dart';
+import '../widgets/Payments/flutterwave.dart';
 import '../widgets/Payments/payment_options.dart';
 import '../widgets/app_header.dart';
 import '../widgets/checkout_tab_screen.dart';
@@ -42,6 +45,8 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   LaundryApi api = LaundryApi(addAccessToken: true);
   OrderApi orderAPI = OrderApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
@@ -59,9 +64,28 @@ class _CheckoutState extends State<Checkout> {
   bool shouldPrefil = false;
   // Location? locationValue;
 
+  final plugin = PaystackPlugin();
+
+  String paystackPublicKey = 'pk_test_35af153bab5dcc125e1f14e61dd87308fdd5df6f';
+  // secret sk_test_e2aedcbf15f38939ea8cc003b7c27765033bcbd0
+
+  static const platform = const MethodChannel('razorpay_flutter');
+
+  late Razorpay _razorpay;
+
   @override
   void initState() {
     super.initState();
+
+    // paystack
+    plugin.initialize(publicKey: paystackPublicKey);
+
+    // razor
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
     getAllLocations().then((_) => print('fetch locations'));
     getFlutterwaveKeys().then((_) => print('fetch fluttwerwave'));
     // locationValue = initialVal;
@@ -87,6 +111,7 @@ class _CheckoutState extends State<Checkout> {
       clearForm();
     }
     return Scaffold(
+      key: _scaffoldKey,
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: AppHeader(
@@ -274,74 +299,6 @@ class _CheckoutState extends State<Checkout> {
           ]),
         ),
       ),
-      // bottomSheet: Container(
-      //   height: SizeConfig.safeBlockHorizontal * 20,
-      //   width: double.maxFinite,
-      //   decoration: BoxDecoration(color: Constants.primaryColor),
-      //   child: Row(
-      //     mainAxisSize: MainAxisSize.max,
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: <Widget>[
-      //       // Price Value
-      //       Padding(
-      //           padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-      //           child: Text(
-      //               // ignore: lines_longer_than_80_chars
-      //               '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
-      //               style: bottomCartStyle)),
-      //       // Checkout Btn
-      //       Padding(
-      //           padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-      //           child: _laundryProvider.getCart!.length < 1
-      //               ? ButtonWidget(
-      //                   text: 'No item in cart',
-      //                   onClicked: () {},
-      //                   color: Colors.amber,
-      //                   paddingValue: 6.0,
-      //                   btnStatus: btnLoading,
-      //                   style: const TextStyle())
-      //               // TODO: proceed to payment
-      //               // : ButtonWidget(
-      //               //     text: AppLocalizations.of(context)!.checkout.toString(),
-      //               //     // onClicked: () => btnLoading ? null : checkoutCart(),
-      //               //     onClicked: submitCheckoutForm,
-      //               //     // onClicked: () {
-      //               //     //   print('I was cliecked!!');
-      //               //     // },
-      //               //     color: Colors.amber,
-      //               //     paddingValue: 6.0,
-      //               //     btnStatus: btnLoading,
-      //               //     style: const TextStyle())),
-      //
-      //               : Padding(
-      //                   padding: const EdgeInsets.symmetric(vertical: 3.0),
-      //                   child: MaterialButton(
-      //                       elevation: 5.0,
-      //                       shape: checkoutBtnLoading
-      //                           ? const CircleBorder()
-      //                           : RoundedRectangleBorder(
-      //                               borderRadius: BorderRadius.circular(9.0)),
-      //                       onPressed: () =>
-      //                           checkoutBtnLoading ? null : checkoutCart(),
-      //                       padding: const EdgeInsets.all(3.0),
-      //                       color: Constants.bgColor,
-      //                       child: Padding(
-      //                           padding: const EdgeInsets.all(3.0),
-      //                           child: checkoutBtnLoading
-      //                               ? CircularProgressIndicator(
-      //                                   backgroundColor: Constants.white,
-      //                                   valueColor:
-      //                                       const AlwaysStoppedAnimation<Color>(
-      //                                           Colors.yellow))
-      //                               : const Text(
-      //                                   'Checkout',
-      //                                   style: TextStyle(
-      //                                       color: Colors.white,
-      //                                       fontSize: 18.0),
-      //                                 ))))),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -499,7 +456,16 @@ class _CheckoutState extends State<Checkout> {
         setState(() {
           checkoutBtnLoading = false;
         });
-        _bottomSheetMore(context);
+
+        /// flutterwave
+        //_bottomSheetMore(context);
+
+        /// paystack
+        // final payment = PaystackPayment(plugin);
+        // payment.handleCheckout(context);
+
+        /// razorpay
+        openCheckout();
 
         //TODO: Clear cart, checkout page data, form field
       });
@@ -518,5 +484,50 @@ class _CheckoutState extends State<Checkout> {
       Common.showSnackBar(context, title: error.toString(), duration: 300);
     });
     return keys;
+  }
+
+  /// Razor pay
+  void openCheckout() async {
+    var options = {
+      'key': 'rzp_test_1DP5mmOlF5G5ag',
+      'amount': 2000,
+      'name': 'Acme Corp.',
+      'description': 'Fine T-Shirt',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Fluttertoast.showToast(
+    //     msg: 'SUCCESS: ' + response.paymentId!,
+    //     toastLength: Toast.LENGTH_SHORT);
+    Common.showSnackBar(context,
+        title: 'SUCCESS: ' + response.paymentId!, duration: 3000);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Fluttertoast.showToast(
+    //     msg: 'ERROR: ' + response.code.toString() + ' - ' + response.message!,
+    //     toastLength: Toast.LENGTH_SHORT);
+    Common.showSnackBar(context,
+        title: 'ERROR: ' + response.code.toString() + ' - ' + response.message!,
+        duration: 3000);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Fluttertoast.showToast(
+    //     msg: 'EXTERNAL_WALLET: ' + response.walletName!,
+    //     toastLength: Toast.LENGTH_SHORT);
+    Common.showSnackBar(context,
+        title: 'EXTERNAL_WALLET: ' + response.walletName!, duration: 3000);
   }
 }
