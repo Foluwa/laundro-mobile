@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:laundro/models/order.dart';
-import 'package:laundro/models/payment/flutterwave.dart';
-import 'package:laundro/utils/api_routes.dart';
 
+import '../models/order.dart';
+import '../models/payment/flutterwave.dart';
+import '../utils/api_routes.dart';
 import 'Exceptions/dio_exception.dart';
 import 'interceptors/auth_interceptor.dart';
 

@@ -6,14 +6,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:laundro/providers/order_provider.dart';
-import 'package:laundro/providers/payment_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
 import 'models/cart.dart';
 import 'providers/laundry_provider.dart';
 import 'providers/locale_provider.dart';
+import 'providers/order_provider.dart';
+import 'providers/payment_provider.dart';
 import 'providers/user_provider.dart';
 import 'routes.dart';
 import 'utils/constants.dart';

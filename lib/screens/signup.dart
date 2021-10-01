@@ -145,7 +145,6 @@ class _SignUpState extends State<SignUp> {
   Function(bool?)? termsCondi(bool value) {}
 
   void userSignUp() async {
-    print('I GOT HERE');
     final form = _formKey.currentState;
 
     if (form!.validate()) {
@@ -165,7 +164,6 @@ class _SignUpState extends State<SignUp> {
         'homeAddress': homeAddressController.text,
         'role': 'authenticated',
       };
-      print('DATA IS ${data.toString()}');
       await api.registerUser(jsonEncode(data)).then((user) {
         print('INSIDE AWAIT2 ${data}');
         print('INSIDE AWAIT ${data.entries}');

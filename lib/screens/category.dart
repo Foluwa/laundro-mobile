@@ -241,7 +241,6 @@ class _ProductCategoryState extends State<ProductCategory> {
 
   /// Fetch User from JWT
   Future<User> getUser() async {
-    print('USER_IN_CATEGORY');
     if (mounted) {
       setState(() {
         screenLoading = true;
@@ -249,10 +248,8 @@ class _ProductCategoryState extends State<ProductCategory> {
     }
     var data;
     // get jwt from sharedprerence
-    print('AAAAAA');
     await userApi.fetchUser().then((user) {
       // check if user is not null
-      print('USER_IN_CATEGORY2 $user');
       _userProvider.setCurrentUser(user);
       // if (user != null) {
       //   _userProvider.setCurrentUser(user);

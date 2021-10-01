@@ -5,7 +5,6 @@ import '../models/category.dart';
 import '../models/currency.dart';
 import '../models/location.dart';
 import '../models/product.dart';
-import '../widgets/Payments/payment_options.dart';
 
 class LaundryProvider extends ChangeNotifier {
   List<Product> _products = [];
@@ -13,7 +12,8 @@ class LaundryProvider extends ChangeNotifier {
   List<Category>? _category = [];
   List<Location> _locations = [];
   Currency? _currency;
-  PaymentPlatforms? _selectedPayment;
+  // PaymentPlatforms? _selectedPayment;
+  String? _selectedPayment;
   Location? _userSelectedLocation;
 
   /// Return gets
@@ -22,11 +22,12 @@ class LaundryProvider extends ChangeNotifier {
   List<Category>? get getCategories => _category;
   List<Location>? get getLocations => _locations;
   Currency? get getCurrency => _currency;
-  PaymentPlatforms? get getSelectedPayment => _selectedPayment;
+  //PaymentPlatforms? get getSelectedPayment => _selectedPayment;
+  String? get getSelectedPayment => _selectedPayment;
   Location? get getSelectedLocation => _userSelectedLocation;
 
   /// Set user selected location
-  void setUserLocation(location){
+  void setUserLocation(location) {
     _userSelectedLocation = location;
     notifyListeners();
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/order_provider.dart';
 
 class DateTimePicker extends StatefulWidget {
   const DateTimePicker({Key? key}) : super(key: key);
@@ -11,6 +14,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
   late DateTime pickedDate;
   late TimeOfDay time;
 
+  OrderProvider _orderProvider = OrderProvider();
+
   @override
   void initState() {
     super.initState();
@@ -20,18 +25,28 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    _orderProvider = Provider.of<OrderProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ListTile(
-          title: Text(
+          title:
+              //Text(
               // ignore: lines_longer_than_80_chars
-              'Date:  ${pickedDate.day}-${pickedDate.month}-${pickedDate.year}'),
+              // 'Date:  ${pickedDate.day}-${pickedDate.month}-${pickedDate.year}'),
+              // 'Date:  ${pickedDate.toString()}'),
+              Text(_orderProvider.getUserSelectedDate == null
+                  ? 'Select date'
+                  : _orderProvider.getUserSelectedDate!.toIso8601String()),
           trailing: const Icon(Icons.keyboard_arrow_down),
           onTap: _pickDate,
         ),
         ListTile(
-          title: Text('Time: ${time.hour}:${time.minute}'),
+          // title: Text('Time: ${time.hour}:${time.minute}'),
+          // title: Text('Time: ${time.toString()}}'),
+          title: Text(_orderProvider.getUserSelectedTime == null
+              ? 'Select a time'
+              : _orderProvider.getUserSelectedTime.toString()),
           trailing: const Icon(Icons.keyboard_arrow_down),
           onTap: _pickTime,
         ),
@@ -52,6 +67,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
       setState(() {
         pickedDate = date;
       });
+    _orderProvider.setUserSelectedDate(date);
   }
 
   // ignore: always_declare_return_types
@@ -62,5 +78,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
       setState(() {
         time = t;
       });
+
+    _orderProvider.setUserSelectedTime(t);
   }
 }

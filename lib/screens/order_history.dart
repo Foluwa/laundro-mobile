@@ -94,10 +94,8 @@ class _OrderHistoryState extends State<OrderHistory> {
         loadingData = false;
       });
 
-      print('JOEBIDEN ${_orderProvider.getOrders!.orders.first}');
       return orders;
     }).catchError((error) {
-      print('ERROR CAUGHT ${error}');
       setState(() {
         loadingData = false;
       });

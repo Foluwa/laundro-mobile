@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/location.dart';
 import '../providers/laundry_provider.dart';
+import '../providers/order_provider.dart';
+import '../utils/constants.dart';
+import '../utils/utils.dart';
 import 'date_time_picker.dart';
 
 class TabScreen extends StatefulWidget {
@@ -15,53 +17,63 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  // LaundryProvider _laundryProvider = LaundryProvider();
+  OrderProvider _orderProvider = OrderProvider();
+
+  /// Dropin or Delivery
   final Map<int, Widget> _tabs = {
+    // Delivery
     0: Tab(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Pick up'),
+        const Text('Delivery'),
         const Icon(Icons.bike_scooter),
       ],
     )),
+
+    // Drop in
     1: Tab(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Drop in'),
+        const Text('Drop In'),
         const Icon(Icons.car_rental),
       ],
     )),
-    // 2: Tab(child: Icon(Icons.airline_seat_flat)),
   };
 
   var _selectedIndex = 0;
-
   void _tabChanged(int index) {
+    print('Selected Tab is: $index');
     setState(() {
       _selectedIndex = index;
-      print('Selected Index: $index');
     });
+
+    // Is drop in tab is 1 so if selected set the state to true else the state is false
+    if (index == 1) {
+      _orderProvider.setIsDropIn(true);
+    } else {
+      _orderProvider.setIsDropIn(false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _orderProvider = Provider.of<OrderProvider>(context);
     return Column(children: [
       SizedBox(
-          width: 500,
+          width: double.infinity,
           child: CupertinoSegmentedControl(
-            padding: const EdgeInsets.all(15),
-            children: _tabs,
-            onValueChanged: _tabChanged,
-            borderColor: Colors.teal,
-            selectedColor: Colors.teal,
-            unselectedColor: Colors.white,
-            groupValue: _selectedIndex,
-          )),
-      Expanded(child: _showSelectedView()),
+              padding: const EdgeInsets.all(15),
+              children: _tabs,
+              onValueChanged: _tabChanged,
+              borderColor: Constants.primaryColor,
+              selectedColor: Constants.secondaryColor,
+              unselectedColor: Constants.white,
+              groupValue: _selectedIndex)),
+      Container(child: _showSelectedView()),
     ]);
   }
 
@@ -69,11 +81,17 @@ class _TabScreenState extends State<TabScreen> {
     var _selectedView;
     switch (_selectedIndex) {
       case 0:
+        print('Pickup was clicked ooo');
+
+        // _orderProvider.setUserSelectedDate(null);
+        // _orderProvider.setUserSelectedTime(null);
+
+        //TODO: Reset data and time when pickup is clicked
         _selectedView = const PickUp();
         break;
-      // case 1:
-      //   _selectedView = DropIn();
-      //   break;
+      case 1:
+        _selectedView = const DropIn();
+        break;
       default:
         _selectedView = const DropIn();
         break;
@@ -98,25 +116,28 @@ class _PickUpState extends State<PickUp> {
     _laundryProvider = Provider.of<LaundryProvider>(context);
     return _laundryProvider.getLocations!.length < 1
         ? const CircularProgressIndicator()
-        : SizedBox(child: buildDropdown());
+        : SizedBox(
+            child: Column(
+            children: [
+              buildDropdown(),
+              const DateTimePicker(),
+            ],
+          ));
   }
 
   Widget buildDropdown() => SizedBox(
       width: MediaQuery.of(context).size.width / 1.1,
       child: DropdownButtonHideUnderline(
-          child: DropdownButton<Location>(
-              //items: items
-              // isExpanded: true,
+          child: DropdownButtonFormField<Location>(
+              //validator: FormValidate.validateHomeAddress,
+              // Todo: Use validator on DropdownButtonFormField
               value: locationValue,
               hint: const Text('Select a Location'),
               items: _laundryProvider.getLocations!
                   .map((item) => DropdownMenuItem<Location>(
                       child: Row(
-                          // width: MediaQuery.of(context).size.width / 1.1,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Icon(item.icon),
-                            // const SizedBox(width: 8),
                             Text(item.location, style: const TextStyle()),
                             const SizedBox(width: 8),
                             Text(
@@ -128,7 +149,6 @@ class _PickUpState extends State<PickUp> {
                   .toList(),
               onChanged: (value) => setState(() {
                     locationValue = value;
-
                     // set location in state
                     _laundryProvider.setUserLocation(value);
                   }))));
