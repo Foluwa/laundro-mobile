@@ -22,7 +22,7 @@ class _DialogBoxState extends State<DialogBox> {
           child: Row(
             children: [
               const Icon(
-                Icons.directions_transit,
+                Icons.help_rounded,
                 color: Colors.pink,
                 size: 30.0,
                 semanticLabel: 'accessibility modes',

@@ -45,13 +45,14 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   LaundryApi api = LaundryApi(addAccessToken: true);
   OrderApi orderAPI = OrderApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   UserProvider _userProvider = UserProvider();
-  final _formKey = GlobalKey<FormState>();
+
   // Declare Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
@@ -60,18 +61,18 @@ class _CheckoutState extends State<Checkout> {
   final TextEditingController _homeAddress = TextEditingController();
   final TextEditingController _orderNotes = TextEditingController();
 
+  /// Paystack
+  final plugin = PaystackPlugin();
+  String paystackPublicKey =
+      'pk_test_35af153bab5dcc125e1f14e61dd87308fdd5df6f'; // secret sk_test_e2aedcbf15f38939ea8cc003b7c27765033bcbd0
+
+  /// Razorpay
+  late Razorpay _razorpay;
+
+  /// States
   bool screenLoading = false;
   bool shouldPrefil = false;
   // Location? locationValue;
-
-  final plugin = PaystackPlugin();
-
-  String paystackPublicKey = 'pk_test_35af153bab5dcc125e1f14e61dd87308fdd5df6f';
-  // secret sk_test_e2aedcbf15f38939ea8cc003b7c27765033bcbd0
-
-  static const platform = const MethodChannel('razorpay_flutter');
-
-  late Razorpay _razorpay;
 
   @override
   void initState() {
@@ -251,19 +252,6 @@ class _CheckoutState extends State<Checkout> {
                               paddingValue: 6.0,
                               btnStatus: btnLoading,
                               style: const TextStyle())
-                          // TODO: proceed to payment
-                          // : ButtonWidget(
-                          //     text: AppLocalizations.of(context)!.checkout.toString(),
-                          //     // onClicked: () => btnLoading ? null : checkoutCart(),
-                          //     onClicked: submitCheckoutForm,
-                          //     // onClicked: () {
-                          //     //   print('I was cliecked!!');
-                          //     // },
-                          //     color: Colors.amber,
-                          //     paddingValue: 6.0,
-                          //     btnStatus: btnLoading,
-                          //     style: const TextStyle())),
-
                           : Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 3.0),
@@ -301,24 +289,6 @@ class _CheckoutState extends State<Checkout> {
       ),
     );
   }
-
-  /*void submitCheckoutForm() async {
-    final form = _formKey.currentState;
-
-    if (form!.validate()) {
-      form.save();
-      // print(
-      //     // ignore: lines_longer_than_80_chars
-      //     'Location and Payment${locationValue!.location}
-      //     ${locationValue!.id} ${_laundryProvider.getSelectedPayment}');
-      print('Details ${_emailController.text} ${_firstName.text}');
-      final data = {
-        'email': _emailController.text,
-        'firstname': _firstName.text
-      };
-      print('DATA $data');
-    }
-  }*/
 
   void prefillForm() {
     _emailController.text = _userProvider.getUser!.email;
@@ -367,17 +337,7 @@ class _CheckoutState extends State<Checkout> {
 
   // Fetch all locations
 
-  void _bottomSheetMore(context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return const FlutterwavePayment(
-          title: 'Foluwa Fulttewww',
-        );
-      },
-    );
-  }
-
+  /// Fetch Delivery/Pickup regions
   Future<LocationList> getAllLocations() async {
     if (mounted) {
       setState(() {
@@ -403,8 +363,9 @@ class _CheckoutState extends State<Checkout> {
     return data;
   }
 
+  /// Initiate checkout
   void checkoutCart() async {
-    print('PRINT USER CLICKED SIGNOUT');
+    print('USER  checkout initiatd');
     final form = _formKey.currentState;
 
     if (form!.validate()) {
@@ -418,7 +379,6 @@ class _CheckoutState extends State<Checkout> {
 
       final cartData = Boxes.getCart();
       //final result = cartData.values.cast<Map<CartDB, dynamic>>();
-
       // final result = <List>[];
       // for (final inCart in cartData.values) {
       //   result.add(inCart);
@@ -430,6 +390,8 @@ class _CheckoutState extends State<Checkout> {
       ];
 
       print('ROQEEB ${result}');
+
+      /// validate pickup and drop in
 
       var data = {
         'order_first_name': _firstName.text,
@@ -458,7 +420,7 @@ class _CheckoutState extends State<Checkout> {
         });
 
         /// flutterwave
-        //_bottomSheetMore(context);
+        //_flutterwaveSheet(context);
 
         /// paystack
         // final payment = PaystackPayment(plugin);
@@ -486,6 +448,18 @@ class _CheckoutState extends State<Checkout> {
     return keys;
   }
 
+  /// Flutterwave payment sheet
+  void _flutterwaveSheet(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (builder) {
+        return const FlutterwavePayment(
+          title: 'Foluwa Fulttewww',
+        );
+      },
+    );
+  }
+
   /// Razor pay
   void openCheckout() async {
     var options = {
@@ -507,26 +481,17 @@ class _CheckoutState extends State<Checkout> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Fluttertoast.showToast(
-    //     msg: 'SUCCESS: ' + response.paymentId!,
-    //     toastLength: Toast.LENGTH_SHORT);
     Common.showSnackBar(context,
         title: 'SUCCESS: ' + response.paymentId!, duration: 3000);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Fluttertoast.showToast(
-    //     msg: 'ERROR: ' + response.code.toString() + ' - ' + response.message!,
-    //     toastLength: Toast.LENGTH_SHORT);
     Common.showSnackBar(context,
         title: 'ERROR: ' + response.code.toString() + ' - ' + response.message!,
         duration: 3000);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Fluttertoast.showToast(
-    //     msg: 'EXTERNAL_WALLET: ' + response.walletName!,
-    //     toastLength: Toast.LENGTH_SHORT);
     Common.showSnackBar(context,
         title: 'EXTERNAL_WALLET: ' + response.walletName!, duration: 3000);
   }

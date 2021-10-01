@@ -110,15 +110,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     ? MyTextButton(
                         buttonName: 'Get Started',
                         onPressed: () =>
-                            Navigator.of(context).pushNamed('/home'),
+                            Navigator.of(context).pushNamed('/category'),
                         bgColor: Constants.primaryColor)
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                             OnBoardNavBtn(
                                 name: 'Skip',
-                                onPressed: () =>
-                                    Navigator.of(context).pushNamed('/home')),
+                                onPressed: () => Navigator.of(context)
+                                    .pushNamed('/category')),
                             Row(
                                 children: List.generate(
                                     onboardingContents.length,

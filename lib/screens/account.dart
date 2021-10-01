@@ -49,7 +49,8 @@ class _AccountState extends State<Account> {
               title: AppLocalizations.of(context)!.accounts,
               bg: const Color(0xFF607D8B),
               textColor: Constants.white,
-              onCloseClicked: () => Navigator.of(context).pushNamed('/home'),
+              onCloseClicked: () =>
+                  Navigator.of(context).pushNamed('/category'),
               backgroundColor: const Color(0xFF607D8B))),
       body: SingleChildScrollView(
         child: Column(
@@ -81,7 +82,7 @@ class _AccountState extends State<Account> {
                           padding:
                               const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
                           child: Row(children: [
-                            Icon(Icons.directions_transit,
+                            Icon(Icons.file_copy,
                                 color: Colors.pink,
                                 size: 30.0,
                                 semanticLabel: AppLocalizations.of(context)!
@@ -99,7 +100,7 @@ class _AccountState extends State<Account> {
                           padding:
                               const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
                           child: Row(children: [
-                            Icon(Icons.directions_transit,
+                            Icon(Icons.file_copy_sharp,
                                 color: Colors.pink,
                                 size: 30.0,
                                 semanticLabel: AppLocalizations.of(context)!
@@ -125,7 +126,7 @@ class _AccountState extends State<Account> {
                         //prefs.clearPrefs();
                         prefs.removePref('JWT');
                         _userProvider.setCurrentUser(null);
-                        Navigator.of(context).pushNamed('/home');
+                        Navigator.of(context).pushNamed('/category');
                       },
                       child: Padding(
                           padding:

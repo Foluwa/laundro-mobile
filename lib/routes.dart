@@ -5,7 +5,6 @@ import 'package:page_transition/page_transition.dart';
 import 'screens/account.dart';
 import 'screens/cart.dart';
 import 'screens/category.dart';
-import 'screens/category_screen.dart';
 import 'screens/checkout.dart';
 import 'screens/onboarding.dart';
 import 'screens/order_history.dart';
@@ -13,6 +12,7 @@ import 'screens/search.dart';
 import 'screens/signin.dart';
 import 'screens/signup.dart';
 import 'screens/single_order.dart';
+import 'screens/subcategory.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -25,14 +25,14 @@ class RouteGenerator {
         return PageTransition(
             type: PageTransitionType.bottomToTop,
             child: const OnBoardingPage()); //Onboarding
-      case '/home':
+      case '/category':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const CategoryWidgetList()); // CategoryWidgetList
-      case '/category_details':
+            child: const ProductCategory()); // CategoryWidgetList
+      case '/subcategory':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: CategoryScreen(subCat: args));
+            child: SubCategory(subCat: args));
       case '/order_history':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const OrderHistory());

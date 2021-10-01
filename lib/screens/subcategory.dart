@@ -9,16 +9,16 @@ import '../utils/size_config.dart';
 import '../widgets/bottom_cart.dart';
 import '../widgets/single_product.dart';
 
-class CategoryScreen extends StatefulWidget {
+class SubCategory extends StatefulWidget {
   final dynamic subCat;
   // ignore: lines_longer_than_80_chars
-  const CategoryScreen({Key? key, required this.subCat}) : super(key: key);
+  const SubCategory({Key? key, required this.subCat}) : super(key: key);
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _SubCategoryState createState() => _SubCategoryState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _SubCategoryState extends State<SubCategory> {
   LaundryApi api = LaundryApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
   bool screenLoading = true;

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,7 @@ import '../providers/user_provider.dart';
 import '../utils/boxes.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
+import '../utils/utils.dart';
 import '../widgets/bottom_cart.dart';
 import '../widgets/common.dart';
 import '../widgets/loading_list.dart';
@@ -24,14 +27,14 @@ class RIKeys {
   static const riKey3 = Key('__RIKEY3__');
 }
 
-class CategoryWidgetList extends StatefulWidget {
-  const CategoryWidgetList({Key? key}) : super(key: key);
+class ProductCategory extends StatefulWidget {
+  const ProductCategory({Key? key}) : super(key: key);
 
   @override
-  _CategoryWidgetListState createState() => _CategoryWidgetListState();
+  _ProductCategoryState createState() => _ProductCategoryState();
 }
 
-class _CategoryWidgetListState extends State<CategoryWidgetList> {
+class _ProductCategoryState extends State<ProductCategory> {
   LaundryApi api = LaundryApi(addAccessToken: false);
   UserApi userApi = UserApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
@@ -39,7 +42,9 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
   bool screenLoading = true;
-  late List<Category>? subCategories;
+  late List<Category>? categories;
+
+  Utils utility = Utils();
 
   @override
   void initState() {
@@ -57,22 +62,17 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     SizeConfig().init(context);
     _userProvider = Provider.of<UserProvider>(context);
     final user = _userProvider.getUser;
-    print('USER $user');
     _laundryProvider = Provider.of<LaundryProvider>(context);
-    subCategories = _laundryProvider.getCategories;
-
-    print('SUBCATEGORY $subCategories');
-
-    // print('CURRENT CURRENCY ${_laundryProvider!.getCurrency!.currency}');
+    categories = _laundryProvider.getCategories;
     return DefaultTabController(
       //length: _laundryProvider.getCategories?.length ?? 0,
-      length: subCategories!.length,
+      length: categories!.length,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Constants.primaryColor,
           title: Text(Constants.appName),
-          // toolbarHeight: subCategories!.length < 1 ? 70 : null,
+          // toolbarHeight: categories!.length < 1 ? 70 : null,
           actions: [
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/search'),
@@ -81,7 +81,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                 ? IconButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/order_history'),
-                    icon: const Icon(Icons.history))
+                    icon: const Icon(Icons.shopping_basket_sharp))
                 : const SizedBox(),
             IconButton(
                 onPressed: () => Navigator.of(context).pushNamed('/account'),
@@ -92,7 +92,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
             indicatorWeight: SizeConfig.safeBlockHorizontal * 1,
             indicatorColor: Constants.white,
             tabs: _laundryProvider.getCategories!.map((title) {
-              return subCategories!.length < 1
+              return categories!.length < 1
                   ? Container()
                   : Tab(
                       // // icon: const Icon(Icons.local_laundry_service_outlined),
@@ -114,12 +114,12 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
             }).toList(),
           ),
         ),
-        body: subCategories!.length < 1
+        body: categories!.length < 1
             ? const Center(child: LoadingListPage())
             : TabBarView(
 
                 ///children: _laundryProvider.getCategories!.map((item) {
-                children: subCategories!.map((item) {
+                children: categories!.map((item) {
                 return RefreshWidget(
                   keyRefresh: RIKeys.riKey1,
                   onRefresh: callAllApis,
@@ -127,86 +127,103 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: item.subCategory.subcategory.length,
                     itemBuilder: (context, index) => MediaQuery(
-                      data: const MediaQueryData(padding: EdgeInsets.zero),
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(left: 0.0, right: 0.0),
-                        title: item.subCategory.subcategory.isEmpty
-                            //TODO: Check if empty and display no product
-                            ? InkWell(
-                                onTap: () => null,
-                                child: const Center(child: Text('Empty')))
-                            : InkWell(
-                                onTap: () => Navigator.of(context).pushNamed(
-                                    '/category_details',
-                                    arguments:
-                                        item.subCategory.subcategory[index]),
-                                child: Stack(children: [
-                                  Container(
-                                      child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height:
-                                              SizeConfig.safeBlockHorizontal *
+                        data: const MediaQueryData(padding: EdgeInsets.zero),
+                        child: ListTile(
+                            contentPadding:
+                                const EdgeInsets.only(left: 0.0, right: 0.0),
+                            title: item.subCategory.subcategory.isEmpty
+                                //TODO: Check if empty and display no product
+                                ? InkWell(
+                                    onTap: () => null,
+                                    child: const Center(child: Text('Empty')))
+                                : InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/subcategory',
+                                            arguments: item.subCategory
+                                                .subcategory[index]),
+                                    child: Stack(children: [
+                                      Container(
+                                          child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: SizeConfig
+                                                      .safeBlockHorizontal *
                                                   51,
-                                          child: FadeInImage.assetNetwork(
-                                              image: item.subCategory
-                                                  .subcategory[index].img_url,
-                                              placeholder: 'assets/spinner.gif',
-                                              fit: BoxFit.cover)),
-                                      foregroundDecoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                            Color(0xCC000000),
-                                            Color(0x00000000),
-                                            Color(0x00000000),
-                                            Color(0xCC000000),
-                                          ])),
-                                      width: double.infinity),
-                                  Positioned(
-                                      // ignore: lines_longer_than_80_chars
-                                      bottom:
-                                          SizeConfig.safeBlockHorizontal * 6.37,
-                                      left:
-                                          // ignore: lines_longer_than_80_chars
-                                          SizeConfig.safeBlockHorizontal * 3.85,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                  '${item.subCategory.subcategory[index].name}',
-                                                  style: TextStyle(
-                                                    color: Constants.white,
-                                                    fontSize: SizeConfig
-                                                            .safeBlockHorizontal *
-                                                        5.1,
-                                                    fontWeight: FontWeight.w500,
-                                                  )),
-                                            ],
+                                              child: FadeInImage.assetNetwork(
+                                                  image: item
+                                                      .subCategory
+                                                      .subcategory[index]
+                                                      .img_url,
+                                                  placeholder:
+                                                      'assets/spinner.gif',
+                                                  fit: BoxFit.cover)),
+                                          foregroundDecoration:
+                                              const BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.topCenter,
+                                                      end: Alignment
+                                                          .bottomCenter,
+                                                      colors: [
+                                                Color(0xCC000000),
+                                                Color(0x00000000),
+                                                Color(0x00000000),
+                                                Color(0xCC000000),
+                                              ])),
+                                          width: double.infinity),
+                                      Positioned.fill(
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      // ignore: lines_longer_than_80_chars
+                                                      '${item.subCategory.subcategory[index].name}',
+                                                      style: TextStyle(
+                                                        color: Constants.white,
+                                                        fontSize: SizeConfig
+                                                                .safeBlockHorizontal *
+                                                            5.1,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
+                                                ),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(
+                                                              20.0)),
+                                                  child: MaterialButton(
+                                                      elevation: 18.0,
+                                                      color: Color(0xFF801E48),
+                                                      onPressed: () => {},
+                                                      child: Text(
+                                                          // ignore: lines_longer_than_80_chars
+                                                          'From ${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${findSmallestPrice(item.subCategory.subcategory[index].id)}',
+                                                          style: TextStyle(
+                                                            color:
+                                                                Constants.white,
+                                                            fontSize: SizeConfig
+                                                                    .safeBlockHorizontal *
+                                                                5.1,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ))),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            children: [
-                                              Text('Starting from \$100',
-                                                  style: TextStyle(
-                                                    color: Constants.white,
-                                                    fontSize: SizeConfig
-                                                            .safeBlockHorizontal *
-                                                        5.1,
-                                                    fontWeight: FontWeight.w500,
-                                                  ))
-                                            ],
-                                          )
-                                        ],
-                                      ))
-                                ]),
-                              ),
-                      ),
-                    ),
+                                        ),
+                                      )
+                                    ]),
+                                  ))),
                   ),
                 );
               }).toList()),
@@ -271,7 +288,6 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
 
   /// Fetch Categories
   Future<CategoryList> getCategories() async {
-    print('CALLING getCategories');
     if (mounted) {
       setState(() {
         screenLoading = true;
@@ -296,6 +312,7 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     return data;
   }
 
+  /// Fetch all products
   Future<ProductList> getAllProducts() async {
     if (mounted) {
       setState(() {
@@ -313,7 +330,6 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       });
       data = products;
       //return products;
-
       // Persist cart
       persistCart().then((_) => print('persist cart'));
     }).catchError((error) {
@@ -324,23 +340,16 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
     return data;
   }
 
+  /// Persist cart in state and hive database
   Future persistCart() async {
     if (_laundryProvider.getProducts != null) {
       final cartData = Boxes.getCart();
-      // print('MAC CART KEYs IS ${cartData.keys}');
-      // print('MAC CART Values IS ${cartData.values.length}');
-      // print('MAC CART FIRST IS ${cartData.values.first}');
-      // print('MAC CART FIRST IS ${cartData.values.first.productId}');
-      // print('MAC CART FIRST IS ${cartData.values.first.qty}');
-      // print('MAC CART DB  ${cartData}');
-
       final _baskets = <Product>[];
       for (final inCart in cartData.values) {
         if (inCart.qty > 0) {
           final retrievedData = _laundryProvider.getProducts!
               .firstWhere((i) => i.id == inCart.productId);
           retrievedData.qty = inCart.qty;
-          print('retrievedData $retrievedData');
           _baskets.add(retrievedData);
         }
       }
@@ -348,5 +357,15 @@ class _CategoryWidgetListState extends State<CategoryWidgetList> {
       /// persist cart
       _laundryProvider.persistBasket(_baskets);
     }
+  }
+
+  /// Find the smallest price in subcategory
+  double findSmallestPrice(subCategoryId) {
+    final products = _laundryProvider.getProducts!
+        .where((e) => e.sub_category_id == subCategoryId)
+        .toList();
+    final productsPriceList = products.map<double>((m) => m.price).toList();
+    if (products.isEmpty) return 0;
+    return productsPriceList.reduce(min);
   }
 }

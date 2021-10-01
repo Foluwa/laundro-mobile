@@ -3,7 +3,7 @@ class OrderList {
   OrderList({required this.orders});
   factory OrderList.fromJson(category) {
     final operations = category as List;
-    print('INSIDE OrderListOperations $operations');
+    // print('INSIDE OrderListOperations $operations');
     final data = operations.map((f) => Order.fromJson(f)).toList();
     return OrderList(orders: data);
   }

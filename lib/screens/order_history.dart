@@ -22,7 +22,11 @@ class _OrderHistoryState extends State<OrderHistory> {
   OrderApi orderAPI = OrderApi(addAccessToken: true);
   OrderProvider _orderProvider = OrderProvider();
 
+  List<Order>? customerOrders;
+
   late Future myFuture;
+
+  bool loadingData = true;
 
   @override
   void initState() {
@@ -33,6 +37,10 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   Widget build(BuildContext context) {
     _orderProvider = Provider.of<OrderProvider>(context);
+
+    customerOrders = _orderProvider.getOrders?.orders;
+
+    // print('customerOrders $customerOrders');
 
     // final userO = _orderProvider.getOrders;
     //
@@ -51,36 +59,48 @@ class _OrderHistoryState extends State<OrderHistory> {
                 onCloseClicked: () => Navigator.pop(context),
                 backgroundColor: const Color(0xFF607D8B))),
         // body: _orderProvider.getOrders!.orders.length < 1
-        body: ListView.builder(
-          itemCount: _orderProvider.getOrders!.orders
-              .length, //_orderProvider.getOrders!.orders.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('/single_order',
-                  arguments: _orderProvider.getOrders!.orders[index]),
-              child: ListTile(
-                  title: Text(
-                      '#${_orderProvider.getOrders!.orders[index].orderId}'),
-                  subtitle: Text(
-                      '${_orderProvider.getOrders!.orders[index].deliveryAddress}'),
-                  trailing: Icon(Icons.arrow_forward_ios)),
-            );
-          },
-        ));
+        body: (loadingData)
+            ? const Center(child: CircularProgressIndicator())
+            : ((customerOrders != null)
+                ? ListView.builder(
+                    //itemCount: _orderProvider.getOrders!.orders.length,
+                    itemCount: _orderProvider.getOrders!.orders.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed(
+                            '/single_order',
+                            arguments: _orderProvider.getOrders!.orders[index]),
+                        child: ListTile(
+                            title: Text(
+                                '#${_orderProvider.getOrders!.orders[index].orderId}'),
+                            subtitle: Text(
+                                '${_orderProvider.getOrders!.orders[index].deliveryAddress}'),
+                            trailing: Icon(Icons.arrow_forward_ios)),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Text('No orders yet'),
+                  )));
   }
 
   /// Fetch Orders
   Future<OrderList> getUserOrders() async {
     var keys;
     await orderAPI.fetchUserOrders().then((orders) {
-      print('ORDERS ${orders}');
-
-      _orderProvider.setOrders(orders);
+      //var data = null;
+      _orderProvider.setOrders(orders); //data
+      setState(() {
+        loadingData = false;
+      });
 
       print('JOEBIDEN ${_orderProvider.getOrders!.orders.first}');
       return orders;
     }).catchError((error) {
       print('ERROR CAUGHT ${error}');
+      setState(() {
+        loadingData = false;
+      });
       Common.showSnackBar(context, title: error.toString(), duration: 300);
     });
     return keys;
