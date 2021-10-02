@@ -67,8 +67,6 @@ class UserApi {
         return User.fromJson(response.data);
       }
     } on DioError catch (error) {
-      print('ERROR WAS KNOCKED! ${error}');
-      print('error WAS ! ${error.response}');
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw Exception('$errorMessage');
     }
@@ -87,13 +85,7 @@ class UserApi {
       prefs.setJWT(jwt);
 
       return User.fromJson(response.data['user']);
-      // } else {
-      //   print('RESPONSE ${response.statusCode}');
-      //   return User.fromJson(response.data);
-      // }
     } on DioError catch (error) {
-      print('ERROR WAS KNOCKED! ${error}');
-      print('error WAS ! ${error.response}');
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw Exception('$errorMessage');
     }
@@ -102,28 +94,15 @@ class UserApi {
   /// Update User account
   Future<User> updateInfo(userId, data) async {
     try {
-      print('API LEVEL userId ${userId}');
-      print('API_LEVEL DATA ${data}');
-      //await Dio().put('${ApiRoutes.user}/${userId}', data: data);
       final response =
           await _dio.put('${ApiRoutes.user}/${userId}', data: data);
       print('response $response');
       print('responseDATA ${response.data}');
       return User.fromJson(response.data);
-      //return response.data;
-    } catch (error, stacktrace) {
-      print('error $error');
-      print('stacktrace $stacktrace');
-      // final errorMessage = DioExceptions.fromDioError(error).toString();
-      throw Exception('$error');
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
     }
-
-    // on DioError catch (error) {
-    //   print('ERROR WAS KNOCKED! ${error}');
-    //   print('error WAS ! ${error.response}');
-    //   final errorMessage = DioExceptions.fromDioError(error).toString();
-    //   throw Exception('$errorMessage');
-    // }
   }
 
   /// Forgot password
@@ -137,8 +116,6 @@ class UserApi {
         return true;
       }
     } on DioError catch (error) {
-      print('ERROR WAS KNOCKED! ${error}');
-      print('error WAS ! ${error.response}');
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw Exception('$errorMessage');
     }

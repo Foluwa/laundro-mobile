@@ -37,8 +37,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     _userProvider = Provider.of<UserProvider>(context);
-    emailController.text = 'adeoyeakin14@gmail.com';
-    passwordController.text = 'postman';
+    // emailController.text = 'adeoyeakin14@gmail.com';
+    // passwordController.text = 'postman';
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -148,7 +148,7 @@ class _SignInState extends State<SignIn> {
         Navigator.of(context).pushNamed('/account');
       }).catchError((error) {
         print('ERROR CAUGHT ${error}');
-        Common.showSnackBar(context, title: error.toString(), duration: 300);
+        Common.showSnackBar(context, title: error.toString(), duration: 3000);
         // return error;
       });
       if (mounted) {
