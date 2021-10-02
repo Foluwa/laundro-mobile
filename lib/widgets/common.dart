@@ -26,10 +26,6 @@ class Common {
     required String title,
     required int duration,
   }) =>
-      // Scaffold.of(context)
-      //   ..removeCurrentSnackBar()
-      //   ..showSnackBar(
-      //     SnackBar(content: Text(title)),
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(title),
@@ -37,5 +33,3 @@ class Common {
         ),
       );
 }
-
-//['message']['messages']['message']

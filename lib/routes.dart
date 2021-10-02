@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'screens/user/account.dart';
-import 'screens/user/cart.dart';
-import 'screens/user/category.dart';
-import 'screens/user/category_screen.dart';
-import 'screens/user/checkout.dart';
-import 'screens/user/order_history.dart';
-import 'screens/user/search.dart';
-import 'screens/user/signin.dart';
-import 'screens/user/signup.dart';
+import 'screens/account.dart';
+import 'screens/cart.dart';
+import 'screens/category.dart';
+import 'screens/checkout.dart';
+import 'screens/onboarding.dart';
+import 'screens/order_history.dart';
+import 'screens/search.dart';
+import 'screens/signin.dart';
+import 'screens/signup.dart';
+import 'screens/single_order.dart';
+import 'screens/subcategory.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,22 +21,25 @@ class RouteGenerator {
     print('Route information: ' + settings.name!);
 
     switch (settings.name) {
-      // case '/':
-      //   return PageTransition(
-      // ignore: lines_longer_than_80_chars
-      //       type: PageTransitionType.topToBottom, child: const LaunchScreen());
-      // categories
       case '/':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const CategoryWidgetList());
-      case '/category_details':
+            child: const OnBoardingPage());
+      case '/category':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: CategoryScreen(subCat: args));
+            child: const ProductCategory());
+      case '/subcategory':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop,
+            child: SubCategory(subCat: args));
       case '/order_history':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const OrderHistory());
+      case '/single_order':
+        return PageTransition(
+            type: PageTransitionType.bottomToTop,
+            child: SingleOrder(order: args));
       case '/account':
         return PageTransition(
             type: PageTransitionType.topToBottom, child: const Account());
@@ -53,8 +58,6 @@ class RouteGenerator {
       case '/signin':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignIn());
-      // case '/walkthrough':
-      //   return MaterialPageRoute(builder: (_) => WalkThroughPage());
       default:
         return _errorRoute();
     }

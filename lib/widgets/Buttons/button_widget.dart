@@ -24,14 +24,7 @@ class ButtonWidget extends StatelessWidget {
         padding: EdgeInsets.all(paddingValue),
         child: btnStatus
             ? const CircularProgressIndicator()
-            : Text(
-                text,
-                style: style,
-              ),
-        // shape: StadiumBorder(),
-        // color: Theme.of(context).accentColor,
-        // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        // textColor: Colors.white,
+            : Text(text, style: style),
         onPressed: onClicked,
       );
 }

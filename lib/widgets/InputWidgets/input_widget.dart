@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../../utils/constants.dart';
 
+// Todo sprcify keyboard input type
+// keyboardType: TextInputType.number,
 class FormInput extends StatefulWidget {
   bool passwordVisible = false;
   bool obscureText;
   String label;
+  TextInputType textInputType;
   final String? Function(String?)? textValidator;
   TextEditingController controller;
 
@@ -17,6 +20,7 @@ class FormInput extends StatefulWidget {
     required this.controller,
     required this.obscureText,
     required this.textValidator,
+    required this.textInputType,
   }) : super(key: key);
 
   @override
@@ -35,6 +39,7 @@ class _FormInputState extends State<FormInput> {
       child: TextFormField(
         autofocus: false,
         validator: widget.textValidator,
+        keyboardType: widget.textInputType, //TextInputType.number,
         obscureText: widget.obscureText
             ? (widget.obscureText
                 ? widget.passwordVisible

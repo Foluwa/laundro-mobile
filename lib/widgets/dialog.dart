@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../utils/constants.dart';
 import '../utils/utils.dart';
 
 class DialogBox extends StatefulWidget {
@@ -22,7 +22,7 @@ class _DialogBoxState extends State<DialogBox> {
           child: Row(
             children: [
               const Icon(
-                Icons.directions_transit,
+                Icons.help_rounded,
                 color: Colors.pink,
                 size: 30.0,
                 semanticLabel: 'accessibility modes',

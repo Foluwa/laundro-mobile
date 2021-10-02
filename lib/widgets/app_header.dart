@@ -22,18 +22,17 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: bg, //?? Colors.white,
-      elevation: elevation, // ?? 0,
-      title: Text(
-        title,
-        style: TextStyle(color: textColor, fontSize: fontSize),
-      ), //?? //'Header'),
+      backgroundColor: bg,
+      elevation: elevation,
+      title:
+          Text(title, style: TextStyle(color: textColor, fontSize: fontSize)),
       leading: IconButton(
-        icon: const Icon(Icons.cancel),
-        onPressed: () =>
-            // ignore: unnecessary_null_comparison
-            onCloseClicked != null ? onCloseClicked() : Navigator.pop(context),
-      ),
+          icon: const Icon(Icons.cancel),
+          onPressed: () =>
+              // ignore: unnecessary_null_comparison
+              onCloseClicked != null
+                  ? onCloseClicked()
+                  : Navigator.pop(context)),
       actions: [],
     );
   }

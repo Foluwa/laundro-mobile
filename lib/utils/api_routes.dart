@@ -6,8 +6,16 @@ class ApiRoutes {
   /// USER ROUTES
   static String register = '$baseUrl/auth/local/register';
   static String login = '$baseUrl/auth/local';
-  static String resetPassword = '$baseUrl';
   static String verifyMe = '$baseUrl/users/me';
+  static String user = '$baseUrl/users';
+  static String forgotPassword = '$baseUrl/auth/forgot-password';
+  static String resetPassword = '$baseUrl';
+  static String refreshToken = '$baseUrl';
+
+  /// Business
+  static String phoneNumber = '$baseUrl/phone-number';
+  static String email = '$baseUrl/email';
+  static String tandC = '$baseUrl/terms-and-conditions';
 
   /// LAUNDRY ROUTES
   static String products = '$baseUrl/products';
@@ -15,4 +23,11 @@ class ApiRoutes {
   static String categories = '$baseUrl/categories';
   static String sub_categories = '$baseUrl/sub-categories';
   static String currency = '$baseUrl/currency';
+
+  /// ORDERS
+  static String orders = '$baseUrl/orders';
+  static String userOrders = '$baseUrl/orders/me';
+
+  /// Flutterwave
+  static String flutterwave = '$baseUrl/flutterwave';
 }

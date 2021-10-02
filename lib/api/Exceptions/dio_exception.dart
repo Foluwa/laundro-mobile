@@ -33,13 +33,16 @@ class DioExceptions implements Exception {
   String _handleError(int statusCode, error) {
     switch (statusCode) {
       case 400:
-        return error;
+        //return error['message'];
+        return 'Email or password incorrect';
       case 401:
-        return error['message'];
+        return 'Not authorized';
+      case 403:
+        return 'Not authorized';
       case 404:
-        return error['message'];
+        return 'Resource not found';
       case 500:
-        return 'Internal server error';
+        return 'Oops something went wrong';
       default:
         return 'Oops something went wrong';
     }

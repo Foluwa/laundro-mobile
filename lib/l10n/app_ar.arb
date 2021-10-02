@@ -1,9 +1,117 @@
 {
-  "language": "العربية",
-      "@language":{
-    "description": "The current Language"
-},
-  "helloWorld": "!مرحبا بالعالم",
-  "hello": "{username} مرحبا",
-   "accounts":"حسابات"
+  "@@locale": "ar",
+
+  "language": "إنجليزي",
+  "@language": {},
+
+  "@language": "{الوصف: اللغة الحالية}",
+  "@@language": {},
+
+  "helloWorld": "مرحبا بالعالم!",
+  "@helloWorld": {},
+
+  "@helloWorld": "{الوصف: تحية مبرمجة}",
+  "@@helloWorld": {},
+
+  "hello": "مرحبا {اسم المستخدم}",
+  "@hello": {},
+
+  "@hello": "{الوصف: رسالة ترحيب، العناصر النائبة: {اسم المستخدم: {النوع: string}}}",
+  "@@hello": {},
+
+  "accounts": "حسابات",
+  "@accounts": {},
+
+  "first_name": "الاسم الاول",
+  "@first_name": {},
+
+  "last_name": "الكنية",
+  "@last_name": {},
+
+  "email": "عنوان البريد الإلكتروني",
+  "@email": {},
+
+  "phone_number": "رقم التليفون",
+  "@phone_number": {},
+
+  "home_address": "عنوان المنزل",
+  "@home_address": {},
+
+  "pickup_address": "بيك اب (التسليم) العنوان",
+  "@pickup_address": {},
+
+  "password": "كلمة المرور",
+  "@password": {},
+
+  "confirm_password": "تأكيد كلمة المرور",
+  "@confirm_password": {},
+
+  "settings": "إعدادات",
+  "@settings": {},
+
+  "change_password": "تغيير كلمة السر",
+  "@change_password": {},
+
+  "help": "يساعد",
+  "@help": {},
+
+  "logout": "تسجيل خروج",
+  "@logout": {},
+
+  "terms_of_service": "شروط الخدمة",
+  "@terms_of_service": {},
+
+  "privacy_policy": "سياسة الخصوصية",
+  "@privacy_policy": {},
+
+  "cart": "عربة التسوق",
+  "@cart": {},
+
+  "no_item_in_cart": "لا يوجد عنصر في العربة",
+  "@no_item_in_cart": {},
+
+  "item_in_cart": "البند في العربة",
+  "@item_in_cart": {},
+
+  "typing_to_search": "ابدأ في الكتابة للبحث",
+  "@typing_to_search": {},
+
+  "no_products_found": "لا توجد منتجات وجدت",
+  "@no_products_found": {},
+
+  "order_history": "تاريخ الطلب",
+  "@order_history": {},
+
+  "order_details": "تفاصيل الطلب",
+  "@order_details": {},
+
+  "order_status": "حالة الطلب",
+  "@order_status": {},
+
+  "create_new_account": "انشاء حساب جديد",
+  "@create_new_account": {},
+
+  "sign_into_acount": "تسجيل الدخول إلى حساب Exisitng",
+  "@sign_into_acount": {},
+
+  "reset_password": "إعادة تعيين كلمة المرور",
+  "@reset_password": {},
+
+  "create_account_to_continue": "إنشاء حساب للمتابعة",
+  "@create_account_to_continue": {},
+
+  "proceed": "يتابع",
+  "@proceed": {},
+
+  "back": "عودة",
+  "@back": {},
+
+  "checkout": "الدفع",
+  "@checkout": {},
+
+  "prefill_form": "Prefillion من بيانات المستخدم",
+  "@prefill_form": {},
+
+  "total": "مجموع",
+  "@total": {}
 }

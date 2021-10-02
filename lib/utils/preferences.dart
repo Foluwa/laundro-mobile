@@ -8,28 +8,23 @@ class Preference {
     await prefs.setString('JWT', jwt);
     print('Jwt Set $jwt');
   }
+
   //
-  // getJwt() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   //Return String
-  //   // print(prefs.getString('JWT'));
-  //   // print(prefs.getString('JWT'));
-  //   return prefs.getString('JWT');
-  // }
-  //
-  // // Clear all shared preferences
-  // clearPrefs() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   await preferences.clear();
-  // }
-  //
-  // skipSlideShow() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool('skipSlideShow', true);
-  // }
-  //
-  // shouldSkipSlideShow() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getBool('skipSlideShow') ?? false;
-  // }
+  Future<String?>? getJwt() async {
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('JWT'));
+    return prefs.getString('JWT');
+  }
+
+  // Remove a pref
+  void removePref(String keyName) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove(keyName);
+  }
+
+  // Clear all shared preferences
+  void clearPrefs() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  }
 }

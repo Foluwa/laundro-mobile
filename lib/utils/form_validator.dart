@@ -47,4 +47,12 @@ class FormValidate {
     }
     return null;
   }
+
+  // validate address
+  static String? validateHomeAddress(String? value) {
+    if (value!.length < 10 || value.isEmpty) {
+      return 'Number can not be less than 10 characters';
+    }
+    return null;
+  }
 }

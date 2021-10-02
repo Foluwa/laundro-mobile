@@ -1,6 +1,117 @@
 {
-  "language": "मानक हिन्दी",
-  "helloWorld": "नमस्ते दुनिया!",
-  "hello": "नमस्ते {username}",
-   "accounts":"हिसाब किताब"
+  "@@locale": "hi",
+
+  "language": "अंग्रेज़ी",
+  "@language": {},
+
+  "@language": "{विवरण: वर्तमान भाषा}",
+  "@@language": {},
+
+  "helloWorld": "हैलो वर्ल्ड!",
+  "@helloWorld": {},
+
+  "@helloWorld": "{विवरण: एक प्रोग्रामर ग्रीटिंग}",
+  "@@helloWorld": {},
+
+  "hello": "हैलो {उपयोगकर्ता नाम}",
+  "@hello": {},
+
+  "@hello": "{विवरण: एक स्वागत संदेश, प्लेसहोल्डर्स: {उपयोगकर्ता नाम: {टाइप: स्ट्रिंग}}}",
+  "@@hello": {},
+
+  "accounts": "हिसाब किताब",
+  "@accounts": {},
+
+  "first_name": "नाम",
+  "@first_name": {},
+
+  "last_name": "उपनाम",
+  "@last_name": {},
+
+  "email": "ईमेल पता",
+  "@email": {},
+
+  "phone_number": "फ़ोन नंबर",
+  "@phone_number": {},
+
+  "home_address": "घर का पता",
+  "@home_address": {},
+
+  "pickup_address": "पिकअप (डिलिवरी) पता",
+  "@pickup_address": {},
+
+  "password": "कुंजिका",
+  "@password": {},
+
+  "confirm_password": "पासवर्ड की पुष्टि कीजिये",
+  "@confirm_password": {},
+
+  "settings": "समायोजन",
+  "@settings": {},
+
+  "change_password": "पासवर्ड बदलें",
+  "@change_password": {},
+
+  "help": "मदद",
+  "@help": {},
+
+  "logout": "लॉग आउट",
+  "@logout": {},
+
+  "terms_of_service": "सेवा की शर्तें",
+  "@terms_of_service": {},
+
+  "privacy_policy": "गोपनीयता नीति",
+  "@privacy_policy": {},
+
+  "cart": "कार्ट",
+  "@cart": {},
+
+  "no_item_in_cart": "गाड़ी में कोई वस्तु नहीं",
+  "@no_item_in_cart": {},
+
+  "item_in_cart": "कार्ट में आइटम",
+  "@item_in_cart": {},
+
+  "typing_to_search": "खोज करने के लिए टाइपिंग शुरू करें",
+  "@typing_to_search": {},
+
+  "no_products_found": "कोई उत्पाद नहीं मिला",
+  "@no_products_found": {},
+
+  "order_history": "आदेश इतिहास",
+  "@order_history": {},
+
+  "order_details": "ऑर्डर का विवरण",
+  "@order_details": {},
+
+  "order_status": "आदेश की स्थिति",
+  "@order_status": {},
+
+  "create_new_account": "नया खाता बनाएँ",
+  "@create_new_account": {},
+
+  "sign_into_acount": "Exisitng खाते में साइन इन करें",
+  "@sign_into_acount": {},
+
+  "reset_password": "पासवर्ड रीसेट",
+  "@reset_password": {},
+
+  "create_account_to_continue": "जारी रखने के लिए एक खाता बनाएँ",
+  "@create_account_to_continue": {},
+
+  "proceed": "आगे बढ़ना",
+  "@proceed": {},
+
+  "back": "वापस",
+  "@back": {},
+
+  "checkout": "चेक आउट",
+  "@checkout": {},
+
+  "prefill_form": "उपयोगकर्ता डेटा से prefill",
+  "@prefill_form": {},
+
+  "total": "संपूर्ण",
+  "@total": {}
 }

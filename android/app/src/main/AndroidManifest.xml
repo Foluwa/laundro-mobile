@@ -22,8 +22,8 @@
     <!-- end of url_launcher -->
 
    <application
-        android:label="laundro"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Laundro"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

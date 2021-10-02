@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/laundry_provider.dart';
@@ -52,22 +53,21 @@ class _BottomCartState extends State<BottomCart> {
                     child: currentCurrency == null
                         ? Common.simpleShimmer()
                         : Text(
-                            'Cart (${_laundryProvider.getBasketQty()})',
+                      // ignore: lines_longer_than_80_chars
+                            '${AppLocalizations.of(context)!.cart.toString()} (${_laundryProvider.getBasketQty()})',
                             style: bottomCartStyle,
                           ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
-                    child: currentCurrency == null
-                        ? Common.simpleShimmer()
-                        : Text(
-                            // ignore: lines_longer_than_80_chars
-                            '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
-                            style: bottomCartStyle,
-                          ),
-                    //
-                  ),
+                      padding:
+                          EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3.34),
+                      child: currentCurrency == null
+                          ? Common.simpleShimmer()
+                          : Text(
+                              // ignore: lines_longer_than_80_chars
+                              '${Utils.getCurrency(_laundryProvider.getCurrency!.currency)} ${_laundryProvider.getTotalPrice()}',
+                              style: bottomCartStyle,
+                            )),
                 ],
               ),
             ),
