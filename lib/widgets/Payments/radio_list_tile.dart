@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/constants.dart';
+
 class MyRadioListTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
@@ -40,17 +42,17 @@ class MyRadioListTile<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blue : null,
+        color: isSelected ? Constants.secondaryColor : null,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          color: isSelected ? Colors.blue : Colors.grey[300]!,
+          color: isSelected ? Constants.secondaryColor : Constants.lightGrey,
           width: 2,
         ),
       ),
       child: Text(
         leading,
         style: TextStyle(
-          color: isSelected ? Colors.white : Colors.grey[600]!,
+          color: isSelected ? Constants.white : Constants.thickGrey,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),

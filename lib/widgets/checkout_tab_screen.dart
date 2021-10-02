@@ -69,7 +69,7 @@ class _TabScreenState extends State<TabScreen> {
               padding: const EdgeInsets.all(15),
               children: _tabs,
               onValueChanged: _tabChanged,
-              borderColor: Constants.primaryColor,
+              borderColor: Constants.secondaryColor,
               selectedColor: Constants.secondaryColor,
               unselectedColor: Constants.white,
               groupValue: _selectedIndex)),

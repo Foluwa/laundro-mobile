@@ -10,7 +10,7 @@ class OrderList {
 }
 
 class Order {
-  // int id;
+  int id;
   String orderId;
   String orderFirstName;
   String orderLastName;
@@ -32,6 +32,7 @@ class Order {
   String updatedAt;
 
   Order({
+    required this.id,
     required this.orderId,
     required this.orderFirstName,
     required this.orderLastName,
@@ -56,6 +57,7 @@ class Order {
   factory Order.fromJson(order) {
     print('INSIDE FROMJSON $order');
     return Order(
+      id: order['id'] ?? '',
       orderId: order['order_id'] ?? '',
       orderFirstName: order['order_first_name'] ?? '',
       orderLastName: order['order_last_name'] ?? '',
@@ -97,6 +99,6 @@ class Order {
 
   @override
   String toString() {
-    return 'id: ${orderId}, name: ${orderFirstName}';
+    return 'id: ${id}, orderID: ${orderId}, name: ${orderFirstName}';
   }
 }

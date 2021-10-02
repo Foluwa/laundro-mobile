@@ -52,6 +52,19 @@ class OrderApi {
     }
   }
 
+  /// Update Order status
+  Future<Order> updateOrderStatus(id) async {
+    print('updateOrderStatus WAS CALLED');
+    try {
+      final response = await _dio.put('${ApiRoutes.userOrders}/${id}');
+      return Order.fromJson(response.data);
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+
+      throw Exception('$errorMessage');
+    }
+  }
+
   /// Fetch API keys
   Future<Flutterwave> fetchFlutterWaveKeys() async {
     print('fetchFlutterWaveKeys WAS CALLED');

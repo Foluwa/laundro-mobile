@@ -47,11 +47,11 @@ class _AccountState extends State<Account> {
               elevation: 0,
               fontSize: 25.0,
               title: AppLocalizations.of(context)!.accounts,
-              bg: const Color(0xFF607D8B),
+              bg: Constants.primaryColor,
               textColor: Constants.white,
               onCloseClicked: () =>
                   Navigator.of(context).pushNamed('/category'),
-              backgroundColor: const Color(0xFF607D8B))),
+              backgroundColor: Constants.primaryColor)),
       body: SingleChildScrollView(
         child: Column(
           children: [

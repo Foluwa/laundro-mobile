@@ -20,9 +20,10 @@ class PaymentOptions extends StatefulWidget {
 
 class _PaymentOptionsState extends State<PaymentOptions> {
   List<PaymentPlatforms> platforms = [
-    PaymentPlatforms(index: 1, platform: 'flutterwave'),
-    PaymentPlatforms(index: 2, platform: 'paystack'),
-    PaymentPlatforms(index: 3, platform: 'razorpay'),
+    PaymentPlatforms(index: 1, platform: 'Cash on Delivery'),
+    PaymentPlatforms(index: 2, platform: 'flutterwave'),
+    PaymentPlatforms(index: 3, platform: 'paystack'),
+    PaymentPlatforms(index: 4, platform: 'razorpay'),
   ];
 
   LaundryProvider _laundryProvider = LaundryProvider();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../api/user.dart';
+import '../utils/constants.dart';
 import '../utils/form_validator.dart';
 import 'Buttons/button_widget.dart';
 import 'InputWidgets/input_widget.dart';
@@ -116,7 +117,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                                           onClicked: () => btnLoading
                                               ? null
                                               : userResetPassword(),
-                                          color: Colors.amber,
+                                          color: Constants.yellow,
                                           paddingValue: 6.0,
                                           btnStatus: btnLoading,
                                           style: const TextStyle()))
@@ -131,8 +132,8 @@ class _AccountDetailsState extends State<AccountDetails> {
                         color: Colors.pink,
                         size: 30.0,
                         semanticLabel: 'Forgot password'),
-                    const Text('Forgot password',
-                        style: TextStyle(color: Colors.black))
+                    Text('Forgot password',
+                        style: TextStyle(color: Constants.black))
                   ])))
         ],
       ),

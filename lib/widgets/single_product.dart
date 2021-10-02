@@ -6,6 +6,7 @@ import '../models/cart.dart';
 import '../models/product.dart';
 import '../providers/laundry_provider.dart';
 import '../utils/boxes.dart';
+import '../utils/constants.dart';
 import '../utils/utils.dart';
 
 class SingleProduct extends StatefulWidget {
@@ -89,7 +90,8 @@ class _SingleProductState extends State<SingleProduct> {
                           padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.blueAccent)),
+                              border:
+                                  Border.all(color: Constants.secondaryColor)),
                           child: IconButton(
                               onPressed: () {
                                 // add item into basket

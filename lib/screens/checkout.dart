@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
-import 'package:laundro/utils/boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -14,6 +13,7 @@ import '../models/payment/flutterwave.dart';
 import '../providers/laundry_provider.dart';
 import '../providers/order_provider.dart';
 import '../providers/user_provider.dart';
+import '../utils/boxes.dart';
 import '../utils/constants.dart';
 import '../utils/form_validator.dart';
 import '../utils/size_config.dart';
@@ -115,10 +115,10 @@ class _CheckoutState extends State<Checkout> {
                 elevation: 0,
                 fontSize: 25.0,
                 title: AppLocalizations.of(context)!.checkout.toString(),
-                bg: const Color(0xFF607D8B),
+                bg: Constants.primaryColor,
                 textColor: Constants.white,
                 onCloseClicked: () => Navigator.pop(context),
-                backgroundColor: const Color(0xFF607D8B))),
+                backgroundColor: Constants.primaryColor)),
         body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -259,7 +259,7 @@ class _CheckoutState extends State<Checkout> {
                                           ? null
                                           : checkoutCart(),
                                       padding: const EdgeInsets.all(3.0),
-                                      color: Constants.bgColor,
+                                      color: Constants.secondaryColor,
                                       child: Padding(
                                           padding: const EdgeInsets.all(3.0),
                                           child: checkoutBtnLoading
@@ -395,12 +395,10 @@ class _CheckoutState extends State<Checkout> {
         'is_drop_in': _orderProvider.isDropIn,
         'drop_in_time': _orderProvider.getUserSelectedTime.toString(),
         'delivery_pickup_time': _orderProvider.getUserSelectedDate.toString(),
-        //TODO: Duplicate
         'location_id': _laundryProvider.getSelectedLocation!.id,
         'delivery_address': _homeAddress.text,
-        'user_products': productsAndQty, //cartData,
-
-        'payment_method': _laundryProvider.getSelectedPayment, //'stripe',
+        'user_products': productsAndQty,
+        'payment_method': _laundryProvider.getSelectedPayment,
       };
 
       print('ORDER $data');
@@ -417,6 +415,10 @@ class _CheckoutState extends State<Checkout> {
 
         final command = response['payment_method'];
         switch (command) {
+          case 'cash':
+            //_flutterwaveSheet(context);
+            print('CASH PAYMENT');
+            break;
           case 'flutterwave':
             _flutterwaveSheet(context);
             break;
@@ -433,6 +435,7 @@ class _CheckoutState extends State<Checkout> {
 
         //TODO: Clear cart, checkout page data, form field
         Boxes.clearCart();
+        clearForm();
       });
     }
   }
@@ -468,7 +471,7 @@ class _CheckoutState extends State<Checkout> {
     final options = {
       'key': 'rzp_test_JuJyqyFSpUvQOp',
       'amount': 2000,
-      'name': 'Raftware LTD.',
+      'name': Constants.businessName,
       'description': 'Landromat Ordes',
       'prefill': {'contact': '8888888888', 'email': 'support@raftware.com'},
       'external': {

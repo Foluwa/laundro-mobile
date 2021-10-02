@@ -36,7 +36,7 @@ class _FlutterwavePaymentState extends State<FlutterwavePayment> {
         child: ListView(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               child: TextFormField(
                 controller: amountController,
                 textInputAction: TextInputAction.next,

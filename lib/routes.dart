@@ -24,11 +24,11 @@ class RouteGenerator {
       case '/':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const OnBoardingPage()); //Onboarding
+            child: const OnBoardingPage());
       case '/category':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const ProductCategory()); // CategoryWidgetList
+            child: const ProductCategory());
       case '/subcategory':
         return PageTransition(
             type: PageTransitionType.bottomToTop,
@@ -58,8 +58,6 @@ class RouteGenerator {
       case '/signin':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignIn());
-      // case '/walkthrough':
-      //   return MaterialPageRoute(builder: (_) => WalkThroughPage());
       default:
         return _errorRoute();
     }

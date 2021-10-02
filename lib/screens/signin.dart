@@ -46,10 +46,10 @@ class _SignInState extends State<SignIn> {
               elevation: 0,
               fontSize: 25.0,
               title: 'Sign In',
-              bg: const Color(0xFF607D8B),
+              bg: Constants.primaryColor,
               textColor: Constants.white,
               onCloseClicked: () => Navigator.pop(context),
-              backgroundColor: const Color(0xFF607D8B))),
+              backgroundColor: Constants.primaryColor)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -95,7 +95,7 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(9.0)),
                     onPressed: () => btnLoading ? null : userSignIn(),
                     padding: const EdgeInsets.all(12),
-                    color: Constants.bgColor,
+                    color: Constants.secondaryColor,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: btnLoading

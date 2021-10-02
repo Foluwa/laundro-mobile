@@ -51,10 +51,10 @@ class _SignUpState extends State<SignUp> {
               elevation: 0,
               fontSize: 25.0,
               title: 'Sign Up',
-              bg: const Color(0xFF607D8B),
+              bg: Constants.primaryColor,
               textColor: Constants.white,
               onCloseClicked: () => Navigator.pop(context),
-              backgroundColor: const Color(0xFF607D8B))),
+              backgroundColor: Constants.primaryColor)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

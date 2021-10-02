@@ -33,10 +33,10 @@ class _CartState extends State<Cart> {
             elevation: 0,
             fontSize: 25.0,
             title: 'Cart',
-            bg: const Color(0xFF607D8B),
+            bg: Constants.primaryColor,
             textColor: Constants.white,
             onCloseClicked: () => Navigator.pop(context),
-            backgroundColor: const Color(0xFF607D8B)),
+            backgroundColor: Constants.primaryColor),
       ),
       body: _laundryProvider.getCart!.length < 1
           ? const Center(

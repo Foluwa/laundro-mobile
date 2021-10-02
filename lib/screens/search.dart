@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/constants.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product.dart';
@@ -29,8 +30,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     _laundryProvider = Provider.of<LaundryProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: const Color(0xFF607D8B), title: buildSearch()),
+      appBar:
+          AppBar(backgroundColor: Constants.primaryColor, title: buildSearch()),
       body: Column(
         children: <Widget>[
           Expanded(

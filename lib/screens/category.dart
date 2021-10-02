@@ -202,7 +202,8 @@ class _ProductCategoryState extends State<ProductCategory> {
                                                               20.0)),
                                                   child: MaterialButton(
                                                       elevation: 18.0,
-                                                      color: Color(0xFF801E48),
+                                                      color: Constants
+                                                          .secondaryColor,
                                                       onPressed: () => {},
                                                       child: Text(
                                                           // ignore: lines_longer_than_80_chars

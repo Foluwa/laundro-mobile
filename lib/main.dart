@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/l10n.dart';
 import 'models/cart.dart';
@@ -18,26 +19,19 @@ import 'providers/user_provider.dart';
 import 'routes.dart';
 import 'utils/constants.dart';
 
+String? initialRoute;
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //Init hive db
+  // Init hive db
   await Hive.initFlutter();
   Hive.registerAdapter(CartDBAdapter());
   await Hive.openBox<CartDB>('cart');
 
-  // to load onboard for the first time only
-  // final pref = await SharedPreferences.getInstance();
-  // var seenOnboard = pref.getBool('seenOnboard') ?? false; //if null set to false
-
-  /// OLD
-  /*
-  // to show status bar
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-    SystemUiOverlay.bottom,
-    SystemUiOverlay.top,
-    runApp(const MyApp());
-  ]);*/
+  // Onboarding
+  final prefs = await SharedPreferences.getInstance();
+  final seenOnboarding = prefs.getBool('seenOnboard') ?? false;
+  (seenOnboarding) ? initialRoute = '/category' : initialRoute = '/';
 
   /// Disable screen rotation
   SystemChrome.setPreferredOrientations(
@@ -66,10 +60,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               title: Constants.appName,
               theme: ThemeData(
-                primarySwatch: Colors.blue,
-                textTheme: GoogleFonts.montserratTextTheme(
-                    Theme.of(context).textTheme),
-              ),
+                  //primarySwatch: Colors.blue,
+                  textTheme: GoogleFonts.montserratTextTheme(
+                      Theme.of(context).textTheme)),
               debugShowCheckedModeBanner: Constants.showDebugBanner,
               locale: provider.locale,
               supportedLocales: L10n.all,
@@ -79,7 +72,8 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              initialRoute: '/',
+              initialRoute: initialRoute ?? '/',
+              //initialRoute: '/',
               onGenerateRoute: RouteGenerator.generateRoute);
         }));
   }

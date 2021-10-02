@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laundro/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 import '../api/order.dart';
@@ -31,22 +32,13 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   void initState() {
     super.initState();
-    getUserOrders().then((_) => print('fetch orders'));
+    getUserOrders().then((_) => print('fetching orders'));
   }
 
   @override
   Widget build(BuildContext context) {
     _orderProvider = Provider.of<OrderProvider>(context);
-
     customerOrders = _orderProvider.getOrders?.orders;
-
-    // print('customerOrders $customerOrders');
-
-    // final userO = _orderProvider.getOrders;
-    //
-    // final lengthOfOrders;
-    // lengthOfOrders = userO!.orders;
-
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(80),
@@ -54,29 +46,29 @@ class _OrderHistoryState extends State<OrderHistory> {
                 elevation: 0,
                 fontSize: 25.0,
                 title: 'Order History',
-                bg: const Color(0xFF607D8B),
-                textColor: Colors.white,
+                bg: Constants.primaryColor,
+                textColor: Constants.white,
                 onCloseClicked: () => Navigator.pop(context),
-                backgroundColor: const Color(0xFF607D8B))),
-        // body: _orderProvider.getOrders!.orders.length < 1
+                backgroundColor: Constants.primaryColor)),
         body: (loadingData)
             ? const Center(child: CircularProgressIndicator())
             : ((customerOrders != null)
                 ? ListView.builder(
-                    //itemCount: _orderProvider.getOrders!.orders.length,
                     itemCount: _orderProvider.getOrders!.orders.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                            '/single_order',
-                            arguments: _orderProvider.getOrders!.orders[index]),
-                        child: ListTile(
-                            title: Text(
-                                '#${_orderProvider.getOrders!.orders[index].orderId}'),
-                            subtitle: Text(
-                                '${_orderProvider.getOrders!.orders[index].deliveryAddress}'),
-                            trailing: Icon(Icons.arrow_forward_ios)),
-                      );
+                          onTap: () => Navigator.of(context).pushNamed(
+                              '/single_order',
+                              arguments:
+                                  _orderProvider.getOrders!.orders[index]),
+                          child: ListTile(
+                              title: Text(
+                                  // ignore: lines_longer_than_80_chars
+                                  '${_orderProvider.getOrders!.orders[index].id} #${_orderProvider.getOrders!.orders[index].orderId}'),
+                              subtitle: Text(
+                                  // ignore: lines_longer_than_80_chars
+                                  '${_orderProvider.getOrders!.orders[index].deliveryAddress}'),
+                              trailing: const Icon(Icons.arrow_forward_ios)));
                     },
                   )
                 : const Center(
@@ -90,15 +82,18 @@ class _OrderHistoryState extends State<OrderHistory> {
     await orderAPI.fetchUserOrders().then((orders) {
       //var data = null;
       _orderProvider.setOrders(orders); //data
-      setState(() {
-        loadingData = false;
-      });
-
+      if (mounted) {
+        setState(() {
+          loadingData = false;
+        });
+      }
       return orders;
     }).catchError((error) {
-      setState(() {
-        loadingData = false;
-      });
+      if (mounted) {
+        setState(() {
+          loadingData = false;
+        });
+      }
       Common.showSnackBar(context, title: error.toString(), duration: 300);
     });
     return keys;
