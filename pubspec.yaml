@@ -19,7 +19,6 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-   #sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -34,7 +33,6 @@ dependency_overrides:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
   flutter_paystack: ^1.0.5+1
-#  flutter_local_notifications: ^8.2.0
   dio: ^4.0.0
   flutterwave: ^1.0.1
   google_fonts: ^2.1.0
@@ -60,16 +58,17 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#8f8e8b"
-  image: assets/splash.png
+  image: assets/app_logo.png
   color_dark: "#8f8e8b"
-  image_dark: assets/splash.png
+  image_dark: assets/app_logo.png
   andriod: true
   ios: true
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/splash.png"
+  image_path: "assets/app_logo.png"
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
