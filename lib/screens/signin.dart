@@ -40,6 +40,7 @@ class _SignInState extends State<SignIn> {
     // emailController.text = 'adeoyeakin14@gmail.com';
     // passwordController.text = 'postman';
     return Scaffold(
+      backgroundColor: Constants.primaryColor,
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: AppHeader(
@@ -50,69 +51,173 @@ class _SignInState extends State<SignIn> {
               textColor: Constants.white,
               onCloseClicked: () => Navigator.pop(context),
               backgroundColor: Constants.primaryColor)),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                FormInput(
-                  label: AppLocalizations.of(context)!
-                      .email
-                      .toString(), //'Email Address',
-                  controller: emailController,
-                  passwordVisible: false,
-                  obscureText: false,
-                  textInputType: TextInputType.emailAddress,
-                  textValidator: FormValidate.validateEmail,
-                ),
-                FormInput(
-                  label: AppLocalizations.of(context)!
-                      .password
-                      .toString(), //'Password',
-                  controller: passwordController,
-                  passwordVisible: true,
-                  obscureText: true,
-                  textInputType: TextInputType.text,
-                  textValidator: FormValidate.validatePassword,
-                ),
-                // ButtonWidget(
-                //     text: 'Sign In',
-                //     onClicked: () => btnLoading ? null : userSignIn(),
-                //     color: Colors.amber,
-                //     paddingValue: 6.0,
-                //     btnStatus: btnLoading,
-                //     style: const TextStyle())
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3.0),
-                  child: MaterialButton(
-                    elevation: 5.0,
-                    shape: btnLoading
-                        ? const CircleBorder()
-                        : RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(9.0)),
-                    onPressed: () => btnLoading ? null : userSignIn(),
-                    padding: const EdgeInsets.all(12),
-                    color: Constants.secondaryColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: btnLoading
-                          ? CircularProgressIndicator(
-                              backgroundColor: Constants.white,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.yellow))
-                          : const Text(
-                              'Sign In',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 18.0),
-                            ),
-                    ),
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                right: 0.0,
+                top: -20.0,
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Image.asset(
+                    'assets/images/washing_machine_illustration.png',
                   ),
                 ),
-              ],
-            ),
+              ),
+              SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 15.0,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.of(context).pop();
+                            //   },
+                            //   child: const Icon(
+                            //     // FlutterIcons.keyboard_backspace_mdi,
+                            //     Icons.keyboard_arrow_down,
+                            //     color: Colors.white,
+                            //   ),
+                            // ),
+
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              'Log in to your account',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 40.0),
+                      Flexible(
+                        child: Container(
+                          width: double.infinity,
+                          constraints: BoxConstraints(
+                            minHeight:
+                                MediaQuery.of(context).size.height - 180.0,
+                          ),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.all(24.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // Lets make a generic input widget
+                              FormInput(
+                                label: AppLocalizations.of(context)!
+                                    .email
+                                    .toString(), //'Email Address',
+                                controller: emailController,
+                                passwordVisible: false,
+                                obscureText: false,
+                                textInputType: TextInputType.emailAddress,
+                                textValidator: FormValidate.validateEmail,
+                              ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              FormInput(
+                                label: AppLocalizations.of(context)!
+                                    .password
+                                    .toString(), //'Password',
+                                controller: passwordController,
+                                passwordVisible: true,
+                                obscureText: true,
+                                textInputType: TextInputType.text,
+                                textValidator: FormValidate.validatePassword,
+                              ),
+                              const SizedBox(
+                                height: 15.0,
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Text(
+                                  'Forgot Password?',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: Constants.primaryColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 3.0),
+                                child: MaterialButton(
+                                  elevation: 5.0,
+                                  shape: btnLoading
+                                      ? const CircleBorder()
+                                      : RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(9.0)),
+                                  onPressed: () =>
+                                      btnLoading ? null : userSignIn(),
+                                  padding: const EdgeInsets.all(12),
+                                  color: Constants.secondaryColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: btnLoading
+                                        ? CircularProgressIndicator(
+                                            backgroundColor: Constants.white,
+                                            valueColor:
+                                                const AlwaysStoppedAnimation<
+                                                    Color>(Colors.yellow))
+                                        : const Text(
+                                            'Sign In',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18.0),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                              // DEFAULT BTN
+                              // AppButton(
+                              //   type: ButtonType.PRIMARY,
+                              //   text: "Log In",
+                              //   onPressed: () {
+                              //     nextScreen(context, "/dashboard");
+                              //   },
+                              // )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
