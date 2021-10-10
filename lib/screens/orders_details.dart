@@ -7,15 +7,15 @@ import 'package:timeline_tile/timeline_tile.dart';
 import '../utils/constants.dart';
 import '../widgets/app_header.dart';
 
-class SingleOrder extends StatefulWidget {
+class OrdersDetails extends StatefulWidget {
   final dynamic order;
-  const SingleOrder({Key? key, required this.order}) : super(key: key);
+  const OrdersDetails({Key? key, required this.order}) : super(key: key);
 
   @override
-  _SingleOrderState createState() => _SingleOrderState();
+  _OrdersDetailsState createState() => _OrdersDetailsState();
 }
 
-class _SingleOrderState extends State<SingleOrder> {
+class _OrdersDetailsState extends State<OrdersDetails> {
   @override
   Widget build(BuildContext context) {
     final customerOrder = widget.order;

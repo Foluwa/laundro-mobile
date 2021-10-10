@@ -10,17 +10,17 @@ import '../utils/constants.dart';
 import '../widgets/app_header.dart';
 import '../widgets/common.dart';
 
-class OrderHistory extends StatefulWidget {
-  const OrderHistory({Key? key}) : super(key: key);
+class OrdersList extends StatefulWidget {
+  const OrdersList({Key? key}) : super(key: key);
 
   @override
-  _OrderHistoryState createState() => _OrderHistoryState();
+  _OrdersListState createState() => _OrdersListState();
 }
 
 /// lIST ALL ORDERS
 /// NEXT PAGE SHOWS TIMELINE, ORDER DETAILS AND REORDER AGAIN
 
-class _OrderHistoryState extends State<OrderHistory> {
+class _OrdersListState extends State<OrdersList> {
   OrderApi orderAPI = OrderApi(addAccessToken: true);
   OrderProvider _orderProvider = OrderProvider();
 
