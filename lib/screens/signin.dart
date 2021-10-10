@@ -37,8 +37,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     _userProvider = Provider.of<UserProvider>(context);
-    // emailController.text = 'adeoyeakin14@gmail.com';
-    // passwordController.text = 'postman';
+    emailController.text = 'aderonke@gmail.com';
+    passwordController.text = 'postman';
     return Scaffold(
       backgroundColor: Constants.primaryColor,
       appBar: PreferredSize(
@@ -58,15 +58,12 @@ class _SignInState extends State<SignIn> {
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                right: 0.0,
-                top: -20.0,
-                child: Opacity(
-                  opacity: 0.3,
-                  child: Image.asset(
-                    'assets/images/washing_machine_illustration.png',
-                  ),
-                ),
-              ),
+                  right: 0.0,
+                  top: -20.0,
+                  child: Opacity(
+                      opacity: 0.3,
+                      child: Image.asset(
+                          'assets/images/washing_machine_illustration.png'))),
               SingleChildScrollView(
                 child: Form(
                   key: _formKey,
