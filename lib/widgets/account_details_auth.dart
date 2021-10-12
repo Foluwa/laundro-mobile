@@ -46,7 +46,21 @@ class _AccountDetailsAuthState extends State<AccountDetailsAuth> {
     homeAddressController.text = user.home_address;
     phoneNumberController.text = user.phone_number;
 
-    return Card(
+    return Container(
+      width: double.infinity,
+      // decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(8.0), color: Constants.white),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: Colors.white,
+        boxShadow: [
+          const BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0.0, 1.0), //(x,y)
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
       margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       child: Form(
         key: _formKey,
