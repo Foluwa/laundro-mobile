@@ -1,25 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/utils/constants.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../api/order.dart';
 import '../models/order.dart';
 import '../providers/order_provider.dart';
+import '../utils/constants.dart';
 import '../widgets/app_header.dart';
 import '../widgets/common.dart';
 
-class OrderHistory extends StatefulWidget {
-  const OrderHistory({Key? key}) : super(key: key);
+class OrdersList extends StatefulWidget {
+  const OrdersList({Key? key}) : super(key: key);
 
   @override
-  _OrderHistoryState createState() => _OrderHistoryState();
+  _OrdersListState createState() => _OrdersListState();
 }
 
 /// lIST ALL ORDERS
 /// NEXT PAGE SHOWS TIMELINE, ORDER DETAILS AND REORDER AGAIN
 
-class _OrderHistoryState extends State<OrderHistory> {
+class _OrdersListState extends State<OrdersList> {
   OrderApi orderAPI = OrderApi(addAccessToken: true);
   OrderProvider _orderProvider = OrderProvider();
 
@@ -62,17 +63,22 @@ class _OrderHistoryState extends State<OrderHistory> {
                               arguments:
                                   _orderProvider.getOrders!.orders[index]),
                           child: ListTile(
+                              leading: Image.asset(
+                                'assets/images/washlogo.png',
+                              ),
                               title: Text(
                                   // ignore: lines_longer_than_80_chars
-                                  '${_orderProvider.getOrders!.orders[index].id} #${_orderProvider.getOrders!.orders[index].orderId}'),
+                                  //'${_orderProvider.getOrders!.orders[index].id}'
+                                  '#${_orderProvider.getOrders!.orders[index].orderId}'),
                               subtitle: Text(
                                   // ignore: lines_longer_than_80_chars
-                                  '${_orderProvider.getOrders!.orders[index].deliveryAddress}'),
+                                  //'${_orderProvider.getOrders!.orders[index].deliveryAddress}  '
+                                  '${formatTime(_orderProvider.getOrders!.orders[index].createdAt)}'),
                               trailing: const Icon(Icons.arrow_forward_ios)));
                     },
                   )
                 : const Center(
-                    child: Text('No orders yet'),
+                    child: Text('You havent made any orders yet'),
                   )));
   }
 
@@ -97,5 +103,13 @@ class _OrderHistoryState extends State<OrderHistory> {
       Common.showSnackBar(context, title: error.toString(), duration: 300);
     });
     return keys;
+  }
+
+  String formatTime(time) {
+    // final DateTime now = DateTime.now();
+    final formatter = DateFormat('yyyy-MM-dd');
+    final dateTime = DateTime.tryParse(time);
+    final formatted = formatter.format(dateTime!);
+    return formatted;
   }
 }

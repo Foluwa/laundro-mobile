@@ -56,92 +56,110 @@ class _AccountState extends State<Account> {
         child: Column(
           children: [
             user == null
-                ? const AccountDetails()
+                ? const Padding(
+                    padding: EdgeInsets.all(10.0), child: AccountDetails())
                 : user.blocked != true
-                    ? const AccountDetailsAuth()
+                    ? const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: AccountDetailsAuth())
                     : const Text(
                         'Your account has been blocked reach out to support'),
-            Card(
-                elevation: 5,
-                margin: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                child: Column(children: <Widget>[
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
-                          child: Text(
-                              AppLocalizations.of(context)!.settings.toString(),
-                              style: TextStyle(
-                                  fontSize: SizeConfig.blockSizeHorizontal * 5,
-                                  fontWeight: FontWeight.bold)))),
-                  const DialogBox(),
-                  GestureDetector(
-                      // onTap: () => Navigator.of(context).pushNamed('/signup'),
-                      child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                          child: Row(children: [
-                            Icon(Icons.file_copy,
-                                color: Colors.pink,
-                                size: 30.0,
-                                semanticLabel: AppLocalizations.of(context)!
-                                    .terms_of_service
-                                    .toString()),
-                            Text(
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      const BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0),
+                          blurRadius: 6.0)
+                    ],
+                  ),
+                  child: Column(children: <Widget>[
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            padding:
+                                const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
+                            child: Text(
                                 AppLocalizations.of(context)!
-                                    .terms_of_service
+                                    .settings
                                     .toString(),
-                                style: TextStyle(color: Constants.black)),
-                          ]))),
-                  GestureDetector(
-                      // onTap: () => Navigator.of(context).pushNamed('/signup'),
-                      child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                          child: Row(children: [
-                            Icon(Icons.file_copy_sharp,
-                                color: Colors.pink,
-                                size: 30.0,
-                                semanticLabel: AppLocalizations.of(context)!
-                                    .privacy_policy
-                                    .toString()),
-                            Text(
-                                AppLocalizations.of(context)!
-                                    .privacy_policy
-                                    .toString(),
-                                style: TextStyle(color: Constants.black)),
-                          ]))),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                      child: Row(children: [
-                        const LanguagePickerWidget(),
-                        Text(AppLocalizations.of(context)!.language,
-                            style: TextStyle(color: Constants.black)),
-                      ])),
-                  GestureDetector(
-                      onTap: () {
-                        print('LOG OUT !!!');
-                        //TODO: clear products in cart
-                        //prefs.clearPrefs();
-                        prefs.removePref('JWT');
-                        _userProvider.setCurrentUser(null);
-                        Navigator.of(context).pushNamed('/category');
-                      },
-                      child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 0.0, 0, 10.0),
-                          child: Row(children: [
-                            Icon(Icons.logout,
-                                color: Colors.pink,
-                                size: 30.0,
-                                semanticLabel: AppLocalizations.of(context)!
-                                    .privacy_policy
-                                    .toString()),
-                            Text('LOGOUT',
-                                style: TextStyle(color: Constants.black)),
-                          ]))),
-                ])),
+                                style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 5,
+                                    fontWeight: FontWeight.bold)))),
+                    const DialogBox(),
+                    GestureDetector(
+                        // onTap: () => Navigator.of(context).pushNamed('/signup'),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                            child: Row(children: [
+                              Icon(Icons.file_copy,
+                                  color: Colors.pink,
+                                  size: 30.0,
+                                  semanticLabel: AppLocalizations.of(context)!
+                                      .terms_of_service
+                                      .toString()),
+                              Text(
+                                  AppLocalizations.of(context)!
+                                      .terms_of_service
+                                      .toString(),
+                                  style: TextStyle(color: Constants.black)),
+                            ]))),
+                    GestureDetector(
+                        // onTap: () => Navigator.of(context).pushNamed('/signup'),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                            child: Row(children: [
+                              Icon(Icons.file_copy_sharp,
+                                  color: Colors.pink,
+                                  size: 30.0,
+                                  semanticLabel: AppLocalizations.of(context)!
+                                      .privacy_policy
+                                      .toString()),
+                              Text(
+                                  AppLocalizations.of(context)!
+                                      .privacy_policy
+                                      .toString(),
+                                  style: TextStyle(color: Constants.black)),
+                            ]))),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                        child: Row(children: [
+                          const LanguagePickerWidget(),
+                          Text(AppLocalizations.of(context)!.language,
+                              style: TextStyle(color: Constants.black)),
+                        ])),
+                    GestureDetector(
+                        onTap: () {
+                          print('LOG OUT !!!');
+                          //TODO: clear products in cart
+                          //prefs.clearPrefs();
+                          prefs.removePref('JWT');
+                          _userProvider.setCurrentUser(null);
+                          Navigator.of(context).pushNamed('/category');
+                        },
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(20.0, 0.0, 0, 10.0),
+                            child: Row(children: [
+                              Icon(Icons.logout,
+                                  color: Colors.pink,
+                                  size: 30.0,
+                                  semanticLabel: AppLocalizations.of(context)!
+                                      .privacy_policy
+                                      .toString()),
+                              Text('LOGOUT',
+                                  style: TextStyle(color: Constants.black)),
+                            ]))),
+                  ])),
+            ),
             // Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
