@@ -48,6 +48,8 @@ class UserApi {
     try {
       print('ATTEMPTING POST');
       final response = await _dio.post(ApiRoutes.register, data: data);
+      print(response.statusCode);
+      print(response);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('statusCode ${response.statusCode}');
         print('response ${response.data['user']}');

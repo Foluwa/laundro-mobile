@@ -27,14 +27,14 @@ class RIKeys {
   static const riKey3 = Key('__RIKEY3__');
 }
 
-class ProductCategory extends StatefulWidget {
-  const ProductCategory({Key? key}) : super(key: key);
+class CategoryList extends StatefulWidget {
+  const CategoryList({Key? key}) : super(key: key);
 
   @override
-  _ProductCategoryState createState() => _ProductCategoryState();
+  _CategoryListState createState() => _CategoryListState();
 }
 
-class _ProductCategoryState extends State<ProductCategory> {
+class _CategoryListState extends State<CategoryList> {
   LaundryApi api = LaundryApi(addAccessToken: false);
   UserApi userApi = UserApi(addAccessToken: true);
   LaundryProvider _laundryProvider = LaundryProvider();
