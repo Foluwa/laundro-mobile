@@ -124,6 +124,18 @@ class UserApi {
   }
 
   /// Reset/Update password
+  Future<User> changePassword(data) async {
+    try {
+      final response =
+          await _dio.post('${ApiRoutes.changePassword}}', data: data);
+      print('response $response');
+      print('responseDATA ${response.data}');
+      return User.fromJson(response.data);
+    } on DioError catch (error) {
+      final errorMessage = DioExceptions.fromDioError(error).toString();
+      throw Exception('$errorMessage');
+    }
+  }
 
   /// Fetch currency
   Future<Currency> fetchCurrency() async {

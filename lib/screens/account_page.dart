@@ -61,18 +61,18 @@ class _AccountsPageState extends State<AccountsPage> {
     phoneNumberController.text = user.phone_number;
 
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: AppHeader(
-              elevation: 0,
-              fontSize: 25.0,
-              title: AppLocalizations.of(context)!.accounts,
-              bg: Constants.primaryColor,
-              textColor: Constants.white,
-              onCloseClicked: () => Navigator.pop(context),
-              backgroundColor: Constants.primaryColor)),
-      body: SingleChildScrollView(
-        child: Column(
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: AppHeader(
+                elevation: 0,
+                fontSize: 25.0,
+                title: AppLocalizations.of(context)!.accounts,
+                bg: Constants.primaryColor,
+                textColor: Constants.white,
+                onCloseClicked: () => Navigator.pop(context),
+                backgroundColor: Constants.primaryColor)),
+        body: SingleChildScrollView(
+            child: Column(
           children: [
             Form(
               key: _formKey,
@@ -219,35 +219,33 @@ class _AccountsPageState extends State<AccountsPage> {
               ),
             ),
             Form(
-              child: Column(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: 25.0, right: 25.0, top: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Text('Change Password',
-                              style: TextStyle(
-                                  fontSize: SizeConfig.blockSizeHorizontal * 5,
-                                  fontWeight: FontWeight.bold)),
-                          _updatePasswordStatus
-                              ? _getEditIcon(passwordBtnLoading, () {
-                                  if (mounted) {
-                                    setState(() {
-                                      _updatePasswordStatus = false;
-                                    });
-                                  }
-                                })
-                              : Container()
-                        ],
-                      )),
-                  Padding(
-                    //padding: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 15.0),
-                    child: Row(
+                child: Column(children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Text('Change Password',
+                          style: TextStyle(
+                              fontSize: SizeConfig.blockSizeHorizontal * 5,
+                              fontWeight: FontWeight.bold)),
+                      _updatePasswordStatus
+                          ? _getEditIcon(passwordBtnLoading, () {
+                              if (mounted) {
+                                setState(() {
+                                  _updatePasswordStatus = false;
+                                });
+                              }
+                            })
+                          : Container()
+                    ],
+                  )),
+              Padding(
+                  padding:
+                      const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -258,14 +256,11 @@ class _AccountsPageState extends State<AccountsPage> {
                                 decoration: const InputDecoration(
                                     hintText: 'Current Password'),
                                 enabled: !_updatePasswordStatus)),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    //padding: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 15.0),
-                    child: Row(
+                      ])),
+              Padding(
+                  padding:
+                      const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -276,45 +271,39 @@ class _AccountsPageState extends State<AccountsPage> {
                                 decoration: const InputDecoration(
                                     hintText: 'New Password'),
                                 enabled: !_updatePasswordStatus)),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    //padding: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Flexible(
-                            child: TextFormField(
-                                controller: confirmPasswordController,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    hintText: 'Confirm Password'),
-                                enabled: !_updatePasswordStatus)),
-                      ],
-                    ),
-                  ),
-                  !_updatePasswordStatus
-                      ? _getActionButtons(updatePassword, () {
-                          if (mounted) {
-                            setState(() {
-                              passwordBtnLoading = false;
-                              _updatePasswordStatus = true;
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            });
-                          }
-                        })
-                      : Container(),
-                ],
+                      ])),
+              Padding(
+                //padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                        child: TextFormField(
+                            controller: confirmPasswordController,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                                hintText: 'Confirm Password'),
+                            enabled: !_updatePasswordStatus)),
+                  ],
+                ),
               ),
-            )
+              !_updatePasswordStatus
+                  ? _getActionButtons(updatePassword, () {
+                      if (mounted) {
+                        setState(() {
+                          passwordBtnLoading = false;
+                          _updatePasswordStatus = true;
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        });
+                      }
+                    })
+                  : Container(),
+            ]))
           ],
-        ),
-      ),
-    );
+        )));
   }
 
   //account_page
@@ -325,6 +314,7 @@ class _AccountsPageState extends State<AccountsPage> {
     super.dispose();
   }
 
+  ///  Action Edit Btn
   Widget _getActionButtons(updateAction, cancelAction) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -361,6 +351,7 @@ class _AccountsPageState extends State<AccountsPage> {
     );
   }
 
+  /// Action Edit status
   Widget _getEditIcon(btnLoadingStatus, action) {
     return GestureDetector(
         child: btnLoadingStatus //btnLoading
@@ -413,7 +404,7 @@ class _AccountsPageState extends State<AccountsPage> {
       Common.showSnackBar(context,
           title: 'Profile updated successfully', duration: 3000);
     }).catchError((error) {
-      print('SPENSER  ${error}');
+      print('${error}');
       Common.showSnackBar(context,
           //  'Profile NOT updated successfully'
           title: 'Error encountered',
@@ -438,6 +429,31 @@ class _AccountsPageState extends State<AccountsPage> {
         FocusScope.of(context).requestFocus(FocusNode());
       });
     }
+
+    final data = {
+      'identifier': 'moronfoluwaakintola@gmail.com',
+      'password': 'foluwa',
+      'newPassword': 'postman',
+      'confirmPassword': 'postman'
+    };
+
+    // Make request
+    await api.changePassword(data).then((user) {
+      print('USER_UPDATED_DATA $user');
+
+      ///TODO: Reset the JWT too from the response
+
+      _userProvider.setCurrentUser(user);
+
+      Common.showSnackBar(context,
+          title: 'Password changed successfully', duration: 3000);
+    }).catchError((error) {
+      print('${error}');
+      Common.showSnackBar(context,
+          //  'Error updating password'
+          title: 'Error encountered',
+          duration: 3000);
+    });
 
     // simulate delay
     Timer(const Duration(seconds: 5), () {

@@ -8,6 +8,7 @@ class ApiRoutes {
   static String login = '$baseUrl/auth/local';
   static String verifyMe = '$baseUrl/users/me';
   static String user = '$baseUrl/users';
+  static String changePassword = '$baseUrl/change-password';
   static String forgotPassword = '$baseUrl/auth/forgot-password';
   static String resetPassword = '$baseUrl';
   static String refreshToken = '$baseUrl';
