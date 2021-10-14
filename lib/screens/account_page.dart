@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -430,21 +428,25 @@ class _AccountsPageState extends State<AccountsPage> {
       });
     }
 
-    final data = {
-      'identifier': 'moronfoluwaakintola@gmail.com',
-      'password': 'foluwa',
-      'newPassword': 'postman',
-      'confirmPassword': 'postman'
-    };
+    // check if password match
+    if (newPasswordController.text.toString() !=
+        confirmPasswordController.text.toString()) {
+      Common.showSnackBar(context,
+          title: 'Password does not match successfully', duration: 3000);
+      return;
+    }
 
-    // Make request
+    final data = {
+      'identifier': emailController.text.toString(),
+      'password': currentPasswordController.text.toString(),
+      'newPassword': newPasswordController.text.toString(),
+      'confirmPassword': confirmPasswordController.text.toString()
+    };
     await api.changePassword(data).then((user) {
       print('USER_UPDATED_DATA $user');
 
       ///TODO: Reset the JWT too from the response
-
       _userProvider.setCurrentUser(user);
-
       Common.showSnackBar(context,
           title: 'Password changed successfully', duration: 3000);
     }).catchError((error) {
@@ -456,15 +458,15 @@ class _AccountsPageState extends State<AccountsPage> {
     });
 
     // simulate delay
-    Timer(const Duration(seconds: 5), () {
-      print(' This line is execute after 5 seconds');
-      if (mounted) {
-        setState(() {
-          passwordBtnLoading = false;
-          _updatePasswordStatus = true;
-          FocusScope.of(context).requestFocus(FocusNode());
-        });
-      }
-    });
+    // Timer(const Duration(seconds: 5), () {
+    //   print(' This line is execute after 5 seconds');
+    //   if (mounted) {
+    //     setState(() {
+    //       passwordBtnLoading = false;
+    //       _updatePasswordStatus = true;
+    //       FocusScope.of(context).requestFocus(FocusNode());
+    //     });
+    //   }
+    // });
   }
 }
