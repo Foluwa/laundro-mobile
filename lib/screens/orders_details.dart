@@ -67,28 +67,20 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Order Details',
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
+                          Text('Order Details',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
                                       color: Color.fromRGBO(74, 77, 84, 1),
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                          ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            'WASHING AND FOLDING',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(143, 148, 162, 1),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
+                                      fontWeight: FontWeight.w800)),
+                          SizedBox(height: 6.0),
+                          Text('WASHING AND FOLDING',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(143, 148, 162, 1))),
+                          SizedBox(height: 10.0),
                           getItemRow('3', 'T-shirts (man)', '\$30.00'),
                           getItemRow('2', 'T-shirts (man)', '\$40.00'),
                           getItemRow('4', 'Pants (man)', '\$80.00'),

@@ -67,7 +67,7 @@ class _CartState extends State<Cart> {
                           text: AppLocalizations.of(context)!
                               .create_new_account, //'Create account to continue', //Place Order
                           onClicked: () =>
-                              Navigator.of(context).pushNamed('/account'),
+                              Navigator.of(context).pushNamed('/menu'),
                           color: Constants.primaryColor,
                           style:
                               TextStyle(fontSize: 20, color: Constants.white),
