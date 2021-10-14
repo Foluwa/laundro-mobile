@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,13 +28,23 @@ class _AccountsPageState extends State<AccountsPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController homeAddressController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
+
+  // Chnage password
+  final TextEditingController currentPasswordController =
+      TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   // Form key
   final _formKey = GlobalKey<FormState>();
   //UserApi api = UserApi();
   UserApi api = UserApi(addAccessToken: true);
 
-  bool _status = true;
-  bool btnLoading = false;
+  bool _updateAccountStatus = true;
+  bool _updatePasswordStatus = true;
+  bool accountBtnLoading = false;
+  bool passwordBtnLoading = false;
 
   final FocusNode myFocusNode = FocusNode();
   late UserProvider _userProvider;
@@ -58,8 +70,6 @@ class _AccountsPageState extends State<AccountsPage> {
               bg: Constants.primaryColor,
               textColor: Constants.white,
               onCloseClicked: () => Navigator.pop(context),
-              // onCloseClicked: () =>
-              //     Navigator.of(context).pushNamed('/category'),
               backgroundColor: Constants.primaryColor)),
       body: SingleChildScrollView(
         child: Column(
@@ -79,7 +89,15 @@ class _AccountsPageState extends State<AccountsPage> {
                               style: TextStyle(
                                   fontSize: SizeConfig.blockSizeHorizontal * 5,
                                   fontWeight: FontWeight.bold)),
-                          _status ? _getEditIcon() : Container()
+                          _updateAccountStatus
+                              ? _getEditIcon(accountBtnLoading, () {
+                                  if (mounted) {
+                                    setState(() {
+                                      _updateAccountStatus = false;
+                                    });
+                                  }
+                                })
+                              : Container()
                         ],
                       )),
                   Padding(
@@ -95,7 +113,7 @@ class _AccountsPageState extends State<AccountsPage> {
                                   style: const TextStyle(color: Colors.grey),
                                   decoration: const InputDecoration(
                                       hintText: 'Email Address'),
-                                  enabled: !_status))
+                                  enabled: !_updateAccountStatus))
                         ],
                       )),
                   Padding(
@@ -109,8 +127,8 @@ class _AccountsPageState extends State<AccountsPage> {
                                     controller: firstNameController,
                                     decoration: const InputDecoration(
                                         hintText: 'First Name'),
-                                    enabled: !_status,
-                                    autofocus: !_status))
+                                    enabled: !_updateAccountStatus,
+                                    autofocus: !_updateAccountStatus))
                           ])),
                   Padding(
                       padding: const EdgeInsets.only(
@@ -123,8 +141,8 @@ class _AccountsPageState extends State<AccountsPage> {
                                     controller: lastNameController,
                                     decoration: const InputDecoration(
                                         hintText: 'Last Name'),
-                                    enabled: !_status,
-                                    autofocus: !_status)),
+                                    enabled: !_updateAccountStatus,
+                                    autofocus: !_updateAccountStatus)),
                           ])),
                   Padding(
                       padding: const EdgeInsets.only(
@@ -138,7 +156,7 @@ class _AccountsPageState extends State<AccountsPage> {
                                   keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
                                       hintText: 'Phone Number'),
-                                  enabled: !_status))
+                                  enabled: !_updateAccountStatus))
                         ],
                       )),
                   Padding(
@@ -152,10 +170,20 @@ class _AccountsPageState extends State<AccountsPage> {
                               controller: homeAddressController,
                               decoration: const InputDecoration(
                                   hintText: 'Home Address'),
-                              enabled: !_status,
+                              enabled: !_updateAccountStatus,
                             )),
                           ])),
-                  !_status ? _getActionButtons() : Container(),
+                  !_updateAccountStatus
+                      ? _getActionButtons(updateAccount, () {
+                          if (mounted) {
+                            setState(() {
+                              accountBtnLoading = false;
+                              _updateAccountStatus = true;
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            });
+                          }
+                        })
+                      : Container(),
                   /*  Padding(
                     padding:
                         const EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
@@ -170,7 +198,7 @@ class _AccountsPageState extends State<AccountsPage> {
                             child: TextFormField(
                               decoration:
                                   const InputDecoration(hintText: 'Password'),
-                              enabled: !_status,
+                              enabled: !_updateAccountStatus,
                               obscureText: true,
                             ),
                           ),
@@ -180,7 +208,7 @@ class _AccountsPageState extends State<AccountsPage> {
                           child: TextFormField(
                             decoration:
                                 const InputDecoration(hintText: 'Confirm Password'),
-                            enabled: !_status,
+                            enabled: !_updateAccountStatus,
                             obscureText: true,
                           ),
                           flex: 2,
@@ -194,6 +222,28 @@ class _AccountsPageState extends State<AccountsPage> {
               child: Column(
                 children: [
                   Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25.0, right: 25.0, top: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Text('Change Password',
+                              style: TextStyle(
+                                  fontSize: SizeConfig.blockSizeHorizontal * 5,
+                                  fontWeight: FontWeight.bold)),
+                          _updatePasswordStatus
+                              ? _getEditIcon(passwordBtnLoading, () {
+                                  if (mounted) {
+                                    setState(() {
+                                      _updatePasswordStatus = false;
+                                    });
+                                  }
+                                })
+                              : Container()
+                        ],
+                      )),
+                  Padding(
                     //padding: const EdgeInsets.all(8.0),
                     padding: const EdgeInsets.only(
                         left: 25.0, right: 25.0, top: 15.0),
@@ -201,13 +251,63 @@ class _AccountsPageState extends State<AccountsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Text('Change Password',
-                            style: TextStyle(
-                                fontSize: SizeConfig.blockSizeHorizontal * 5,
-                                fontWeight: FontWeight.bold)),
+                        Flexible(
+                            child: TextFormField(
+                                controller: currentPasswordController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                    hintText: 'Current Password'),
+                                enabled: !_updatePasswordStatus)),
                       ],
                     ),
                   ),
+                  Padding(
+                    //padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(
+                        left: 25.0, right: 25.0, top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                            child: TextFormField(
+                                controller: newPasswordController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                    hintText: 'New Password'),
+                                enabled: !_updatePasswordStatus)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    //padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(
+                        left: 25.0, right: 25.0, top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                            child: TextFormField(
+                                controller: confirmPasswordController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                    hintText: 'Confirm Password'),
+                                enabled: !_updatePasswordStatus)),
+                      ],
+                    ),
+                  ),
+                  !_updatePasswordStatus
+                      ? _getActionButtons(updatePassword, () {
+                          if (mounted) {
+                            setState(() {
+                              passwordBtnLoading = false;
+                              _updatePasswordStatus = true;
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            });
+                          }
+                        })
+                      : Container(),
                 ],
               ),
             )
@@ -225,7 +325,7 @@ class _AccountsPageState extends State<AccountsPage> {
     super.dispose();
   }
 
-  Widget _getActionButtons() {
+  Widget _getActionButtons(updateAction, cancelAction) {
     return Padding(
       padding: const EdgeInsets.only(
           left: 25.0, right: 25.0, top: 15.0, bottom: 15.0),
@@ -241,7 +341,7 @@ class _AccountsPageState extends State<AccountsPage> {
                       text: 'Save',
                       color: Constants.white,
                       btnStatus: false,
-                      onClicked: updateAccount,
+                      onClicked: updateAction, //updateAccount,
                       style: const TextStyle(),
                       paddingValue: 8))),
           Expanded(
@@ -252,15 +352,7 @@ class _AccountsPageState extends State<AccountsPage> {
                     text: 'Cancel',
                     color: Colors.red,
                     btnStatus: false,
-                    onClicked: () {
-                      if (mounted) {
-                        setState(() {
-                          btnLoading = false;
-                          _status = true;
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        });
-                      }
-                    },
+                    onClicked: cancelAction,
                     style: const TextStyle(),
                     paddingValue: 8,
                   ))),
@@ -269,35 +361,37 @@ class _AccountsPageState extends State<AccountsPage> {
     );
   }
 
-  Widget _getEditIcon() {
+  Widget _getEditIcon(btnLoadingStatus, action) {
     return GestureDetector(
-      child: btnLoading
-          ? const SizedBox(
-              height: 20.0, width: 20.0, child: CircularProgressIndicator())
-          : CircleAvatar(
-              backgroundColor: Colors.red,
-              radius: 14.0,
-              child: Icon(
-                Icons.edit,
-                color: Constants.white,
-                size: 16.0,
-              )),
-      onTap: () {
-        if (mounted) {
-          setState(() {
-            _status = false;
-          });
-        }
-      },
-    );
+        child: btnLoadingStatus //btnLoading
+            ? const SizedBox(
+                height: 20.0, width: 20.0, child: CircularProgressIndicator())
+            : CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 14.0,
+                child: Icon(
+                  Icons.edit,
+                  color: Constants.white,
+                  size: 16.0,
+                )),
+        onTap: action
+        // onTap: () {
+        //   if (mounted) {
+        //     setState(() {
+        //       _updateAccountStatus = false;
+        //     });
+        //   }
+        // },
+        );
   }
 
+  /// Update Account Dtails
   void updateAccount() async {
     print('SAVE WAS CLICKED!!');
     if (mounted) {
       setState(() {
-        btnLoading = true;
-        _status = true;
+        accountBtnLoading = true;
+        _updateAccountStatus = true;
         FocusScope.of(context).requestFocus(FocusNode());
       });
     }
@@ -329,8 +423,32 @@ class _AccountsPageState extends State<AccountsPage> {
     // Setting state
     if (mounted) {
       setState(() {
-        btnLoading = false;
+        accountBtnLoading = false;
       });
     }
+  }
+
+  /// Update Password
+  void updatePassword() async {
+    print('SAVE WAS CLICKED!!');
+    if (mounted) {
+      setState(() {
+        passwordBtnLoading = true;
+        _updatePasswordStatus = true;
+        FocusScope.of(context).requestFocus(FocusNode());
+      });
+    }
+
+    // simulate delay
+    Timer(const Duration(seconds: 5), () {
+      print(' This line is execute after 5 seconds');
+      if (mounted) {
+        setState(() {
+          passwordBtnLoading = false;
+          _updatePasswordStatus = true;
+          FocusScope.of(context).requestFocus(FocusNode());
+        });
+      }
+    });
   }
 }
