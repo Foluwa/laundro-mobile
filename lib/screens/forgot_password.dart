@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/utils/constants.dart';
-import 'package:laundro/utils/form_validator.dart';
-import 'package:laundro/widgets/InputWidgets/input_widget.dart';
-import 'package:laundro/widgets/app_header.dart';
+
+import '../utils/constants.dart';
+import '../utils/form_validator.dart';
+import '../widgets/InputWidgets/input_widget.dart';
+import '../widgets/app_header.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);

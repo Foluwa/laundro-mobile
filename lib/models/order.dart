@@ -24,7 +24,7 @@ class Order {
   String status;
   double totalPrice;
   double deliveryPrice;
-  //Location deliveryLocation;
+  // Location deliveryLocation;
   // ProductList products;
   // User user;
   String publishedAt;
@@ -46,7 +46,7 @@ class Order {
     required this.status,
     required this.totalPrice,
     required this.deliveryPrice,
-    //required this.deliveryLocation,
+    // required this.deliveryLocation,
     // required this.products,
     // required this.user,
     required this.publishedAt,
@@ -54,8 +54,11 @@ class Order {
     required this.updatedAt,
   });
 
-  factory Order.fromJson(order) {
+  factory Order.fromJson(Map<String, dynamic> order) {
     print('INSIDE FROMJSON $order');
+    // var orderD = Location.fromJson(order['delivery_location']);
+    // var productsD = ProductList.fromJson(order['products']);
+
     return Order(
       id: order['id'] ?? '',
       orderId: order['order_id'] ?? '',
@@ -72,7 +75,9 @@ class Order {
       totalPrice: order['total_price'].toDouble() ?? '',
       deliveryPrice: order['delivery_price'].toDouble() ?? '',
       //deliveryLocation: order['delivery_location'] ?? '',
+      // deliveryLocation: orderD,
       // products: order['products'] ?? '',
+      // products: productsD,
       // user: order['user'] ?? '',
       publishedAt: order['published_at'] ?? '',
       createdAt: order['created_at'] ?? '',

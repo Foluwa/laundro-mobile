@@ -55,6 +55,8 @@ class RouteGenerator {
       case '/checkout':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const Checkout());
+      case '/payment_success':
+        return paymentSuccess();
       case '/signup':
         return PageTransition(
             type: PageTransitionType.bottomToTop, child: const SignUp());
@@ -77,6 +79,15 @@ class RouteGenerator {
           backgroundColor: Constants.primaryColor,
           appBar: AppBar(title: const Text('Error Page')),
           body: const Center(child: Text('Error')));
+    });
+  }
+
+  static Route<dynamic> paymentSuccess() {
+    return MaterialPageRoute(builder: (_) {
+      return Scaffold(
+          backgroundColor: Constants.primaryColor,
+          appBar: AppBar(title: const Text('Payment Success Page')),
+          body: const Center(child: Text('Payment Success Page')));
     });
   }
 }

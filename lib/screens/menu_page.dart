@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:laundro/utils/utils.dart';
-import 'package:laundro/widgets/menu.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,7 +8,9 @@ import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 import '../utils/preferences.dart';
 import '../utils/size_config.dart';
+import '../utils/utils.dart';
 import '../widgets/app_header.dart';
+import '../widgets/menu.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -248,7 +248,10 @@ class _MenuPageState extends State<MenuPage> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: const Text('Phone call', style: TextStyle(fontSize: 16)),
               onPressed: () {
-                Utils.showSnackBar(context, title: 'Selected Option 2');
+                setState(() {
+                  _launched = _openUrl('tel://2348169425505');
+                });
+                //Utils.showSnackBar(context, title: 'Selected Option 2');
                 Navigator.pop(context);
               },
             ),

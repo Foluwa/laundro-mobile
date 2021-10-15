@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -20,7 +21,6 @@ import '../utils/size_config.dart';
 import '../utils/utils.dart';
 import '../widgets/Buttons/button_widget.dart';
 import '../widgets/InputWidgets/input_widget.dart';
-import '../widgets/Payments/flutterwave.dart';
 import '../widgets/Payments/payment_options.dart';
 import '../widgets/Payments/paystack.dart';
 import '../widgets/app_header.dart';
@@ -441,7 +441,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   /// Fetch Payment API keys
-  Future<Flutterwave> getFlutterwaveKeys() async {
+  Future<FlutterwaveModel> getFlutterwaveKeys() async {
     var keys;
     await orderAPI.fetchFlutterWaveKeys().then((keys) {
       print('KEYS ${keys}');
@@ -454,16 +454,51 @@ class _CheckoutState extends State<Checkout> {
     return keys;
   }
 
-  /// Flutterwave payment sheet
-  void _flutterwaveSheet(context) {
-    showModalBottomSheet(
+  Future<void> showLoading(String message) {
+    return showDialog(
       context: context,
-      builder: (builder) {
-        return const FlutterwavePayment(
-          title: 'Foluwa Fulttewww',
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
+            width: double.infinity,
+            height: 50,
+            child: Text(message),
+          ),
         );
       },
     );
+  }
+
+  /// Flutterwave payment sheet
+  void _flutterwaveSheet(context) async {
+    final customer = Customer(
+        name: 'FLW Developer',
+        phoneNumber: '1234566677777',
+        email: 'customer@customer.com');
+
+    final flutterwave = Flutterwave(
+        context: context,
+        publicKey: 'FLWPUBK_TEST-73d06f2967dae6825c3586ee265afc9a-X',
+        currency: 'NGN',
+        txRef: 'unique_transaction_reference8000',
+        amount: '3000',
+        customer: customer,
+        paymentOptions: 'ussd, card, barter, payattitude',
+        customization: Customization(title: 'Laundro Payment'),
+        isTestMode: true);
+
+    final response = await flutterwave.charge();
+    if (response != null) {
+      showLoading(response.status!);
+      print('I GOT HERE !!!!!');
+      print('${response}');
+      print('${response.toJson()}');
+      Navigator.of(context).pushNamed('/payment_success');
+    } else {
+      showLoading('No Response!');
+    }
   }
 
   /// Razor pay

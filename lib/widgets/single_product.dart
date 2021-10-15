@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:laundro/utils/constants.dart';
-import 'package:laundro/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cart.dart';
 import '../models/product.dart';
 import '../providers/laundry_provider.dart';
 import '../utils/boxes.dart';
+import '../utils/constants.dart';
+import '../utils/utils.dart';
 
 class SingleProduct extends StatefulWidget {
   final Product products;
@@ -137,6 +137,7 @@ class _SingleProductState extends State<SingleProduct> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('${Utils.getCurrency(currentCurrency)} '
+                        // ignore: lines_longer_than_80_chars
                         '${getUPrice(widget.products.price, widget.products.qty).toString()}'),
                     _laundryProvider.inCart(widget.products.id)
                         ? Row(

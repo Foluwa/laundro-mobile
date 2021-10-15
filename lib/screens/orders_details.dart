@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
+import '../models/order.dart';
 import '../utils/constants.dart';
 import '../widgets/app_header.dart';
 
@@ -18,7 +19,7 @@ class OrdersDetails extends StatefulWidget {
 class _OrdersDetailsState extends State<OrdersDetails> {
   @override
   Widget build(BuildContext context) {
-    final customerOrder = widget.order;
+    Order customerOrder = widget.order;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),

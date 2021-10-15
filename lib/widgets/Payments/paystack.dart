@@ -211,7 +211,7 @@ class PaystackPayment {
         method: _method,
         charge: charge,
         fullscreen: false,
-        logo: BrandLogo(),
+        logo: const BrandLogo(),
       );
       print('Response = $response');
       // setState(() => _inProgress = false);

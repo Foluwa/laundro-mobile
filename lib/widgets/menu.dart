@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:laundro/utils/constants.dart';
-//
+
+import '../utils/constants.dart';
 // import '../../../constants.dart';
 
 class Menu extends StatelessWidget {

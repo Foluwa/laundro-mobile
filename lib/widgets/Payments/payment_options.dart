@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundro/widgets/Payments/radio_list_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/laundry_provider.dart';
+import 'radio_list_tile.dart';
 
 class PaymentPlatforms {
   String platform;
@@ -40,6 +40,8 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                 groupValue: _value,
                 leading: '${item.platform[0].toUpperCase()}',
                 title: Text(item.platform.toUpperCase()),
+                // title: SvgPicture.asset(assetName,
+                //     color: Colors.red, semanticsLabel: 'A red up arrow'),
                 onChanged: (value) {
                   setState(() => _value = value!);
                   print('SELECTED VALUE IS ${item.platform}');
