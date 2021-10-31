@@ -100,7 +100,8 @@ class _OrdersListState extends State<OrdersList> {
           loadingData = false;
         });
       }
-      Common.showSnackBar(context, title: error.toString(), duration: 300);
+      Common.showSnackBar(context,
+          title: error.toString(), duration: 10000000000);
     });
     return keys;
   }

@@ -13,7 +13,7 @@ class Constants {
       'https://laundro-staging-api.herokuapp.com'; // without slash
 
   /// COLORS
-  static Color primaryColor = const Color(0xFF607D8B);
+  static Color primaryColor = const Color(0xFF6C56F9); //Color(0xFF607D8B);
   static Color secondaryColor = const Color(0xFF2A2D3E);
 
   static Color black = const Color(0xFF000000);

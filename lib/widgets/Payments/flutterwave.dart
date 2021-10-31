@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwave/flutterwave.dart';
 
@@ -250,5 +250,58 @@ class _FlutterwavePaymentState extends State<FlutterwavePayment> {
         );
       },
     );
+  }
+}
+*/
+import 'package:flutter/material.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
+
+class FlutterwavePayment {
+  Future<void> showLoading(context, String message) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
+            width: double.infinity,
+            height: 50,
+            child: Text(message),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Flutterwave payment sheet
+  void flutterwaveSheet(context) async {
+    //print('Flutterwave order is $userOrder');
+    final customer = Customer(
+        name: 'FLW Developer',
+        phoneNumber: '1234566677777',
+        email: 'customer@customer.com');
+
+    final flutterwave = Flutterwave(
+        context: context,
+        publicKey: 'FLWPUBK_TEST-73d06f2967dae6825c3586ee265afc9a-X',
+        currency: 'NGN',
+        txRef: 'unique_transaction_reference8000',
+        amount: '3000',
+        customer: customer,
+        paymentOptions: 'ussd, card, barter, payattitude',
+        customization: Customization(title: 'Laundro Payment'),
+        isTestMode: true);
+
+    final response = await flutterwave.charge();
+    if (response != null) {
+      showLoading(context, response.status!);
+      print('I GOT HERE !!!!!');
+      print('${response}');
+      print('${response.toJson()}');
+      Navigator.of(context).pushNamed('/payment_success');
+    } else {
+      showLoading(context, 'No Response!');
+    }
   }
 }

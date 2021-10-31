@@ -35,10 +35,7 @@ Future main() async {
 
   /// Disable screen rotation
   SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   ).then((val) {
     runApp(const MyApp());
   });
@@ -60,7 +57,6 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               title: Constants.appName,
               theme: ThemeData(
-                  //primarySwatch: Colors.blue,
                   textTheme: GoogleFonts.montserratTextTheme(
                       Theme.of(context).textTheme)),
               debugShowCheckedModeBanner: Constants.showDebugBanner,
@@ -73,7 +69,6 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               initialRoute: initialRoute ?? '/',
-              //initialRoute: '/',
               onGenerateRoute: RouteGenerator.generateRoute);
         }));
   }

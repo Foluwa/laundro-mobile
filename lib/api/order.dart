@@ -66,12 +66,12 @@ class OrderApi {
   }
 
   /// Fetch API keys
-  Future<Flutterwave> fetchFlutterWaveKeys() async {
+  Future<FlutterwaveModel> fetchFlutterWaveKeys() async {
     print('fetchFlutterWaveKeys WAS CALLED');
     try {
       final response = await _dio.get(ApiRoutes.flutterwave);
       print('Flutterwave Keys ${response}');
-      return Flutterwave.fromJson(response.data);
+      return FlutterwaveModel.fromJson(response.data);
     } on DioError catch (error) {
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw Exception('$errorMessage');

@@ -156,7 +156,7 @@ class _AccountDetailsState extends State<AccountDetails> {
       await api.forgotPassword(data).then((response) {
         print('ForgotPassword ${response}');
         emailController.clear();
-        // Navigator.of(context).pushNamed('/account');
+        // Navigator.of(context).pushNamed('/menu');
         if (mounted) {
           setState(() {
             btnLoading = false;

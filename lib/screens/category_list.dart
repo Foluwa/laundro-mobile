@@ -84,7 +84,7 @@ class _CategoryListState extends State<CategoryList> {
                     icon: const Icon(Icons.shopping_basket_sharp))
                 : const SizedBox(),
             IconButton(
-                onPressed: () => Navigator.of(context).pushNamed('/account'),
+                onPressed: () => Navigator.of(context).pushNamed('/menu'),
                 icon: const Icon(Icons.person)),
           ],
           bottom: TabBar(

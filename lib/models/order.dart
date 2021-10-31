@@ -1,3 +1,5 @@
+import 'product.dart';
+
 class OrderList {
   List<Order> orders;
   OrderList({required this.orders});
@@ -24,8 +26,8 @@ class Order {
   String status;
   double totalPrice;
   double deliveryPrice;
-  //Location deliveryLocation;
-  // ProductList products;
+  // Location deliveryLocation;
+  ProductList products;
   // User user;
   String publishedAt;
   String createdAt;
@@ -46,16 +48,28 @@ class Order {
     required this.status,
     required this.totalPrice,
     required this.deliveryPrice,
-    //required this.deliveryLocation,
-    // required this.products,
+    // required this.deliveryLocation,
+    required this.products,
     // required this.user,
     required this.publishedAt,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Order.fromJson(order) {
-    print('INSIDE FROMJSON $order');
+  factory Order.fromJson(Map<String, dynamic> order) {
+    var _products;
+
+    print('order[products]');
+    print('ORDERID IS order[id]');
+    print(order['id']);
+    print(order['products']);
+    print(order['products'].runtimeType);
+
+    if (order['products'] != null) {
+      _products = ProductList.fromJson(order['products']);
+      print('_products ${_products}');
+    }
+
     return Order(
       id: order['id'] ?? '',
       orderId: order['order_id'] ?? '',
@@ -72,7 +86,7 @@ class Order {
       totalPrice: order['total_price'].toDouble() ?? '',
       deliveryPrice: order['delivery_price'].toDouble() ?? '',
       //deliveryLocation: order['delivery_location'] ?? '',
-      // products: order['products'] ?? '',
+      products: _products,
       // user: order['user'] ?? '',
       publishedAt: order['published_at'] ?? '',
       createdAt: order['created_at'] ?? '',
