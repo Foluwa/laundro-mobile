@@ -1,20 +1,20 @@
 /// ProductList
-class ProductList {
-  List<Product> product;
-  ProductList({required this.product});
+class OrderProductList {
+  List<OrderProduct> product;
+  OrderProductList({required this.product});
 
-  factory ProductList.fromJson(product) {
+  factory OrderProductList.fromJson(product) {
     print('INSIDE ProductList $product');
     final operations = product as List;
     print('operations $operations');
-    final data = operations.map((f) => Product.fromJson(f)).toList();
+    final data = operations.map((f) => OrderProduct.fromJson(f)).toList();
     print('INSIDE ProductList data $data');
     print('INSIDE ProductList data ${data.length}');
-    return ProductList(product: data);
+    return OrderProductList(product: data);
   }
 }
 
-class Product {
+class OrderProduct {
   int id;
   String name;
   String description;
@@ -22,7 +22,7 @@ class Product {
   int sub_category_id;
   int qty;
 
-  Product({
+  OrderProduct({
     required this.id,
     required this.name,
     required this.description,
@@ -31,19 +31,19 @@ class Product {
     required this.qty,
   });
 
-  factory Product.fromJson(Map<String, dynamic> product) {
+  factory OrderProduct.fromJson(Map<String, dynamic> product) {
     // print('PRICE: ${product['Price']}');
-    return Product(
+    return OrderProduct(
       id: product['id'],
       name: product['Name'],
       description: product['Description'],
       price: product['Price'].toDouble(),
-      sub_category_id: product['sub_category']['id'],
+      //sub_category_id: product['sub_category']['id'],
       qty: 0,
     );
   }
 
-  Product.fromMap(Map<String, dynamic> res)
+  OrderProduct.fromMap(Map<String, dynamic> res)
       : id = res['id'],
         name = res['name'],
         description = res['description'],

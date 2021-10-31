@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:laundro/models/order.dart';
+import 'package:laundro/widgets/Payments/flutterwave.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -420,7 +422,9 @@ class _CheckoutState extends State<Checkout> {
             print('CASH PAYMENT');
             break;
           case 'flutterwave':
-            _flutterwaveSheet(context);
+            // _flutterwaveSheet(context);
+            final payment = FlutterwavePayment();
+            payment.flutterwaveSheet(context);
             break;
           case 'paystack':
             final payment = PaystackPayment(plugin);
@@ -454,6 +458,7 @@ class _CheckoutState extends State<Checkout> {
     return keys;
   }
 
+  /*
   Future<void> showLoading(String message) {
     return showDialog(
       context: context,
@@ -500,7 +505,7 @@ class _CheckoutState extends State<Checkout> {
       showLoading('No Response!');
     }
   }
-
+*/
   /// Razor pay
   void razorCheckout() async {
     final options = {
